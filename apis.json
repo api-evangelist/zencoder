@@ -1,0 +1,119 @@
+{
+    "name": "Zencoder",
+    "description": "Audio and video encoding\/transcoding software as a service. Convert videos online into web and mobile formats using our cloud encoding API.",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/282-zencoder.jpg",
+    "tags": [
+        "encoding",
+        "getting started example",
+        "have api",
+        "relative data",
+        "service api"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/zencoder\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Zencoder",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/282-zencoder.jpg",
+            "humanURL": "http:\/\/zencoder.com",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/zencoder.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Base",
+            "url": "https:\/\/app.zencoder.com\/api\/"
+        },
+        {
+            "type": "Blog",
+            "url": "http:\/\/blog.zencoder.com\/"
+        },
+        {
+            "type": "Blog RSS",
+            "url": "http:\/\/blog.zencoder.com\/feed\/"
+        },
+        {
+            "type": "Contact Form",
+            "url": "https:\/\/zencoder.com\/en\/sales"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "http:\/\/www.crunchbase.com\/company\/zencoder"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/zencoder"
+        },
+        {
+            "type": "Developers",
+            "url": "http:\/\/zencoder.com\/api\/"
+        },
+        {
+            "type": "Email",
+            "url": "privacy@zencoder.com"
+        },
+        {
+            "type": "Error Codes",
+            "url": "https:\/\/app.zencoder.com\/docs\/errors"
+        },
+        {
+            "type": "Facebook",
+            "url": "http:\/\/www.facebook.com\/zencoderinc"
+        },
+        {
+            "type": "FAQ",
+            "url": "https:\/\/app.zencoder.com\/docs\/faq"
+        },
+        {
+            "type": "Getting Started",
+            "url": "https:\/\/app.zencoder.com\/docs\/guides\/getting-started"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/zencoder"
+        },
+        {
+            "type": "Pricing",
+            "url": "https:\/\/zencoder.com\/en\/file-transcoding\/pricing#basic"
+        },
+        {
+            "type": "Pricing",
+            "url": "https:\/\/zencoder.com\/en\/live-transcoding\/pricing"
+        },
+        {
+            "type": "Privacy",
+            "url": "http:\/\/zencoder.com\/privacy"
+        },
+        {
+            "type": "Registration",
+            "url": "https:\/\/app.zencoder.com\/signup"
+        },
+        {
+            "type": "Terms of Service",
+            "url": "http:\/\/zencoder.com\/terms"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/zencoderinc"
+        },
+        {
+            "type": "Website",
+            "url": "http:\/\/zencoder.com\/"
+        },
+        {
+            "type": "Website",
+            "url": "http:\/\/zencoder.com"
+        }
+    ]
+}
