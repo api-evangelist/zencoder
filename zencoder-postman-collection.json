@@ -1,0 +1,724 @@
+{
+    "id": "4a8a381a4c2b91465169e30b0024382f",
+    "name": "Zencoder",
+    "description": null,
+    "auth": null,
+    "events": null,
+    "variables": [],
+    "order": [],
+    "folders_order": [],
+    "folders": [],
+    "requests": [
+        {
+            "id": "09cb8a6ee1d7ebb79758ded211c6c3b5",
+            "name": "Get Account Details",
+            "url": "httpsapp.zencoder.com\/api\/v2\/account",
+            "description": "Get Account Details",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "495005ca517d42dee1b3c7407cca4869",
+            "name": "Create an Account",
+            "url": "httpsapp.zencoder.com\/api\/v2\/account",
+            "description": "Create an Account",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "email",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "password",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "password_confirmation",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "terms_of_service",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "d7d1378d7dc6b059f6278f034f87c44c",
+            "name": "Integration Mode",
+            "url": "httpsapp.zencoder.com\/api\/v2\/account\/integration",
+            "description": "Integration Mode",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "put",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "15e0dba5361ffc29b8433a7fec5c1f04",
+            "name": "Integration Mode - Live",
+            "url": "httpsapp.zencoder.com\/api\/v2\/account\/live",
+            "description": "Integration Mode - Live",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "put",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "53bf5ef08e4a43f44e0fd06bfbdd7f8b",
+            "name": "Get Input Details",
+            "url": "httpsapp.zencoder.com\/api\/v2\/inputs\/{input_id}",
+            "description": "Get Input Details",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "callback",
+                    "description": "JSONP Callback",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "input_id",
+                    "description": "The input id.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "383a4355e7067bf082d4f8a420fdc5cc",
+            "name": "Input Progress",
+            "url": "httpsapp.zencoder.com\/api\/v2\/inputs\/{input_id}\/progress",
+            "description": "The return will contain one or more of the following keys: state, current_event, current_event_progress and progress.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "8aa5963b5288346a69cacda98f9d76e9",
+            "name": "List Jobs",
+            "url": "httpsapp.zencoder.com\/api\/v2\/jobs",
+            "description": "A list of jobs can be obtained by sending an HTTP GET request.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "46d839b065015a3be6a3c22268a118a0",
+            "name": "Create a Job",
+            "url": "httpsapp.zencoder.com\/api\/v2\/jobs",
+            "description": "Encoding jobs are created by sending an HTTP POST request.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Encoding Settings",
+                    "description": "(see: https:\/\/app.zencoder.com\/docs\/api\/encoding)",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "input",
+                    "description": "A valid URL to a media file (HTTP\/HTTPS, FTP\/FTPS, SFTP, GCS, CF or S3), with or without authentication",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "c66bb40c86c966874a2d2fb2acf74ad2",
+            "name": "Get Job Details",
+            "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}",
+            "description": "Get Job Details",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Get Job Details",
+                    "description": "The Job id.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "7ec963982f9109538d85229b13260a82",
+            "name": "Cancel a Job",
+            "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}\/cancel",
+            "description": "If you wish to cancel a job that has not yet finished processing you may send a request.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "put",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "job_id",
+                    "description": "The job id.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "7e1153cd6d2de01c8f80677f6d0243e4",
+            "name": "Finish a LIve Job",
+            "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}\/finish",
+            "description": "Finishes the input on a Live streaming job.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "put",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "19a85ed405dc25592da380de7359af55",
+            "name": "Job Progress",
+            "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}\/progress",
+            "description": "The return will contain one or more of the following keys: state, input, outputs, and progress.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "f593a137dd5f793e8eafb233c6584b15",
+            "name": "Resubmit a Job",
+            "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}\/resubmit",
+            "description": "If a job has failed processing you may request that it be attempted again.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "put",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "job_id",
+                    "description": "The job id.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "1ae309f0b61190ad70c75701b71c9094",
+            "name": "Output Progress",
+            "url": "httpsapp.zencoder.com\/api\/v2\/outputs\/{output_id}\/progress",
+            "description": "The return will contain one or more of the following keys: state, current_event, current_event_progress and progress.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "callback",
+                    "description": "JSONP Callback",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "output_id",
+                    "description": "The output id.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "91314a705490f4caae4728071e8dc7db",
+            "name": "Get Usage for VOD & Live",
+            "url": "httpsapp.zencoder.com\/api\/v2\/reports\/all",
+            "description": "Get Usage for VOD & Live",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "from",
+                    "description": "Start date in the format YYYY-MM-DD (default: 30 days ago).",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "grouping",
+                    "description": "Hour usage for only one report grouping (default: none).",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "to",
+                    "description": "End date in the format YYYY-MM-DD (default: yesterday).",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "3ccce9c7767a7536d030cec36e3064e5",
+            "name": "Get Usage for Live",
+            "url": "httpsapp.zencoder.com\/api\/v2\/reports\/live",
+            "description": "Get Usage for Live",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "from",
+                    "description": "Start date in the format YYYY-MM-DD (default: 30 days ago).",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "grouping",
+                    "description": "Hour usage for only one report grouping (default: none).",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "to",
+                    "description": "End date in the format YYYY-MM-DD (default: yesterday).",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "0bc0169aab82a8c9a09b44383635b401",
+            "name": "Get Minutes Used",
+            "url": "httpsapp.zencoder.com\/api\/v2\/reports\/minutes",
+            "description": "Get Minutes Used",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "bedbc288b4b8590e826aa4c7e8f87957",
+            "name": "Get Usage for VOD",
+            "url": "httpsapp.zencoder.com\/api\/v2\/reports\/vod",
+            "description": "Get Usage for VOD",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "from",
+                    "description": "Start date in the format YYYY-MM-DD (default: 30 days ago).",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "grouping",
+                    "description": "Hour usage for only one report grouping (default: none).",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "to",
+                    "description": "End date in the format YYYY-MM-DD (default: yesterday).",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        },
+        {
+            "id": "a17fe030de648cef12d8e1380331b24f",
+            "name": "Get Output Details",
+            "url": "httpsapp.zencoder.com\/api\/v2\/v2\/outputs\/{output_id}",
+            "description": "Get Output Details",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "api_key",
+                    "description": "The API key.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "output_id",
+                    "description": "The output id.",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "rawModeData": ""
+        }
+    ]
+}
