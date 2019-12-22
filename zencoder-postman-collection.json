@@ -1,5 +1,5 @@
 {
-    "id": "4a8a381a4c2b91465169e30b0024382f",
+    "id": "529f85cb17a8fbb611fe41c05f82123d",
     "name": "Zencoder",
     "description": null,
     "auth": null,
@@ -10,7 +10,7 @@
     "folders": [],
     "requests": [
         {
-            "id": "09cb8a6ee1d7ebb79758ded211c6c3b5",
+            "id": "bd99b697cb4ba1028bface05c44c6507",
             "name": "Get Account Details",
             "url": "httpsapp.zencoder.com\/api\/v2\/account",
             "description": "Get Account Details",
@@ -37,11 +37,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "495005ca517d42dee1b3c7407cca4869",
+            "id": "b1d842a9702fd733a5c660d7729248fc",
             "name": "Create an Account",
             "url": "httpsapp.zencoder.com\/api\/v2\/account",
             "description": "Create an Account",
@@ -89,11 +89,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "d7d1378d7dc6b059f6278f034f87c44c",
+            "id": "25214ffae0a1b64ec0a7ac859e984ba1",
             "name": "Integration Mode",
             "url": "httpsapp.zencoder.com\/api\/v2\/account\/integration",
             "description": "Integration Mode",
@@ -120,11 +120,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "15e0dba5361ffc29b8433a7fec5c1f04",
+            "id": "5b703f90489ae9f0cc0f76f9a3744d97",
             "name": "Integration Mode - Live",
             "url": "httpsapp.zencoder.com\/api\/v2\/account\/live",
             "description": "Integration Mode - Live",
@@ -143,11 +143,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "53bf5ef08e4a43f44e0fd06bfbdd7f8b",
+            "id": "03671678cf7be8d706611a3268a0b3c8",
             "name": "Get Input Details",
             "url": "httpsapp.zencoder.com\/api\/v2\/inputs\/{input_id}",
             "description": "Get Input Details",
@@ -188,11 +188,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "383a4355e7067bf082d4f8a420fdc5cc",
+            "id": "2a3af3267ddf30eff1b878d97ff6b3f6",
             "name": "Input Progress",
             "url": "httpsapp.zencoder.com\/api\/v2\/inputs\/{input_id}\/progress",
             "description": "The return will contain one or more of the following keys: state, current_event, current_event_progress and progress.",
@@ -211,11 +211,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "8aa5963b5288346a69cacda98f9d76e9",
+            "id": "cb1c78b7957e8934344623b0a6629aff",
             "name": "List Jobs",
             "url": "httpsapp.zencoder.com\/api\/v2\/jobs",
             "description": "A list of jobs can be obtained by sending an HTTP GET request.",
@@ -242,11 +242,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "46d839b065015a3be6a3c22268a118a0",
+            "id": "0adadadc5f0655aad434979c69cddd15",
             "name": "Create a Job",
             "url": "httpsapp.zencoder.com\/api\/v2\/jobs",
             "description": "Encoding jobs are created by sending an HTTP POST request.",
@@ -287,11 +287,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "c66bb40c86c966874a2d2fb2acf74ad2",
+            "id": "bb8dbcfac13aade33dfe734b42b95c5e",
             "name": "Get Job Details",
             "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}",
             "description": "Get Job Details",
@@ -325,11 +325,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "7ec963982f9109538d85229b13260a82",
+            "id": "a63b31accbf622609ad57f7a63b433e6",
             "name": "Cancel a Job",
             "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}\/cancel",
             "description": "If you wish to cancel a job that has not yet finished processing you may send a request.",
@@ -363,11 +363,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "7e1153cd6d2de01c8f80677f6d0243e4",
+            "id": "846f1c37e1f33f3efc3834cb2b0e54fb",
             "name": "Finish a LIve Job",
             "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}\/finish",
             "description": "Finishes the input on a Live streaming job.",
@@ -386,11 +386,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "19a85ed405dc25592da380de7359af55",
+            "id": "6cf5fcf2c9c22cdaca9fddaed2b8907a",
             "name": "Job Progress",
             "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}\/progress",
             "description": "The return will contain one or more of the following keys: state, input, outputs, and progress.",
@@ -409,11 +409,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "f593a137dd5f793e8eafb233c6584b15",
+            "id": "ee1de60cfc9d06323f7efd80e56701fd",
             "name": "Resubmit a Job",
             "url": "httpsapp.zencoder.com\/api\/v2\/jobs\/{job_id}\/resubmit",
             "description": "If a job has failed processing you may request that it be attempted again.",
@@ -447,11 +447,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "1ae309f0b61190ad70c75701b71c9094",
+            "id": "addb1019769320958af65f91297cf216",
             "name": "Output Progress",
             "url": "httpsapp.zencoder.com\/api\/v2\/outputs\/{output_id}\/progress",
             "description": "The return will contain one or more of the following keys: state, current_event, current_event_progress and progress.",
@@ -492,11 +492,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "91314a705490f4caae4728071e8dc7db",
+            "id": "35fddf8cbdbba2b6a968aa780b58e6ef",
             "name": "Get Usage for VOD & Live",
             "url": "httpsapp.zencoder.com\/api\/v2\/reports\/all",
             "description": "Get Usage for VOD & Live",
@@ -544,11 +544,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "3ccce9c7767a7536d030cec36e3064e5",
+            "id": "c3ecd55001d9f915bb4d10beb3366217",
             "name": "Get Usage for Live",
             "url": "httpsapp.zencoder.com\/api\/v2\/reports\/live",
             "description": "Get Usage for Live",
@@ -596,11 +596,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "0bc0169aab82a8c9a09b44383635b401",
+            "id": "38a3caf914e7bcc10272809d2d590642",
             "name": "Get Minutes Used",
             "url": "httpsapp.zencoder.com\/api\/v2\/reports\/minutes",
             "description": "Get Minutes Used",
@@ -627,11 +627,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "bedbc288b4b8590e826aa4c7e8f87957",
+            "id": "17aaa38b46082f6a4e1e80d7f0706797",
             "name": "Get Usage for VOD",
             "url": "httpsapp.zencoder.com\/api\/v2\/reports\/vod",
             "description": "Get Usage for VOD",
@@ -679,11 +679,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         },
         {
-            "id": "a17fe030de648cef12d8e1380331b24f",
+            "id": "3d629117275e492a15bdc86b884eab63",
             "name": "Get Output Details",
             "url": "httpsapp.zencoder.com\/api\/v2\/v2\/outputs\/{output_id}",
             "description": "Get Output Details",
@@ -717,7 +717,7 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4a8a381a4c2b91465169e30b0024382f",
+            "collectionId": "529f85cb17a8fbb611fe41c05f82123d",
             "rawModeData": ""
         }
     ]
