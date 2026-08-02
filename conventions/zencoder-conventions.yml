@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: searched
+source: https://zencoder.support.brightcove.com/references/reference.html
+derived_from: openapi/zencoder-openapi-original.yml
+authentication:
+  style: api-key
+  header: Zencoder-Api-Key
+  query_param: api_key
+  ref: authentication/zencoder-authentication.yml
+idempotency:
+  supported: false
+  notes: >-
+    Zencoder does not document an idempotency-key mechanism. Job submission is a plain POST /jobs;
+    to avoid duplicate encoding, callers de-duplicate on their own job identifiers. Cancel/resubmit
+    are naturally idempotent-ish via job state (a finished job cannot be resubmitted -> 409).
+pagination:
+  style: page-number
+  params:
+    page: 1-based page number
+    per_page: results per page (max 50, default 50)
+  default_sort: id descending
+  applies_to: [getJobs]
+  notes: Only the list-jobs endpoint paginates.
+versioning:
+  scheme: uri-path
+  current: v2
+  base_url: https://app.zencoder.com/api/v2
+error_envelope:
+  format: json
+  http_codes: [403, 409, 422, 500]
+  fields: [errors]
+  content_types: [application/json, application/xml]
+  ref: errors/zencoder-problem-types.yml
+request_formats:
+  request: [application/json, application/xml]
+  response: [application/json, application/xml]
+  notes: Requests and responses may be JSON or XML; JSON is the default.
+data_retention:
+  jobs_history_days: 60
+  notes: >-
+    Historical jobs data is retained by Zencoder for 60 days; retrieve and store it yourself for
+    longer periods.
+notifications:
+  mechanism: webhooks
+  ref: asyncapi/zencoder-notifications-webhooks.yml
+rate_limiting:
+  documented: false
+  notes: Zencoder does not publish explicit request rate limits; encoding is metered per output minute.

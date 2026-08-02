@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: searched
+source: https://zencoder.support.brightcove.com/getting-started/getting-api-key.html
+notes: >-
+  Zencoder has no separate sandbox host; testing is done against the production API
+  (https://app.zencoder.com/api/v2) using an Integration-Mode API key. Jobs submitted with an
+  integration-mode key are accepted and validated (you get realistic API responses) but are NOT
+  actually encoded and are not billed — the mechanism for building and testing an integration before
+  moving to a paid plan. No published test-card / magic-value fixtures exist (this is a media API, not
+  a payments API). Free test jobs are also available on the platform.
+test_mode:
+  name: Integration Mode
+  how: Use an integration-mode API key (see authentication/zencoder-authentication.yml key_types).
+  behavior: Jobs are accepted and return API responses but are not processed or billed.
+  toggle_operations: [turnOnIntegration, turnOffIntegration]
+  toggle_endpoints:
+  - PUT /account/integration  (turn on integration mode)
+  - PUT /account/live         (turn off integration mode -> live/processing)
+live_mode:
+  name: Full Access
+  how: Use a full-access API key on a paid plan; jobs are processed and billed per output minute.
+free_testing:
+  notes: The platform advertises free test jobs for evaluating encoding quality.
+magic_values: []

@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/zencoder-openapi-original.yml
+format: http-status
+notes: >-
+  HTTP-level API error responses derived from the Zencoder v2 OpenAPI 4xx/5xx responses. Zencoder does
+  not use RFC 9457 application/problem+json; error bodies are plain JSON (or XML) with an `errors` array.
+  Job-processing (encoding) failures are a separate, richer registry captured in
+  errors/zencoder-error-codes.yml.
+envelope:
+  content_types: [application/json, application/xml]
+  field: errors
+problems:
+- status: 403
+  title: Forbidden
+  meaning: Invalid, missing, or insufficient API key (e.g. a read-only key used for a write).
+  operations: [createJob, getJobs, getJob, getInputDetails, getInputProgress, getOutputDetails, getOutputProgress, createAccount, getAccountDetails, turnOnIntegration, turnOffIntegration, getUsageReport, getMinutesUsed]
+- status: 409
+  title: Conflict
+  meaning: The job is in a state that does not allow the action (e.g. resubmitting or cancelling a finished job).
+  operations: [resubmitJob, cancelJob]
+- status: 422
+  title: Unprocessable Entity
+  meaning: Invalid query parameters or request body / invalid encoding settings.
+  operations: [createJob, getJobs, getJob, getInputDetails, getInputProgress, getOutputDetails, getOutputProgress, createAccount]
+- status: 500
+  title: Server error
+  meaning: Internal Zencoder error; retry with backoff.
+  operations: [createJob, getJobs, getJob, resubmitJob, getJobProgress, cancelJob, getInputDetails, getInputProgress, getOutputDetails, getOutputProgress, createAccount, getAccountDetails, turnOnIntegration, turnOffIntegration, getUsageReport, getMinutesUsed]

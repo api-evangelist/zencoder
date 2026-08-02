@@ -1,0 +1,39 @@
+generated: '2026-07-21'
+method: searched
+source: https://zencoder.support.brightcove.com/encoding-settings/general/encoding-settings-notifications.html
+spec_type: Webhooks
+notes: >-
+  Zencoder publishes no AsyncAPI document; its event surface is job/output completion webhooks
+  configured per job via the `notifications` array in the encoding settings. Zencoder POSTs a
+  notification to each configured URL when a job or output reaches a terminal (or, for live, a
+  milestone) state. There is no HMAC/signature verification; callers authenticate the callback with
+  URL basic-auth credentials and/or up to-100-char custom headers, and de-duplicate by job id + state.
+delivery:
+  method: POST
+  content_types: [application/json, application/xml]
+  default_format: json
+  max_notifications_per_target: 5
+  http2_supported: false
+  verification: none (no HMAC/signature); use URL basic-auth and/or custom headers
+  auth_options:
+  - url-embedded basic auth (https://user:pass@example.com/path)
+  - custom HTTP headers (<=100 chars each)
+payload_fields:
+- job id
+- state/status
+- output label (for multi-output jobs)
+events:
+- name: job.finished
+  trigger: A job completed successfully.
+- name: job.failed
+  trigger: A job failed.
+- name: job.cancelled
+  trigger: A job was cancelled.
+- name: output.finished
+  trigger: An individual output file completed.
+- name: output.failed
+  trigger: An individual output file failed.
+- name: live.first_segment_uploaded
+  trigger: (Live outputs) the first segment has been uploaded.
+- name: live.seamless_playback
+  trigger: (Live outputs) seamless playback is available.

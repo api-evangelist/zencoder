@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: searched
+source: https://zencoder.support.brightcove.com/getting-started/getting-api-key.html
+docs: https://zencoder.support.brightcove.com/getting-started/getting-api-key.html
+notes: >-
+  The Zencoder v2 OpenAPI models the credential as a required request parameter (ZencoderApiKey) rather
+  than a formal components.securitySchemes entry, so the mechanical auth-derive returns nothing; this
+  profile is authored from the docs. Zencoder authenticates every request with an API key sent in the
+  `Zencoder-Api-Key` HTTP header. The key may alternatively be passed as an `api_key` query-string
+  parameter. There is no OAuth 2.0 / OIDC surface, hence no scopes/ artifact.
+summary:
+  types: [apiKey]
+  api_key_in: [header, query]
+  oauth2_flows: []
+schemes:
+- name: ZencoderApiKey
+  type: apiKey
+  in: header
+  parameter_name: Zencoder-Api-Key
+  description: >-
+    API key sent on every request in the Zencoder-Api-Key header. Also accepted as an `api_key`
+    query-string parameter (e.g. ?api_key=...).
+  sources: [openapi/zencoder-openapi-original.yml]
+key_types:
+- name: full-access
+  description: Allows any request to the Zencoder API; required to submit jobs and retrieve outputs. Requires a paid plan.
+- name: read-only
+  description: Allows GET requests only (job/output status), no job submission.
+- name: integration-mode
+  description: >-
+    Allows job submission for testing without processing (jobs are accepted but not encoded). Used to
+    build and test integrations before purchasing a paid plan. See sandbox/zencoder-sandbox.yml.

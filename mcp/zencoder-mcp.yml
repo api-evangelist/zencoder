@@ -1,0 +1,59 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/zencoder-openapi-original.yml
+notes: No official hosted/remote Zencoder MCP server was found (searched docs, npm @modelcontextprotocol,
+  MCP registries). This is a CANDIDATE tool list derived one-per-operation from the Zencoder v2 OpenAPI
+  so an MCP server could be generated.
+server:
+  name: zencoder
+  transport: stdio
+tools:
+- name: createJob
+  description: Create an Encoding Job
+  source_operation: openapi/zencoder-openapi-original.yml#createJob
+- name: getJobs
+  description: List jobs
+  source_operation: openapi/zencoder-openapi-original.yml#getJobs
+- name: getJob
+  description: Get Job Details
+  source_operation: openapi/zencoder-openapi-original.yml#getJob
+- name: resubmitJob
+  description: Resubmit a Job
+  source_operation: openapi/zencoder-openapi-original.yml#resubmitJob
+- name: getJobProgress
+  description: Get Job Progress
+  source_operation: openapi/zencoder-openapi-original.yml#getJobProgress
+- name: cancelJob
+  description: Cancel a Job
+  source_operation: openapi/zencoder-openapi-original.yml#cancelJob
+- name: getInputDetails
+  description: Get Input Details
+  source_operation: openapi/zencoder-openapi-original.yml#getInputDetails
+- name: getInputProgress
+  description: Get Input Progress
+  source_operation: openapi/zencoder-openapi-original.yml#getInputProgress
+- name: getOutputDetails
+  description: Get Output Details
+  source_operation: openapi/zencoder-openapi-original.yml#getOutputDetails
+- name: getOutputProgress
+  description: Get Output Progress
+  source_operation: openapi/zencoder-openapi-original.yml#getOutputProgress
+- name: createAccount
+  description: Create an Account
+  source_operation: openapi/zencoder-openapi-original.yml#createAccount
+- name: getAccountDetails
+  description: Get Account Details
+  source_operation: openapi/zencoder-openapi-original.yml#getAccountDetails
+- name: turnOnIntegration
+  description: Turn on Integration Mode
+  source_operation: openapi/zencoder-openapi-original.yml#turnOnIntegration
+- name: turnOffIntegration
+  description: Turn off Integration Mode
+  source_operation: openapi/zencoder-openapi-original.yml#turnOffIntegration
+- name: getUsageReport
+  description: Get Usage Report
+  source_operation: openapi/zencoder-openapi-original.yml#getUsageReport
+- name: getMinutesUsed
+  description: Get Minutes Used
+  source_operation: openapi/zencoder-openapi-original.yml#getMinutesUsed

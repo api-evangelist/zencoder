@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: https://zencoder.support.brightcove.com/references/release-notes.html
+scheme: dated
+current_version: v2
+notes: >-
+  Zencoder's own API release notes (a mature, low-churn transcoding API). More recent product changes
+  are rolled into the cross-product Brightcove Product Release Notes at
+  https://support.brightcove.com/product-updates.html.
+entries:
+- date: '2021-09-22'
+  breaking: false
+  highlights: Added support for Auto Captions.
+- date: '2020-10-19'
+  breaking: false
+  highlights: Added support for min_frame_rate.
+- date: '2020-10-08'
+  breaking: false
+  highlights: Added support for Azure SAS Policies.
+- date: '2020-07-20'
+  breaking: false
+  highlights: Added support for mixed codecs in CAE jobs for HEVC video.
+- date: '2018-06-20'
+  breaking: false
+  highlights: Added support for Context Aware Encoding (CAE).

@@ -1,0 +1,22 @@
+{
+  "provider": "zencoder",
+  "sources": [
+    "zencoder-accounts-api-openapi.yml",
+    "zencoder-inputs-api-openapi.yml",
+    "zencoder-jobs-api-openapi.yml",
+    "zencoder-outputs-api-openapi.yml",
+    "zencoder-reports-api-openapi.yml"
+  ],
+  "outputs": [
+    "zencoder-accounts-api-openapi.yml",
+    "zencoder-inputs-api-openapi.yml",
+    "zencoder-jobs-api-openapi.yml",
+    "zencoder-outputs-api-openapi.yml",
+    "zencoder-reports-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

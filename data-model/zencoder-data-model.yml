@@ -1,0 +1,75 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/zencoder-openapi-original.yml
+notes: >-
+  Entity-relationship graph derived from the Zencoder v2 OpenAPI schema $ref links. The core aggregate
+  is a Job: one Job has one input media file and many output media files; each Output composes audio,
+  DRM, streams, thumbnails, watermarks, cue points and clip/skip settings. Accounts and Reports are
+  standalone resources.
+entities:
+- name: Job
+  schema: JobResponseFields
+  id_field: id
+  description: An encoding job — the top-level unit of work created via POST /jobs.
+- name: InputMediaFile
+  schema: InputMediaFile
+  id_field: id
+  description: The source media file for a job.
+- name: OutputMediaFile
+  schema: OutputMediaFile
+  id_field: id
+  description: A rendered output file produced by a job.
+- name: Output
+  schema: Output
+  description: An output specification within a create-job request (format/codec/destination/settings).
+- name: Account
+  schema: GetAccountDetailsResponse
+  description: The Zencoder account (billing, integration mode, plan).
+- name: UsageReport
+  schema: GetUsageReportResponse
+  description: VOD usage / minutes-used reporting.
+relationships:
+- from: Job
+  to: InputMediaFile
+  type: has_one
+  via: input_media_file
+- from: Job
+  to: OutputMediaFile
+  type: has_many
+  via: output_media_files
+- from: CreateJobFields
+  to: Output
+  type: has_many
+  via: outputs
+- from: CreateJobFields
+  to: DynamicProfileOptions
+  type: has_one
+  via: dynamic_profile_options
+- from: Output
+  to: Stream
+  type: has_many
+  via: streams
+- from: Output
+  to: AlternateAudio
+  type: has_one
+  via: alternate_audio
+- from: Output
+  to: DRM
+  type: has_one
+  via: drm
+- from: Output
+  to: CuePoint
+  type: has_many
+  via: cue_points
+- from: Output
+  to: MasterDisplay
+  type: has_one
+  via: master_display
+- from: Output
+  to: Skip
+  type: has_one
+  via: skip
+- from: DRM
+  to: Schema
+  type: has_many
+  via: schemas

@@ -1,0 +1,120 @@
+generated: '2026-07-21'
+method: searched
+source: https://zencoder.support.brightcove.com/error-troubleshooting/error-codes/index.html
+notes: Zencoder job/output error registry (encoding errors surfaced on failed jobs, distinct from the
+  HTTP API errors in zencoder-problem-types.yml). Each code is documented at error-troubleshooting/error-codes/error-<code>.html.
+  Categories are derived from the code name; per-code remediation lives on the linked docs pages.
+reference: https://zencoder.support.brightcove.com/error-troubleshooting/error-codes/index.html
+envelope:
+  surfaced_on: job/output state
+  field: error
+count: 54
+error_codes:
+- code: AkamaiNetStorageFileSizeError
+  category: output-upload
+- code: ChecksumMismatchError
+  category: media-integrity
+- code: DimensionTooSmallError
+  category: settings-validation
+- code: DownloadAccessDeniedError
+  category: input-download
+- code: DownloadFailureError
+  category: input-download
+- code: DownloadTimeoutError
+  category: input-download
+- code: FileNotFoundError
+  category: input-download
+- code: FilePermanentlyMovedError
+  category: input-download
+- code: InaccurateDurationError
+  category: media-integrity
+- code: IncompatibleWithDynamicProfilesError
+  category: settings-validation
+- code: InputFileNotFound
+  category: input-download
+- code: InvalidAccessKeyIdError
+  category: input-download
+- code: InvalidAudioSettingsError
+  category: settings-validation
+- code: InvalidCodecCombinationError
+  category: settings-validation
+- code: InvalidDownloadedFileTypeError
+  category: input-download
+- code: InvalidEncryptionSettingsError
+  category: settings-validation
+- code: InvalidFilePathError
+  category: settings-validation
+- code: InvalidFormatCodecError
+  category: settings-validation
+- code: InvalidFrameRateError
+  category: settings-validation
+- code: InvalidUsernameOrPasswordError
+  category: input-download
+- code: InvalidVideoBitrateError
+  category: settings-validation
+- code: InvalidVideoSettingsError
+  category: settings-validation
+- code: NoMediaError
+  category: media-integrity
+- code: QuicktimeReferenceError
+  category: media-integrity
+- code: RemoteServerProblemError
+  category: input-download
+- code: RtmpAuthFailedError
+  category: live-rtmp
+- code: RtmpMaxStreamsXidReached
+  category: live-rtmp
+- code: RtmpStreamNameAlreadyInUse
+  category: live-rtmp
+- code: S3BucketNotFoundError
+  category: input-download
+- code: SegmentingError
+  category: processing-internal
+- code: SkippedSourceError
+  category: media-integrity
+- code: ThumbnailError
+  category: processing-internal
+- code: TranscodingError
+  category: processing-internal
+- code: TransferInvalidGranteeGroupUrlError
+  category: output-upload
+- code: TransferInvalidGranteeIdError
+  category: output-upload
+- code: TruncatedFileError
+  category: media-integrity
+- code: UnableToCreateDynamicProfilesError
+  category: processing-internal
+- code: UnexpectedDownloadProblemError
+  category: input-download
+- code: UnexpectedFfmpegResult
+  category: processing-internal
+- code: UnexpectedMplayerResult
+  category: processing-internal
+- code: UnexpectedProgenResult
+  category: processing-internal
+- code: UnexpectedResultError
+  category: processing-internal
+- code: UnexpectedUploadProblemError
+  category: output-upload
+- code: UnexpectedX264Result
+  category: processing-internal
+- code: UnreadableFileError
+  category: media-integrity
+- code: UnsupportedCodecError
+  category: settings-validation
+- code: UnsupportedEncodingError
+  category: settings-validation
+- code: UnsupportedEncryptionError
+  category: settings-validation
+- code: UnsupportedTranscodeCombinationError
+  category: settings-validation
+- code: UploadAccessDeniedError
+  category: output-upload
+- code: UploadFailureError
+  category: output-upload
+- code: UploadServerNotFoundError
+  category: output-upload
+- code: UploadTimeoutError
+  category: output-upload
+- code: WorkerTimeoutError
+  category: processing-internal

@@ -1,0 +1,47 @@
+# Zencoder
+
+> Zencoder is a cloud-based video and audio encoding (transcoding) platform, now part of Brightcove. Its v2 REST API submits encoding jobs, produces multiple simultaneous outputs (MP4, HLS, DASH, HEVC/H.265, VP9, 4K/UHD, HDR10), applies captions, watermarks, clips, thumbnails, DRM and encryption, and posts completion webhooks. Authentication is an API key sent in the Zencoder-Api-Key header (or api_key query param). Base URL: https://app.zencoder.com/api/v2.
+
+## APIs
+
+- [Zencoder API reference](https://zencoder.support.brightcove.com/references/reference.html): v2 REST API — Jobs, Inputs, Outputs, Accounts, Reports.
+- [OpenAPI 3.0 spec](https://zencoder.support.brightcove.com/references/openapi.yaml): machine-readable definition (16 operations, 5 tags).
+
+## Getting started
+
+- [Quick Start](https://zencoder.support.brightcove.com/getting-started/quick-start-zencoder.html)
+- [Getting an API Key](https://zencoder.support.brightcove.com/getting-started/getting-api-key.html): full-access, read-only, and integration-mode (test) keys.
+- [Creating multiple outputs](https://zencoder.support.brightcove.com/getting-started/creating-multiple-outputs.html)
+
+## Docs
+
+- [Documentation home](https://zencoder.support.brightcove.com/)
+- [Encoding settings](https://zencoder.support.brightcove.com/encoding-settings/index.html): formats/codecs, audio/video, captions, DRM, watermarks, thumbnails, clips.
+- [Encoding guides](https://zencoder.support.brightcove.com/encoding-guides/index.html): HLS, DASH, HEVC/H.265, VP9, HDR10, CAE.
+- [Notifications / webhooks](https://zencoder.support.brightcove.com/encoding-settings/general/encoding-settings-notifications.html)
+- [Error codes](https://zencoder.support.brightcove.com/error-troubleshooting/error-codes/index.html)
+- [Release notes](https://zencoder.support.brightcove.com/references/release-notes.html)
+- [Integration libraries](https://zencoder.support.brightcove.com/integration/faq-integration-libraries.html): Ruby, PHP, Python, Node.js, Java, Elixir.
+
+## Operations
+
+- POST /jobs — Create an encoding job (createJob)
+- GET /jobs — List jobs (getJobs, paginated page/per_page)
+- GET /jobs/{job_id} — Get job details (getJob)
+- GET /jobs/{job_id}/progress — Get job progress (getJobProgress)
+- PUT /jobs/{job_id}/resubmit — Resubmit a job (resubmitJob)
+- PUT /jobs/{job_id}/cancel — Cancel a job (cancelJob)
+- GET /inputs/{input_id} — Get input details (getInputDetails)
+- GET /outputs/{output_id} — Get output details (getOutputDetails)
+- GET /account — Get account details (getAccountDetails)
+- GET /reports/vod — Get usage report (getUsageReport)
+- GET /reports/minutes — Get minutes used (getMinutesUsed)
+
+## SDKs
+
+- [Ruby](https://github.com/zencoder/zencoder-rb) — gem install zencoder
+- [PHP](https://github.com/zencoder/zencoder-php) — composer require zencoder/zencoder
+- [Python](https://github.com/zencoder/zencoder-py) — pip install zencoder
+- [Node.js](https://github.com/zencoder/zencoder-node) — npm install zencoder
+- [Java](https://github.com/zencoder/zencoder-java)
+- [Elixir](https://github.com/zencoder/zencoder-ex)

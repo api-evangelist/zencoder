@@ -1,8 +1,16 @@
 aid: zencoder
 name: Zencoder
-description: Zencoder is a company surfaced as a portfolio company of 500-global, a16z, gv and added to
-  the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Zencoder is a cloud-based video and audio encoding (transcoding) platform, now part of Brightcove,
+  that turns source media into web-, mobile-, and broadcast-ready outputs at scale. Its REST API lets
+  developers submit encoding jobs, generate multiple simultaneous outputs (MP4, HLS, DASH, HEVC/H.265,
+  VP9, 4K/UHD, HDR10), apply captions, watermarks, clips, and thumbnails, protect content with DRM and
+  encryption, and receive completion notifications via webhooks. Zencoder is known for its Emmy
+  Award-winning Context Aware Encoding (CAE), no queue time, and per-minute usage-based pricing. The
+  v2 API is organized around Jobs, Inputs, Outputs, Accounts, and Reports resources and authenticates
+  with a Zencoder-Api-Key header (also accepted as an api_key query parameter). Originally an
+  a16z / GV / 500 Global-backed startup, Zencoder was acquired by Brightcove and its API is documented
+  and supported under the Brightcove developer surface.
 url: https://raw.githubusercontent.com/api-evangelist/zencoder/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,19 +18,204 @@ x-backed-by:
 - 500-global
 - a16z
 - gv
-x-tier: stub
+x-tier: enriched
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://zencoder.support.brightcove.com/assets/s-site-assets-favicons/apple-touch-icon.png
 tags:
 - Company
-apis: []
+- Video
+- Video Encoding
+- Transcoding
+- Media
+- Streaming
+- Video Processing
+- Cloud
+- Brightcove
+- Captions
+- DRM
+- HLS
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: zencoder:zencoder-accounts-api
+  name: Zencoder Accounts API
+  description: Operations for managing accounts.
+  humanURL: https://zencoder.support.brightcove.com/references/reference.html
+  baseURL: https://app.zencoder.com/api/v2
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/zencoder-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://zencoder.support.brightcove.com/
+  - type: APIReference
+    url: https://zencoder.support.brightcove.com/references/reference.html
+  - type: GettingStarted
+    url: https://zencoder.support.brightcove.com/getting-started/quick-start-zencoder.html
+  - type: Authentication
+    url: authentication/zencoder-authentication.yml
+  - type: Webhooks
+    url: asyncapi/zencoder-notifications-webhooks.yml
+- aid: zencoder:zencoder-inputs-api
+  name: Zencoder Inputs API
+  description: Operations for getting input details and progress.
+  humanURL: https://zencoder.support.brightcove.com/references/reference.html
+  baseURL: https://app.zencoder.com/api/v2
+  tags:
+  - Inputs
+  properties:
+  - type: OpenAPI
+    url: openapi/zencoder-inputs-api-openapi.yml
+  - type: Documentation
+    url: https://zencoder.support.brightcove.com/
+  - type: APIReference
+    url: https://zencoder.support.brightcove.com/references/reference.html
+  - type: GettingStarted
+    url: https://zencoder.support.brightcove.com/getting-started/quick-start-zencoder.html
+  - type: Authentication
+    url: authentication/zencoder-authentication.yml
+  - type: Webhooks
+    url: asyncapi/zencoder-notifications-webhooks.yml
+- aid: zencoder:zencoder-jobs-api
+  name: Zencoder Jobs API
+  description: Operations for managing Zencoder encoding jobs.
+  humanURL: https://zencoder.support.brightcove.com/references/reference.html
+  baseURL: https://app.zencoder.com/api/v2
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/zencoder-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://zencoder.support.brightcove.com/
+  - type: APIReference
+    url: https://zencoder.support.brightcove.com/references/reference.html
+  - type: GettingStarted
+    url: https://zencoder.support.brightcove.com/getting-started/quick-start-zencoder.html
+  - type: Authentication
+    url: authentication/zencoder-authentication.yml
+  - type: Webhooks
+    url: asyncapi/zencoder-notifications-webhooks.yml
+- aid: zencoder:zencoder-outputs-api
+  name: Zencoder Outputs API
+  description: Operations for getting output details and progress.
+  humanURL: https://zencoder.support.brightcove.com/references/reference.html
+  baseURL: https://app.zencoder.com/api/v2
+  tags:
+  - Outputs
+  properties:
+  - type: OpenAPI
+    url: openapi/zencoder-outputs-api-openapi.yml
+  - type: Documentation
+    url: https://zencoder.support.brightcove.com/
+  - type: APIReference
+    url: https://zencoder.support.brightcove.com/references/reference.html
+  - type: GettingStarted
+    url: https://zencoder.support.brightcove.com/getting-started/quick-start-zencoder.html
+  - type: Authentication
+    url: authentication/zencoder-authentication.yml
+  - type: Webhooks
+    url: asyncapi/zencoder-notifications-webhooks.yml
+- aid: zencoder:zencoder-reports-api
+  name: Zencoder Reports API
+  description: Operations for getting reports.
+  humanURL: https://zencoder.support.brightcove.com/references/reference.html
+  baseURL: https://app.zencoder.com/api/v2
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/zencoder-reports-api-openapi.yml
+  - type: Documentation
+    url: https://zencoder.support.brightcove.com/
+  - type: APIReference
+    url: https://zencoder.support.brightcove.com/references/reference.html
+  - type: GettingStarted
+    url: https://zencoder.support.brightcove.com/getting-started/quick-start-zencoder.html
+  - type: Authentication
+    url: authentication/zencoder-authentication.yml
+  - type: Webhooks
+    url: asyncapi/zencoder-notifications-webhooks.yml
 common:
+- type: DomainSecurity
+  url: security/zencoder-domain-security.yml
 - type: Website
   url: https://zencoder.com
+- type: DeveloperPortal
+  url: https://zencoder.support.brightcove.com/
+- type: Documentation
+  url: https://zencoder.support.brightcove.com/
+- type: APIReference
+  url: https://zencoder.support.brightcove.com/references/reference.html
+- type: GettingStarted
+  url: https://zencoder.support.brightcove.com/getting-started/quick-start-zencoder.html
+- type: Support
+  url: https://zencoder.support.brightcove.com/support/index.html
+- type: SignUp
+  url: https://app.zencoder.com/signup
+- type: Login
+  url: https://app.zencoder.com/login
+- type: TermsOfService
+  url: https://www.brightcove.com/legal/terms-and-conditions
+- type: PrivacyPolicy
+  url: https://www.brightcove.com/legal/privacy-policy
+- type: GitHubOrganization
+  url: https://github.com/zencoder
+- type: StatusPage
+  url: https://status.brightcove.com/
+- type: ChangeLog
+  url: changelog/zencoder-changelog.yml
+- type: Packages
+  url: packages/zencoder-packages.yml
+- type: SDKs
+  url: packages/zencoder-packages.yml
+- type: Authentication
+  url: authentication/zencoder-authentication.yml
+- type: Conventions
+  url: conventions/zencoder-conventions.yml
+- type: ErrorCatalog
+  url: errors/zencoder-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/zencoder-lifecycle.yml
+- type: DataModel
+  url: data-model/zencoder-data-model.yml
+- type: Conformance
+  url: conformance/zencoder-conformance.yml
+- type: Webhooks
+  url: asyncapi/zencoder-notifications-webhooks.yml
+- type: Sandbox
+  url: sandbox/zencoder-sandbox.yml
+- type: MCPServer
+  url: mcp/zencoder-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/zencoder-openapi-overlay.yaml
+- type: AgenticAccess
+  url: agentic-access/zencoder-agentic-access.yml
+- type: LLMsTxt
+  url: llms/zencoder-llms.txt
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

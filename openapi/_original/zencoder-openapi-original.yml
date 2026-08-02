@@ -1,0 +1,3577 @@
+openapi: '3.0.0'
+x-bc-implicit-head: true
+x-bc-implicit-options: true
+x-bc-upstream: 'http://backend_server'
+info:
+  description: |-
+    API for Zencoder. Zencoder offers a fast and reliable transcoding service for video and audio files, as well as live streams. It can produce outputs for the web and a wide variety of devices, and can easily be integrated with your CMS and other applications.
+
+    **Base URL: https://app.zencoder.com/api/v2**
+  version: 2.0.0
+  title: Zencoder API
+  x-bc-access: public
+servers:
+  - url: 'https://app.zencoder.com/api/v2'
+    variables: {}
+tags:
+  - name: Jobs
+    description: Operations for managing Zencoder encoding jobs.
+  - name: Inputs
+    description: Operations for getting input details and progress.
+  - name: Outputs
+    description: Operations for getting output details and progress.
+  - name: Accounts
+    description: Operations for managing accounts.
+  - name: Reports
+    description: Operations for getting reports.
+paths:
+  '/jobs':
+    post:
+      tags:
+        - Jobs
+      summary: Create an Encoding Job
+      description: |-
+        'Encoding jobs are created by sending an HTTP POST request to https://app.zencoder.com/api/v2/jobs. The post body must include one thing: the URL of a video to process. It may also include output settings for the job, including an output destination, notification settings, and transcoding settings. You also must send a Zencoder API Key in a `Zencoder-Api-Key` header.'
+      operationId: createJob
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+      requestBody:
+        description: |-
+          Defines inputs and outputs for a Zencoder encoding job.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateJobFields'
+        required: true
+      responses:
+        '200':
+          description: A list of videos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateJobResponse'
+        '403':
+          description: Forbidden
+        '422':
+          description: Invalid query parameters
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    get:
+      tags:
+        - Jobs
+      summary: List jobs
+      description: |-
+        'A list of jobs can be obtained by sending an HTTP GET request to https://app.zencoder.com/api/v2/jobs?api_key=93h630j1dsyshjef620qlkavnmzui3 (replace the api_key with your own). It will return an array of jobs similar to the example below. The list of thumbnails will be empty until the job is completed. By default, the results are paginated with 50 jobs per page and sorted by ID in descending order. You can pass two parameters to control the paging: page and per_page. per_page has a limit of 50. Note that historical jobs data is kept by Zencoder for 60 days - if you need to keep jobs data for longer periods, you need to retrieve it within 60 days and save it in your own data storage.'
+      operationId: getJobs
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: A List of Jobs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListJobsResponse'
+        '403':
+          description: Forbidden
+        '422':
+          description: Invalid query parameters
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/jobs/{job_id}':
+    get:
+      tags:
+        - Jobs
+      summary: Get Job Details
+      description: |-
+        Get Job Details. Job details are available for two months after the job is submitted.
+      operationId: getJob
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: Job properties.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponseFields'
+        '403':
+          description: Forbidden
+        '422':
+          description: Invalid query parameters
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/jobs/{job_id}/resubmit':
+    put:
+      tags:
+        - Jobs
+      summary: Resubmit a Job
+      description: |-
+        'If a job has failed processing with a transient error that may be solved by attempting processing again (such as a network timeout, or if you fix permissions on your server that had caused a download permission error) you may request that it be attempted again.
+
+        You may resubmit a job for processing by sending a PUT request to https://app.zencoder.com/api/v2/jobs/1234/resubmit?api_key=93h630j1dsyshjef620qlkavnmzui3. Only jobs that are not in the “finished” state may be resubmitted. If resubmission succeeds you will receive a 204 No Content response. If you attempt to resubmit a “finished” job you will receive a 409 Conflict response.
+
+        Resubmit requests are limited to prevent runaway scripts from repeatedly resubmitting a failing job. If you attempt to resubmit a job more times than the limit amount, you will receive a 403 Forbidden response. The limit is currently 5 attempts, but may change without warning.'
+      operationId: resubmitJob
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/JobId'
+      responses:
+        '204':
+          description: No content.
+        '409':
+          description: Conflict
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/jobs/{job_id}/progress':
+    get:
+      tags:
+        - Jobs
+      summary: Get Job Progress
+      description: |-
+        'Get the progress of a job. The return will contain one or more of the following keys: `state`, `input`, `outputs`, and `progress`.'
+      operationId: getJobProgress
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProgressResponse'
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/jobs/{job_id}/cancel':
+    put:
+      tags:
+        - Jobs
+      summary: Cancel a Job
+      description: |-
+        'If you wish to cancel a job that has not yet finished processing you may send a request (using any HTTP method) to https://app.zencoder.com/api/v2/jobs/1234/cancel. If cancellation succeeds you will receive a 204 No Content response. Only jobs that are in the `waiting` or `processing` state may be cancelled. If you attempt to cancel a job in any other state you will receive a 409 Conflict response.'
+      operationId: cancelJob
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/JobId'
+      responses:
+        '204':
+          description: No content.
+        '409':
+          description: Conflict
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/inputs/{input_id}':
+    get:
+      tags:
+        - Inputs
+      summary: Get Input Details
+      description: |-
+        Get job input Details. Job details are available for two months after the job is submitted.
+      operationId: getInputDetails
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/InputId'
+      responses:
+        '200':
+          description: Input properties.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputMediaFile'
+        '403':
+          description: Forbidden
+        '422':
+          description: Invalid query parameters
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/inputs/{input_id}/progress':
+    get:
+      tags:
+        - Inputs
+      summary: Get Input Progress
+      description: |-
+        Get the progress of processing for the input file. The current_event_progress number is the percent complete of the current event – so if the event is Downloading, and current_event_progress is 99.3421, then the file is almost finished downloading, but hasn't started Inspecting yet.
+
+        The progress number is the overall percentage of completion for the input. The progress number is the percent complete of the current event – so if the event is Downloading, and progress is 99.3421, then the file is almost finished downloading, but hasn't started Inspecting yet.
+
+        Valid states include:
+        - `waiting`
+        - `pending`
+        - `assigning`
+        - `processing`
+        - `finished`
+        - `failed`
+        - `cancelled`
+
+        Events include:
+        - `downloading`
+        - `inspecting`
+
+        If you're getting a 404 to an input progress request, make sure that you're using the input ID, not the job or output ID, and make sure your API key is correct. A 404 means that we didn't find an input file with the specified ID for the account linked to the provided API key.
+      operationId: getInputProgress
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/InputId'
+      responses:
+        '200':
+          description: Input processing progress.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputProgressResponse'
+        '403':
+          description: Forbidden
+        '422':
+          description: Invalid query parameters
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/outputs/{output_id}':
+    get:
+      tags:
+        - Outputs
+      summary: Get Output Details
+      description: |-
+        Get details for a job output. Job details are available for two months after the job is submitted.
+      operationId: getOutputDetails
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/OutputId'
+      responses:
+        '200':
+          description: Output properties.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutputMediaFile'
+        '403':
+          description: Forbidden
+        '422':
+          description: Invalid query parameters
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/outputs/{output_id}/progress':
+    get:
+      tags:
+        - Outputs
+      summary: Get Output Progress
+      description: |-
+        Get the progress of processing for an output file. The current_event_progress number is the percent complete of the current event – so if the event is Transcoding, and current_event_progress is 99.3421, then the file is almost finished transcoding, but hasn't started uploading yet.
+
+        The progress number is the overall percentage of completion for the output. The progress number is the percent complete of the current event – so if the event is Transcoding, and progress is 99.3421, then the file is almost finished transcoding, but hasn't started Uploading yet.
+
+        Valid states include:
+        - `waiting`
+        - `queued`
+        - `assigning`
+        - `processing`
+        - `finished`
+        - `failed`
+        - `cancelled`
+        - `no input`
+        - `skipped`
+
+        Events include:
+        - `downloading`
+        - `transcoding`
+        - `uploading`
+
+        If you're getting a 404 to an output progress request, make sure that you're using the output ID, not the job or output ID, and make sure your API key is correct. A 404 means that we didn't find an output file with the specified ID for the account linked to the provided API key.
+      operationId: getOutputProgress
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/OutputId'
+      responses:
+        '200':
+          description: Output processing progress.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutputProgressResponse'
+        '403':
+          description: Forbidden
+        '422':
+          description: Invalid query parameters
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/account':
+    post:
+      tags:
+        - Accounts
+      summary: Create an Account
+      description: |-
+        All that is required is an email address and an agreement to the terms of service. You can also send a password, but if you don't one will be generated. New accounts will be created under the Test (Free) plan.
+      operationId: createAccount
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+      requestBody:
+        description: |-
+          Fields for creating a free test account.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountFields'
+        required: true
+      responses:
+        '200':
+          description: Create account response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountResponse'
+        '403':
+          description: Forbidden
+        '422':
+          description: Invalid query parameters
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    get:
+      tags:
+        - Accounts
+      summary: Get Account Details
+      description: |-
+        'Account details may be retrieved by issuing an HTTP GET to https://app.zencoder.com/api/v2/account. Account states are `Active`, `Stopped`, `Suspended`, and `Cancelled`. Billing states are `Active`, `Past Due`, and `Cancelled`.'
+      operationId: getAccountDetails
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+      responses:
+        '200':
+          description: Get account details response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountDetailsResponse'
+        '403':
+          description: Forbidden
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/account/integration':
+    put:
+      tags:
+        - Accounts
+      summary: Turn on Integration Mode
+      description: |-
+        'Integration (test) mode can be turned on by issuing a PUT request to https://app.zencoder.com/api/v2/account/integration. A successful response will be indicated by a HTTP status of 204 No Content.'
+      operationId: turnOnIntegration
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/account/live':
+    put:
+      tags:
+        - Accounts
+      summary: Turn off Integration Mode
+      description: |-
+        'Integration (test) mode can be turned off by issuing a PUT request to https://app.zencoder.com/api/v2/account/live. A successful response will be indicated by a HTTP status of 204 No Content.'
+      operationId: turnOffIntegration
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/reports/vod':
+    get:
+      tags:
+        - Reports
+      summary: Get Usage Report
+      description: |-
+        'This report returns a breakdown of video on demand minute usage by day and grouping. It will contain two top-level keys: total and statistics. total will contain the sum of all statistics returned in the report. statistics will contain an entry for each day and grouping. If you do not use the report grouping feature of the API the report will contain only one entry per day. These statistics are collected about once per hour, but there is only one record per day (per grouping). By default this report excludes the current day from the response because it is only partially complete. It is important to note that our service operates in the UTC time zone (including billing periods). All dates and times reported will be in UTC.'
+      operationId: getUsageReport
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Grouping'
+      responses:
+        '200':
+          description: Get account details response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUsageReportResponse'
+        '403':
+          description: Forbidden
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  '/reports/minutes':
+    get:
+      tags:
+        - Reports
+      summary: Get Minutes Used
+      description: |-
+        'In API version 2 /vod and /minutes return the same data, so this endpoint is identical to `https://app.zencoder.com/api/v2/reports/vod`.'
+      operationId: getMinutesUsed
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/ZencoderApiKey'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Grouping'
+      responses:
+        '200':
+          description: Get minutes used response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUsageReportResponse'
+        '403':
+          description: Forbidden
+        '500':
+          description: Server error
+      deprecated: false
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+components:
+  parameters:
+    ContentType:
+      name: Content-Type
+      in: header
+      description: 'Content-Type: application/json'
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ZencoderApiKey:
+      name: Zencoder-Api-Key
+      in: header
+      description: Your API key
+      required: true
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: >-
+        The page of results to return
+      style: form
+      explode: true
+      schema:
+        type: integer
+    PerPage:
+      name: per_page
+      in: query
+      description: >-
+        The number of results to return for each page
+      style: form
+      explode: true
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+    From:
+      name: from
+      in: query
+      description: >-
+        Start date in the format YYYY-MM-DD (default: 30 days ago)
+      style: form
+      explode: true
+      schema:
+        type: string
+    To:
+      name: to
+      in: query
+      description: >-
+        End date in the format YYYY-MM-DD (default: today)
+      style: form
+      explode: true
+      schema:
+        type: string
+    Grouping:
+      name: grouping
+      in: query
+      description: >-
+        A grouping name set in the [Create Job](#operation/createJob) operation
+      style: form
+      explode: true
+      schema:
+        type: string
+    JobId:
+      name: job_id
+      in: path
+      description: >-
+        The Zencoder job id
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    InputId:
+      name: input_id
+      in: path
+      description: >-
+        A Zencoder job input id
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    OutputId:
+      name: output_id
+      in: path
+      description: >-
+        A Zencoder job output id
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: integer
+  schemas:
+    CreateJobFields:
+      title: Create Job Request Body Fields
+      type: object
+      description: |-
+        Hash of Zencoder job properties
+      required:
+        - input
+      properties:
+        dynamic_profile_options:
+          $ref: '#/components/schemas/DynamicProfileOptions'
+        generate_dynamic_profile:
+          type: boolean
+          deprecated: true
+          description: |-
+            'With CAE the number of outputs and parameters of such outputs may change dynamically for each input file. To specify limits on the number of outputs to be generated as well as other profile constraints, CAE job request must also include dynamic_profile_options object. The outputs reserved for CAE use should not include resolution, bitrate, or codec-related parameters. Instead, they should include labels dynamic_profile_rendition. The number of outputs reserved for CAE use must match the number specified as max_renditions in dynamic_profile_options.'
+          default: false
+        input:
+          type: string
+          description: |-
+            'A valid URL to a media file (HTTP/HTTPS, FTP/FTPS, SFTP, Azure, GCS, CF or S3), with or without authentication'
+          example: s3://zencodertesting/test.mov
+        region:
+          type: string
+          description: |-
+            'The AWS region or Google Compute Engine instance (beta) where Zencoder should process the job'
+          enum:
+            - us
+            - europe
+            - asia
+            - sa
+            - australia
+            - us-virginia
+            - us-oregon
+            - us-n-california
+            - eu-dublin
+            - asia-singapore
+            - asia-tokyo
+            - sa-saopaulo
+            - australia-sydney
+          default: us
+          example: us-virginia
+        test:
+          type: boolean
+          description: |-
+            'Enable test mode ("Integration Mode") for a job'
+          default: false
+        private:
+          type: boolean
+          description: 'Enable privacy mode for a job'
+          default: false
+        pass_through:
+          type: string
+          description: Optional information to store alongside this job
+          example: my-custom-pass-through-value
+        mock:
+          type: boolean
+          description: Send a mocked job request
+          default: false
+        grouping:
+          type: string
+          description: A report grouping for this job
+          example: my-custom-group-name
+        aspera_transfer_policy:
+          type: string
+          description: |-
+            How to allocate available bandwidth for Aspera file transfers
+          enum:
+            - fair
+            - low
+          default: fair
+        transfer_minimum_rate:
+          type: integer
+          description: A targeted rate in Kbps for data transfer minimums
+          default: 1800
+          example: 2500
+        transfer_maximum_rate:
+          type: integer
+          description: A targeted rate in Kbps for data transfer maximums
+          default: 250000
+          example: 300000
+        expected_md5_checksum:
+          type: string
+          description: The expected MD5 checksum of the input file. If the file's checksum does not match the provided checksum the job will fail.
+          example: d5ed34b6b49f57a4a5f4be72fc0a2cd4
+        credentials:
+          type: string
+          description: References saved credentials by a nickname
+          example: my_s3_credentials
+        notifications:
+          description: |-
+            Array of notification destination objects or strings - notifications defined here are for job-level events.  A notification will be sent to the destination when selected event occurs. You can use a simple string with a url: &quot;http://log:pass@httpbin.org/post&quot;, or you can use an object.  <br> Retry strategy: In the event of a failed request to send a notification, the default retry strategy is to retry 50 times with an exponential delay between attempts: <br>
+            `max_retry_times = 50` <br> `delay_delta_s = 5` <br>
+            `next_retry = now_s + retry_count * delay_delta_s`
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Notification'
+              - type: string
+                description: A URL or email address to send notifications to
+          type: array
+          example: [
+              "dev@example.com",
+              "http://user:pass@example.com/path/to/notification/action",
+              {
+                "url": "https://example.com/notifications.html"
+              }
+            ]
+        outputs:
+          type: array
+          description: Array of output specifications
+          items:
+            $ref: '#/components/schemas/Output'
+    JobResponseFields:
+      title: Create Job Request Body Fields
+      type: object
+      description: |-
+        Hash of Zencoder job properties
+      required:
+        - input
+      properties:
+        id:
+          type: integer
+          description: The job id, an integer in the 64-bit range.
+          example: 365524597
+          readOnly: true
+        submitted_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was submitted
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        created_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was created
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        updated_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was last updated
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        finished_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was completed
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        state:
+          type: string
+          description: |-
+            The current state of the job:
+            - pending (not yet submitted to Zencoder)
+            - submitting (currently submitting to Zencoder)
+            - transcoding (successfully submitted to Zencoder)
+            - finished (Zencoder finished transcoding, and the job is done)
+            - failed (Zencoder was unable to transcode the video)
+          enum:
+            - pending
+            - submitting
+            - transcoding
+            - finished
+            - failed
+          readOnly: true
+        input_media_file:
+          $ref: '#/components/schemas/InputMediaFile'
+        output_media_files:
+          type: array
+          description: |-
+            Array of objects containing the properties of the output files
+          items:
+            $ref: '#/components/schemas/OutputMediaFile'
+    DynamicProfileOptions:
+      title: Dynamic Profile Options
+      type: object
+      deprecated: true
+      description: |-
+         'hash of options for CAE (Context Aware Encoding) jobs. With CAE the number of outputs and parameters of such outputs may change dynamically for each input file. The dynamic_profile_options settings define the way renditions should be created. See [CAE Settings](/encoding-settings/general/cae-settings.html) for details. You must also set generate_dynamic_profile equal to true to use this feature.'
+      properties:
+        min_renditions:
+          type: integer
+          description: The minimum number of renditions to generate.
+          minimum: 1
+          maximum: 15
+          default: 1
+        max_renditions:
+          type: integer
+          description: The maximum number of renditions to generate.
+          minimum: 1
+          maximum: 15
+          default: 8
+        min_resolution:
+          type: object
+          description: Minimum resolution to be considered for the ladder.
+          properties:
+            height:
+              type: integer
+              minimum: 16
+              maximum: 8192
+              default: 108
+            width:
+              type: integer
+              minimum: 16
+              maximum: 8192
+              default: 192
+        max_resolution:
+          type: object
+          description: Maximum resolution to be considered for the ladder.
+          properties:
+            height:
+              type: integer
+              minimum: 16
+              maximum: 8192
+              default: (sourse height)
+            width:
+              type: integer
+              minimum: 16
+              maximum: 8192
+              default: (source width)
+        max_frame_rate:
+          type: number
+          description: Maximum frame rate that can be used.
+          minimum: 0.1
+          maximum: 120
+          default: 30
+        keyframe_rate:
+          type: number
+          description: Keyframe rate. This value can be either 0.5 or 1. For SSAI enabled content, this value needs to be 1.
+          minimum: 0.5
+          maximum: 1.0
+          default: 0.5
+        fixed_frame_rate:
+          type: boolean
+          description: Instructs generator to use same frame rate across all renditions. If false, H.264 baseline profile renditions at resolutions below 360p will be assigned halved frame rate.
+          default: true
+        max_bitrate:
+          type: integer
+          description: Maximum bitrate [kbps] that can be used.
+          minimum: 400
+          maximum: 40000
+          default: 15000
+        min_bitrate:
+          type: integer
+          description: Minimum bitrate [kbps] that can be used.
+          minimum: 40
+          maximum: 400
+          default: 200
+        max_first_rendition_bitrate:
+          type: integer
+          description: Maximum bitrate [kbps] that can be used for first rendition.
+          minimum: 40
+          maximum: 1000
+          default: 700
+        min_granularity:
+          type: integer
+          description: Minimum relative change in bitrate between renditions as a percentage.
+          minimum: 1
+          maximum: 100
+          default: 90
+        max_granularity:
+          type: integer
+          description: Maximum relative change in bitrate between renditions as a percentage.
+          minimum: 1
+          maximum: 100
+          default: 30
+        video_codec:
+          type: string
+          description: Video codec to use.
+          enum:
+            - h264
+            - hevc
+          default: h264
+        bitrate_cap_to_bitrate_ratio:
+          type: number
+          description: Ratio of maximum bit rate to average bitrate to be used for VBR encoding.
+          minimum: 1.0
+          maximum: 2.0
+          default: 1.3
+        buffer_size_to_bitrate_ratio:
+          type: number
+          description: Ratio of decoder buffer size to average bitrate to be used for VBR encoding.
+          minimum: 1.0
+          maximum: 4.0
+          default: 2.0
+        bitrate_cap_offset:
+          type: integer
+          description: Constant added when computing maximum bitrate (KBPS).
+          default: 64
+        buffer_size_offset:
+          type: integer
+          description: Constant added when computing VBV buffer size.
+          default: 85
+        quality_rate_tune:
+          type: integer
+          description: Quality vs rate tuning parameter.
+          minimum: -40
+          maximum: 40
+          default: 0
+        select_baseline_profile_configuration:
+          type: boolean
+          description: |-
+            At least one rendition used in the profile will be baseline profile. Note that `select_baseline_profile_configuration`is `true` by default, and it requires *at least one rendition* to have a resolution at or below 512x288.
+          default: true
+        select_distinct_configurations:
+          type: boolean
+          description: |-
+            If true, CAE will ensure that no two renditions use the same combination of: resolution, frame rate, and codec profile.
+          default: false
+        video_configurations:
+          type: array
+          description: |-
+            'An array of structures describing resolutions, frame rates and associated codec settings that should be preferentially or mandatorily generated as part of the CAE encoding. See the [CAE encoding guide](/encoding-settings/general/cae-settings.html#video_configurations) for details.'
+          items:
+            type: object
+    Notification:
+      properties:
+        url:
+          description: A valid HTTP or HTTPS URL to notify, optionally including HTTP Auth credential
+          type: string
+        format:
+          type: string
+          description: A format and content type for notifications
+          enum:
+            - json
+            - xml
+        headers:
+          type: object
+          description: |-
+            By default, HTTP notifications are sent with an HTTP Content-Type, along with a User-Agent; if your application requires additional headers, they can be specified here
+      title: notification
+      type: object
+    Output:
+      properties:
+        aac-lc:
+          default: he-aac-v2
+          description: |-
+            Force the use of a particular AAC profile, rather than letting Zencoder choose the best profile for the bitrate.
+    
+            The AAC audio codec has several profiles.
+    
+            * **AAC-LC** ("Low Complexity") is the most common AAC profile, and virtually every AAC decoder supports AAC-LC. AAC-LC allows mono and stereo, with sample rates from 8khz-96khz, and high bitrates (>300kbps). Use AAC-LC when encoding stereo content at 80kbps and above or mono content above 40kbps, or when you want to support devices that only play AAC-LC, like the Roku or old iPods.
+            * **HE-AAC** ("High Efficiency") is a widely supported AAC profile that sounds better than AAC-LC at low bitrates by implementing Spectral Band Replication (SBR). HE-AAC supports mono and stereo content at sample rates of 16khz-48khz and bitrates ranging from 16kbps-128kbps. Most web and mobile decoders support HE-AAC, including Flash, HTML5 (wherever AAC is supported), iPhone, iPad, Android, etc. Use HE-AAC for stereo content below 80, or low bitrate mono content.
+            * **HE-AAC v2** is optimized for even more aggressive compression than HE-AAC by adding Parametric Stereo (PS) to HE-AAC. This means that HE-AAC v2 is only suitable for stereo content; mono content can only use HE-AAC. HE-AAC v2 is supported by Flash, HTML5, and some mobile devices (Windows Phone 7, Android). Use HE-AAC v2 for stereo content below 40kbps or so, but not for iOS audio. (Newer iOS devices can play HE-AAC v2 content, but ignore the PS information, resulting in mono content.)
+          enum:
+            - aac-lc
+            - he-aac
+            - he-aad-v2
+          type: string
+        access_control:
+          description: |-
+            'The `public` option grants S3 READ access to all users for a given video or thumbnail. If you want more fine-grained control, use `access_control`. Using this setting will cause the `public` option to be ignored. This setting applies to both output video files and output thumbnails. By default, permissions set on an output file also apply to thumbnails.
+    
+            `access_control` takes an array of access control grants, which each have two settings: `grantee` and `permission`.
+    
+            An alternative to manual permissions would be to use a [bucket policy](http://awspolicygen.s3.amazonaws.com/policygen.html).'
+          items:
+            properties:
+              grantee:
+                description: |-
+                  'A grantee for S3 permissions: user by email address, user by CanonicalUser ID, or a AWS access group (http://acs.amazonaws.com/groups/global/AuthenticatedUsers or http://acs.amazonaws.com/groups/global/AllUsers). See the [S3 ACL docs](http://aws.amazon.com/documentation/s3/) for more detail.
+    
+                  Used as a part of the `access_control` setting for fine-grained S3 permissions.
+    
+                  **Valid Values:** A valid S3 grantee (email, ID, or URI)'
+                type: string
+              permission:
+                description: |-
+                  'A permission to give to a S3 permission grantee. See the [S3 ACL docs](http://aws.amazon.com/documentation/s3/) for more detail.
+    
+                  - `READ` - read access to a file.
+                  - `READ_ACP` - permission to read the Access Control Policy for the given file.
+                  - `WRITE_ACP` - permission to write the Access Control Policy for the given file. Equivalent to `FULL_CONTROL`, since a user with `WRITE_ACP` could change the ACP for a file.
+                  - `FULL_CONTROL` - grants `READ`, `READ_ACP`, and `WRITE_ACP` permissions to a file.
+    
+                  Used as a part of the `access_control` setting for fine-grained S3 permissions.'
+                oneOf:
+                  - enum:
+                      - READ
+                      - READ_ACP
+                      - WRITE_ACP
+                      - FULL_CONTROL
+                    type: string
+                  - enum:
+                      - READ
+                      - READ_ACP
+                      - WRITE_ACP
+                      - FULL_CONTROL
+                    items:
+                      type: string
+                    type: array
+            type: object
+          type: array
+        allow_skipped_sources:
+          default: false
+          description: |-
+            When generating the playlist, instead of failing the output if any of the referenced streams have been skipped (as part of the conditional outputs functionality), just leave them out of the playlist.
+    
+            To properly ignore skipped sources, the streams for the playlist must have a source defined.
+    
+            `allow_skipped_sources` is **not** compatible with SMIL output. SMIL will not recognize skipped sources.
+          type: boolean
+        alpha_transparency:
+          default: false
+          description: |-
+            Enable alpha transparency on a video.
+    
+            Currently, only the VP6 video_codec supports alpha transparency. Behind the scenes, this setting tells the encoder to use the VP6A codec instead of VP6.
+          type: boolean
+        alternate_audio:
+          $ref: '#/components/schemas/AlternateAudio'
+        aspect_mode:
+          default: preserve
+          description: >-
+            If the aspect ratio of the input does not match the requested output aspect ratio, what should the output resolution be? `aspect_mode` controls this decision. Note that **both the width and height may be modified.**
+    
+    
+            As an example, assume that an input file is 1280×720 (widescreen 16:9), but the target output is 640×480 (standard 4:3). There are four basic approaches to this problem, and Zencoder supports them all.
+    
+    
+            * `preserve`: By default, Zencoder will preserve the aspect ratio of the original file, so if you submit widescreen content and ask for standard resolution, the output file will fit keep the widescreen aspect ratio, and will fit within the output size. Presumably, the player will then add black bars to fill up the frame. In our example, the output file will be 640×360 (widescreen 16×9 that fits within the 640×480 target).
+    
+    
+            * `stretch`: When the aspect mode is “stretch”, the output video will exactly match the requested width and height, even if it distorts the image. So in our example, the output will be 640×480, but will look vertically stretched. NB: this is not the same as the “upscale” option, above, which governs whether or not a smaller video will be enlarged to a larger frame size.
+    
+    
+            * `crop`: This option tells Zencoder to “zoom in” to the video to match the output size, by cropping pixels from the top/bottom or left/right. So if the input is widescreen 1280×720, and the output target is standard 640×480, we will crop roughly 160 pixels from the left and from the right of the input file (creating a 4:3 movie), and then resize that down to 640×480. If you’re old enough to remember non-widescreen VHS (like us), this is the old “pan and scan” option.
+    
+    
+            * `pad`: The pad option tells Zencoder to letterbox the video to match the output frame size exactly. Use this option if your target player doesn’t know how to pad a video; otherwise, you’re just wasting bits by including black bars in the actual file. Following our example, this option would take 1280×720 (16:9) content and convert it to 640×480 (4:3) by creating a 640×360 movie, and then placing 60 pixel black bars at the top and bottom of the movie. So the movie would be 640×480, with
+            black bars at the top and bottom.
+    
+    
+            Note that `aspect_mode` requires that both a width and a height are provided (or size); otherwise, if only one dimension is provided, we will calculate the other dimension proportionately.
+    
+    
+            Note: the VP6 video_codec does not support the `pad` `aspect_mode`. If you ask for `pad` with VP6 video, we will use the default mode of `preserve`.
+          enum:
+            - preserve
+            - stretch
+            - crop
+            - pad
+          type: string
+        aspera_transfer_policy:
+          default: fair
+          description: |-
+            Sets how Zencoder will use the available bandwidth of the encoding server when transferring files to your Aspera server.
+    
+            - `fair` splits bandwidth evenly between all running jobs on the encoding server.
+            - `low` uses any available bandwidth on the encoding server, but will give priority to other jobs. Low is useful if you are concerned about overrunning your server with too much traffic.
+    
+            **Note:** The High option in Aspera is not supported in Zencoder. By default we will use as much bandwidth as possible, but will not prioritize access to bandwidth for one job over all others on an encoding server.
+          enum:
+            - fair
+            - low
+          type: string
+        audio_bitrate:
+          description: |-
+            An output bitrate setting, in Kbps. With 2 channel output, this is the total audio bitrate, not the bitrate of each channel, so 128kbps stereo output is encoded at 64kbps per channel. Below 48kbps per channel, quality can start to suffer.
+    
+            Beware that if you manually set an `audio_sample_rate`, you need to choose a compatible `audio_bitrate`, or the encoding may fail. By default, we will auto-correct these failues and choose a valid bitrate/sample rate combination. Enable `strict_mode` to avoid this auto-correction.
+    
+            For AAC audio, a bitrate lower than 84 will set the AAC profile to `HE-AAC`.
+          type: integer
+        audio_codec:
+          description: |-
+            'The output audio codec to use. Zencoder currently supports the following codecs: `h264` (default), `hevc`, `jp2`, `theora`, `vp6`, `vp8`, `vp9`, `mpeg4`, and `wmv`. By default, determined by the `format`, `profile`, or `audio_codec`. `h264` if none are provided.
+    
+            Compatibility:
+    
+            *  `aac` is compatible with h264 video (mp4, m4f, 3gp, or flv format), mpeg4 video (mp4 or 3gp format), and vp6 (flv format)
+            *  `vorbis` is compatible vp8 video (webm format) and theora video (ogg format)
+            *  `wma` is compatible with wmv video and the wmv format
+            *  `mp3` is compatible with h264 video (mp4, 3gp, or flv format) and wmv video (wmv format). mp3, h264, and mp4 will not play back in Quicktime
+            *  `pcm` is compatible with h264 video and the mxf format.'
+          enum:
+            - aac
+            - ac3
+            - amr
+            - eac3
+            - mp3
+            - pcm
+            - vorbis
+            - wma
+          type: string
+        audio_constant_bitrate:
+          default: false
+          description: |-
+            Enable constant bitrate (CBR) mode for audio, when possible. audio_sample_rate may be adjusted for compatibility.
+    
+            audio_bitrate setting must also be specified when using this option.
+    
+            *Compatible with AAC and MP3 audio codecs. Not compatible when used with the VP6 `video_codec`.) For MP3 audio, only certain bitrates are compatible with this option: 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320.*
+    
+            Note: The AAC codec does not define a fixed CBR mode, so there are still small variations in bitrate over short time periods. Most software will still report these encodes as VBR.
+          type: boolean
+        audio_language:
+          description: Set the audio language for the input audio track for auto-transcriptions. BCP-47 style language code, for instance “en-US”, “en-GB”. See [Auto Transcriptions](/encoding-settings/assets/encoding-settings-auto-captions.html)
+          example: en-US
+          type: string
+          enum:
+            - af-ZA
+            - ar-AE
+            - ar-SA
+            - cy-GB
+            - da-DK
+            - de-CH
+            - de-DE
+            - en-AB
+            - en-AU
+            - en-GB
+            - en-IE
+            - en-IN
+            - en-NZ
+            - en-US
+            - en-WL
+            - en-ZA
+            - es-ES
+            - es-US
+            - fa-IR
+            - fr-CA
+            - fr-FR
+            - ga-IE
+            - gd-GB
+            - he-IL
+            - hi-IN
+            - id-ID
+            - it-IT
+            - ja-JP
+            - ko-KR
+            - ms-MY
+            - nl-NL
+            - pt-BR
+            - pt-PT
+            - ru-RU
+            - ta-IN
+            - te-IN
+            - th-TH
+            - tr-TR
+            - zh-CN
+            - zh-TW
+        audio_quality:
+          default: 3
+          description: |-
+            The desired output audio quality, from 1 to 5. Automatically selects an `audio_bitrate` to achieve this quality.
+    
+            Quality 1 uses a low audio bitrate, which results in a low sound quality, but small files. Quality 5 results in a high audio bitrate for larger files but higher quality.
+    
+            We recommend using 3 for most purposes, or 4-5 when transparent sound quality is desired.
+          maximum: 5
+          minimum: 1
+          type: integer
+        base_url:
+          description: A base S3, Cloud Files, GCS, FTP, FTPS, SFTP, Azure, or Aspera directory URL where Zencoder put the transcoded file, without a filename
+          type: string
+        byte_range_segmenting:
+          default: false
+          description: |-
+            Configures HLS segmenting to produce a single output file rather than one file per segment.
+    
+            Requires `max_hls_protocol_version` or `hls_protocol_version` set to `4` or higher.
+          type: boolean
+        cae_options:
+          type: object
+          description: |-
+            hash of options for CAE (Context Aware Encoding) jobs. With CAE the number of outputs and parameters of such outputs may change dynamically for each input file. The dynamic_profile_options settings define the way renditions should be created. See [CAE Settings](/encoding-settings/general/cae-settings.html) for details. You must also set 'type' equal to 'true' to use this feature.
+          properties:
+            min_renditions:
+              type: integer
+              description: The minimum number of renditions to generate.
+              minimum: 1
+              maximum: 15
+              default: 1
+            max_renditions:
+              type: integer
+              description: The maximum number of renditions to generate.
+              minimum: 1
+              maximum: 15
+              default: 8
+            min_resolution:
+              type: object
+              description: Minimum resolution to be considered for the ladder.
+              properties:
+                height:
+                  type: integer
+                  minimum: 16
+                  maximum: 8192
+                  default: 108
+                width:
+                  type: integer
+                  minimum: 16
+                  maximum: 8192
+                  default: 192
+            max_resolution:
+              type: object
+              description: Maximum resolution to be considered for the ladder.
+              properties:
+                height:
+                  type: integer
+                  minimum: 16
+                  maximum: 8192
+                  default: (sourse height)
+                width:
+                  type: integer
+                  minimum: 16
+                  maximum: 8192
+                  default: (source width)
+            max_frame_rate:
+              type: number
+              description: Maximum frame rate that can be used.
+              minimum: 0.1
+              maximum: 120
+              default: 30
+            keyframe_rate:
+              type: number
+              description: Keyframe rate. This value can be either 0.5 or 1. For SSAI enabled content, this value needs to be 1.
+              minimum: 0.5
+              maximum: 1.0
+              default: 0.5
+            fixed_frame_rate:
+              type: boolean
+              description: Instructs generator to use same frame rate across all renditions. If false, H.264 baseline profile renditions at resolutions below 360p will be assigned halved frame rate.
+              default: true
+            max_bitrate:
+              type: integer
+              description: Maximum bitrate [kbps] that can be used.
+              minimum: 400
+              maximum: 40000
+              default: 15000
+            min_bitrate:
+              type: integer
+              description: Minimum bitrate [kbps] that can be used.
+              minimum: 40
+              maximum: 400
+              default: 200
+            max_first_rendition_bitrate:
+              type: integer
+              description: Maximum bitrate [kbps] that can be used for first rendition.
+              minimum: 40
+              maximum: 1000
+              default: 700
+            min_granularity:
+              type: integer
+              description: Minimum relative change in bitrate between renditions as a percentage.
+              minimum: 1
+              maximum: 100
+              default: 90
+            max_granularity:
+              type: integer
+              description: Maximum relative change in bitrate between renditions as a percentage.
+              minimum: 1
+              maximum: 100
+              default: 30
+            video_codec:
+              type: string
+              description: Video codec to use.
+              enum:
+                - h264
+                - hevc
+              default: h264
+            bitrate_cap_to_bitrate_ratio:
+              type: number
+              description: Ratio of maximum bit rate to average bitrate to be used for VBR encoding.
+              minimum: 1.0
+              maximum: 2.0
+              default: 1.3
+            buffer_size_to_bitrate_ratio:
+              type: number
+              description: Ratio of decoder buffer size to average bitrate to be used for VBR encoding.
+              minimum: 1.0
+              maximum: 4.0
+              default: 2.0
+            bitrate_cap_offset:
+              type: integer
+              description: Constant added when computing maximum bitrate (KBPS).
+              default: 64
+            buffer_size_offset:
+              type: integer
+              description: Constant added when computing VBV buffer size.
+              default: 85
+            quality_rate_tune:
+              type: integer
+              description: Quality vs rate tuning parameter.
+              minimum: -40
+              maximum: 40
+              default: 0
+            select_baseline_profile_configuration:
+              type: boolean
+              description: |-
+                At least one rendition used in the profile will be baseline profile. Note that `select_baseline_profile_configuration`is `true` by default, and it requires *at least one rendition* to have a resolution at or below 512x288.
+              default: true
+            select_distinct_configurations:
+              type: boolean
+              description: |-
+                If true, CAE will ensure that no two renditions use the same combination of: resolution, frame rate, and codec profile.
+              default: false
+            video_configurations:
+              type: array
+              description: |-
+                'An array of structures describing resolutions, frame rates and associated codec settings that should be preferentially or mandatorily generated as part of the CAE encoding. See the [CAE encoding guide](/encoding-settings/general/cae-settings.html#video_configurations) for details.'
+              items:
+                type: object
+        caption_from_audio_transcription:
+          description: |-
+            Use audio transcription to generate captions when captions are not available in the source file.
+            See [Auto Transcriptions](/encoding-settings/assets/encoding-settings-auto-captions.html)
+          type: boolean
+          default: false
+        include_transcription_json:
+          description: |-
+            Whether a JSON version of the transcription should be included along with the captions. `caption_from_audio_transcription` must also be set to `true`.
+          type: boolean
+          default: false
+        transcription_filename:
+          description: |-
+            Specify a filename for the JSON transcription file. If not included, a default name will be used. If included, it must have a value, or an error will be returned.
+          type: string
+          default: false
+          example: stc-episode-3-transcript.json
+        caption_url:
+          description: |-
+            The URL to an SCC, DFXP, or SAMI caption file to include in the output.
+    
+            Zencoder supports captions for multiple output video formats:
+    
+            MP4/M4V files, with caption track in CEA-608 format
+            HLS outputs (segmented outputs with H.264 video in TS format)
+    
+    
+            **Note:** Captioning is not currently supported on transmuxed outputs.
+          example: http://example.com/captions.scc
+          type: string
+        clip_length:
+          description: |-
+            Create a subclip of a particular length. This can either be a duration with a format of HH:MM:SS.S, or a decimal expressing the length of the clip in seconds. Can be combined with start_clip to create subclips in the middle of a video. If `start_clip` is not provided, the clip will start at the beginning of the video. Note that the actual clip length may not be perfectly exact, depending on the arrangement of keyframes within the video. Also note that clip_length is a duration and is not
+            the timecode in the media file at which the subclip should end.
+    
+            Valid Values: A duration in the format of HH:MM:SS.S or a positive number representing a number of seconds
+    
+            Examples:
+            * 00:00:10.0
+            * 01:31:08.3
+            * 60
+            * 12.5
+          type: string
+        constant_bitrate:
+          default: false
+          description: |-
+            Constant bitrate (CBR) encoding is used by some streaming servers and decoders. CBR encoding looks significantly worse than variable bitrate (VBR) encoding at the same bitrate, so only use this setting if you absolutely must. This setting requires that you set a `video_bitrate`; you cannot use `quality` to autoselect a bitrate when using the `constant_bitrate` setting.
+    
+            Do not use constant_bitrate for HTTP-based delivery, or for downloaded video.
+    
+            Different `video_codecs` behave differently with the `constant_bitrate` setting.
+          type: boolean
+        copy_audio:
+          default: false
+          description: Specifying `copy_audio` will take the audio track from the input video file and transmux it into the resulting output file.
+          type: boolean
+        copy_video:
+          default: false
+          description: Specifying `copy_video` will take the video track from the input video file and transmux it into the resulting output file.
+          type: boolean
+        credentials:
+          description: References saved credentials by a nickname
+          type: string
+        crf:
+          description: |-
+            CRF is a bitrate-control setting, and sets a constant ratefactor. This is closely related to constant quantizer encoding, though CRF mode generally achieves better compression than constant Q encoding by reducing the quantizer quality on "less important" frames. Read more about crf.
+    
+            The Zencoder Quality setting determines an appropriate CRF for a given video. So if you set both Quality and CRF, the CRF setting will override Quality.
+    
+            Valid values are 0-51, with lower values being better quality. Generally speaking, you shouldn't have to go below 16; 16 is nearly lossless for most files. Around 24 usually looks pretty good. Around 35 looks pretty compressed.
+          example: 26
+          maximum: 51
+          minimum: 1
+          type: integer
+        cue_points:
+          description: >-
+            Zencoder supports adding event and navigation cue points to VP6 Flash Video (FLV) files. Cue points are embedded in the FLV stream and FLV metadata packet when you encode the FLV file.
+    
+    
+            There are two cue point types: "navigation" and "event". Navigation cue points can be used to let users seek to a specified part of a video file. Navigation cue points create a keyframe at the specified cue point location, so you can use code to move a video player’s playhead to that location. You can set particular points in an FLV file where you might want users to seek. For example, your video might have multiple chapters or segments, and you can control the video by embedding
+            navigation cue points in the video file.
+    
+    
+            Event cue points can be used to perform actions in a SWF video player that are triggered at specified points during FLV playback.
+          items:
+            $ref: '#/components/schemas/CuePoint'
+          type: array
+        decimate:
+          description: |-
+            'Divide the input frame rate by the specified number. This is useful if you know you want to cut frame rate in half, but you don’t know what the input frame rate is. Given an input frame rate of 20, if you set decimate to 2, you’ll get an output frame rate of 10. You can still set max_frame_rate if you want to ensure that a decimated frame rate does not exceed a certain value.
+    
+            The output video will have a frame_rate that is equal to the input frame rate divided by the decimate value. So if the input is 24 fps, and you set decimate to 4, the output would be 6 fps (24 / 4).'
+          type: integer
+        decoder_bitrate_cap:
+          description: |-
+            The max bitrate fed to the decoder via a buffer. This setting is typically used only for streaming (HLS or broadcast video).
+    
+            Only use this setting if you understand its implications, as it can decrease video quality.
+          maximum: 100000
+          type: integer
+        decoder_buffer_size:
+          description: |-
+            The size of the buffer fed to the decoder when using a bitrate_cap, expressed in kbps. The buffer_size divided by bitrate_cap represents the size of the buffer in seconds; so if you set bitrate_cap to 1000 and buffer_size to 1000, the buffer is effectively 1.0 second. If bitrate_cap is 500 and buffer_size is 1000, the buffer is 2.0 seconds.
+    
+            Only use this setting if you understand its implications, as it can decrease video quality. This should typically only be used for streaming (or for device playback).
+          maximum: 100000
+          type: integer
+        decryption_key:
+          description: |-
+            Set the decryption key to use for an encrypted input.
+    
+            **Valid Values:** A hexadecimal string of 16 octets (32 chars long, optional "0x" prefix)
+          example: a5f6a7d6ef5d6a7a02a23dd35dd56a63
+          type: string
+        decryption_key_url:
+          description: |-
+            The URL of a decryption key file to use, with a key in binary form (16 bytes total). This is ignored if a decryption_key is specified.
+    
+            **Valid Values:** A URL to a file containing a 16-byte binary key
+          example: http://example.com/encryption.key
+          type: string
+        decryption_method:
+          description: Set the decryption algorithm to use for decrypting.
+          enum:
+            - none
+            - aes-128-cbc
+            - aes-128-ctr
+            - aes-256-cbc
+            - aes-256-ctr
+          type: string
+        decryption_password:
+          description: The password used in combination with the key to decrypt the input file.
+          example: super-secret-password
+          type: string
+        device_profile:
+          description: '''A device profile to use for mobile device compatibility. See the [encoding guide](/encoding-settings/general/encoding-settings-general-output-settings.html#device_profile) for the details of the different profiles.'''
+          enum:
+            - mobile/advanced
+            - mobile/baseline
+            - v1/mobile/advanced
+            - v1/mobile/baseline
+            - v1/mobile/legacy
+            - v2/mobile/advanced
+            - v2/mobile/baseline
+            - v2/mobile/legacy
+          type: string
+        drm:
+          $ref: '#/components/schemas/DRM'
+        dynamic_profile_rendition:
+          description: 'The `dynamic_profile_rendition` setting specifies that this Output should use settings from the dynamically generated CAE profile, and specifically which rendition of the profile to use settings from. When `dynamic_profile_rendition` is set, there is no need to specify encoding settings such as resolution, bitrate, etc. (See the [CAE Guide](/encoding-guides/cae-guide.html) for the full list of settings that are automatically set by CAE.)'
+          type: integer
+        encryption_iv:
+          description: |-
+            Set an initialization vector to use when encrypting, as a 16-octet hexadecimal string. On segmented outputs if this is not specified, the segments will be encrypted with incrementing IV values, starting at zero (consistent with HLS specifications).
+    
+            **Valid Values:** A hexadecimal string of 16 octets (32 chars long, optional "0x" prefix)
+          example: a5f6a7d6ef5d6a7a02a23dd35dd56a63
+          type: string
+        encryption_key:
+          description: |-
+            Set a single encryption key to use rather than having Zencoder generate one. Passing an encryption key is not compatible with key rotation. Zencoder will generate and return the encryption keys if using key rotation.
+    
+            **Valid Values:** A hexadecimal string of 16 octets (32 chars long, optional "0x" prefix)
+          example: a5f6a7d6ef5d6a7a02a23dd35dd56a63
+          type: string
+        encryption_key_rotation_period:
+          description: When Zencoder is generating encryption keys, use a different key for each set of segments, rotating to a new key after this many segments.
+          example: 10
+          minimum: 1
+          type: integer
+        encryption_key_url:
+          description: |-
+            Set a single encryption key to use rather than having Zencoder generate one. Specified as a URL to a file containing a 16-byte binary key.
+    
+            This will be included as the URL to the key file in HLS manifests and no encryption key files will be included with the output. If the encryption_key is not also specified, Zencoder will attempt to download this file and use it to encrypt the output.
+    
+            **Valid Values:** A URL to a file containing a 16-byte binary key
+          example: http://example.com/encryption.key
+          type: string
+        encryption_key_url_prefix:
+          description: |-
+            When an `encryption_key_url` is not specified, prepend this to the encryption key filenames before including them in the manifest. Otherwise the keys are assumed to be accessible from the same path as the manifest file. If a question mark is used in the string the prefix it will be used as-is, otherwise a slash will be added to the end of the prefix (unless it already ends with a slash).
+    
+            **Valid Values:** A URL or relative path
+          example: keys/
+          type: string
+        encryption_method:
+          description: |-
+            Set the encryption method to use for encrypting.
+    
+            **Note:** for HLS outputs, only aes-128-cbc is supported.
+          enum:
+            - none
+            - aes-128-cbc
+            - aes-128-ctr
+            - aes-256-cbc
+            - aes-256-ctr
+          type: string
+        encryption_password:
+          description: Sets a password to use for generating an initialization vector. Not supported for segmented outputs. Non-segmented outputs require either encryption_iv or encryption_password.
+          example: super-secret-password
+          type: string
+        filename:
+          description: The filename of a finished file
+          type: string
+        fixed_keyframe_interval:
+          default: false
+          description: |-
+            By default, a specified keyframe_interval only guarantees the max number of frames between two keyframes. The encoder may decide to place a keyframe before it is required by the `keyframe_interval`; for example, better compression might be achieved by putting a keyframe at a scene change. Setting this option to true prevents this variability.
+    
+            This option only applies when using the H.264, HEVC or VP6 `video_codec`.
+          type: boolean
+        force_interlace_headers:
+          default: false
+          description: |-
+            Some decoders ask for interlaced content, but will play progressive content just fine. This setting will add "interlaced" headers to the metadata of progressive content, to make it look like it is actually interlaced.
+    
+            Note: Some media inspection tools won't be tricked by this, and will report this content as progressive despite the header information.)
+    
+            This option only applies when using the H.264 codec.
+          type: boolean
+        forced_keyframe_interval:
+          description: |-
+            Forces keyframes to be created at the specified frame interval (every N frames), while still allowing the encoder to place keyframes elsewhere, such as at scene cuts. As opposed to `fixed_keyframe_interval` which only puts keyframes at the specified interval.
+    
+            This option only applies when using the H.264 or HEVC `video_codec`.
+          type: integer
+        forced_keyframe_rate:
+          description: |-
+            Set the forced keyframe interval by specifying number of keyframes per second, taking frame rate into account.
+    
+            This option is ignored if `forced_keyframe_interval` is specified.
+    
+            This option only applies when using the H.264 or HEVC `video_codec`.
+          type: number
+        forensic_watermark:
+          description: 'To generate outputs with forensic watermarking in Zencoder, you need to specify 2 outputs per video, an output A and B so that segments from each output can be intermixed in different sequences to produce a range of different watermarked "videos" for playback (for example: AABABBABA, ABBBABABA, BABAABBAA, etc.).'
+          enum:
+            - A
+            - B
+          type: string
+        forensic_watermark_stub_mode:
+          description: |-
+            To be used for purposes of testing integrations that generate outputs with forensic watermarking in Zencoder. When set to true together with `forensic_watermark`, this flag causes visible watermarks to be created (to verify that forensic watermarking is being successfully added).
+    
+            Once testing is complete, you will need to run the job again, omitting the `forensic_watermark_stub_mode` flag or setting it to `false`, to get outputs without the visible watermarks.
+          type: boolean
+        format:
+          description: |-
+            'The output container format to use. By default, determined by the output filename and then video or audio codec. Otherwise: mp4 (for standard outputs); ts (for segmented outputs).
+    
+            Note that some containers have multiple valid file extensions. Typically, names like `f4v`, `ogv`, and `m4v` are used for audio/video files, and `f4a`, `m4a`, and `oga` are used for audio-only files, but this is not enforced. Similarly, `f4v` and `f4a` are often used for mp4 content designed to play in Flash Video, but this is just a convention.
+    
+            Compatibility:
+    
+            * mp4 is compatible with h264 (default), hevc, and mpeg4 video, and aac (default), mp3, ac3, and eac3 audio. Valid values and file extensions: mp4, m4a, m4v, f4v, f4a, m4b, m4r, f4b
+            * m4f is compatible with h264 and hevc video and aac, ac3, and eac3 audio.
+            * ogg is compatible with theora video and vorbis audio. Valid values and file extensions: ogg, oga, ogv, ogx
+            * webm is compatible with vp8 (default) and vp9 video and vorbis audio. Valid values and file extensions: webm
+            * 3gp is compatible with mpeg4 (default) and h264 video, and aac (default) and mp3 audio. Valid values and file extensions: 3gp, 3gp2, 3g2, 3gpp, 3gpp2. Note that the 3gp format can also use a mp4 file extension.
+            * flv is compatible with vp6 (default) and h264 video, and aac (default) and mp3 audio. Valid values and file extensions: flv
+            * ts is compatible with h264 video and aac (default), mp3 or ac3 audio. Valid values and file extensions: ts
+            * mkv is compatible with h264 video and aac (default), mp3, ac3 or eac3 audio. Valid values and file extensions: mkv
+            * wmv is compatible with wmv video and wma (default) or mp3 audio. Valid values and file extensions: wmv, wma
+            * aac is compatible with aac audio and no video. Valid values and file extensions: aac
+            * mp3 is compatible with mp3 audio and no video. Valid values and file extensions: mp3
+            * ac3 is compatible with ac3 audio and no video. Valid values and file extensions: ac3
+            * ec3 is compatible with eac3 audio and no video. Valid values and file extensions: ec3
+            * mj2 is compatible with jp2 video and aac audio. Valid values and file extensions: mj2, mjp2.
+            * mxf is compatible with h264 video and pcm audio. Valid values and file extensions: mxf.
+          enum:
+            - 3gp
+            - aac
+            - ac3
+            - ec3
+            - flv
+            - m4f
+            - mj2
+            - mkv
+            - mp3
+            - mp4
+            - mxf
+            - ogg
+            - ts
+            - webm
+            - wmv
+          type: string
+        format_preset:
+          description: |-
+            Format preset to allow compatibility with specific industry standards. Note that only 2 audio channels are supported.
+    
+            Standards:
+    
+            * `ts_broadcast` produces standard MPEG-TS broadcast compliant streams.
+            * `ts_dvb` produces Digital Video Broadcasting (DVB) compliant streams.
+            * `ts_cablelabs` produces CableLabs compliant MPEG-TS streams.
+            * `as11_hd` is AVC-Intra 100 video, 4 or 16 channels of PCM audio in an MXF-OP1A container.
+          enum:
+            - ts_broadcast
+            - ts_dvb
+            - ts_cablelabs
+            - as11_hd
+          type: string
+        frame_index_filename:
+          default: false
+          description: |-
+            Unless specified, the filename used for frame index generation will be **frame_index.tab**.
+    
+            This option requires that `generate_frame_index` is true.
+          type: string
+        frame_rate:
+          default: (original frame rate)
+          description: |-
+            The output frame rate to use, as a decimal number (e.g. 15, or 24.98).
+    
+            We recommend that you do not use this setting – forcing a change to the video frame rate will result in a lower-quality video. If you want to prevent frame rates above a certain level, use `max_frame_rate` instead.
+    
+            Frame rates above 60 are not allowed for resolutions greater than HD (i.e. 1920x1080).
+          type: number
+        generate_frame_index:
+          default: false
+          description: |-
+            'Produces a tab-delimited file with three integer values: frame #, frame size (bytes) and last keyframe #. Each line is padded with spaces to a width of 42 columns.
+    
+            This option cannot be used unless the output contains a video stream.
+    
+            The default index filename **frame_index.tab** can be overridden with `frame_index_filename`.'
+          type: boolean
+        generate_keyframe_manifest:
+          default: false
+          description: |-
+            Generates an HLS keyframe (I-frame) manifest which is required for fast-forward and reverse playback.
+    
+            The default keyframe manifest filename is the same as the playlist filename, but with '-iframe-index' added (so for a 'master.m3u8' playlist, the keyframe manifest would be 'master-iframe-index.m3u8'). The keyframe manifest filename can be overridden with `keyframe_manifest_filename`.
+    
+            Enabled by default if `max_hls_protocol_version` or `hls_protocol_version` is set `4` or greater.
+          type: boolean
+        generate_md5_checksum:
+          default: false
+          description: Generate an MD5 checksum of the output file
+          type: boolean
+        headers:
+          description: |-
+            HTTP headers to send with your file when we upload it. This feature is currently supported when using S3, GCS and Cloud Files.
+    
+            Zencoder supports setting a limited subset of these headers: `Cache-Control`, `Content-Disposition`, `Content-Encoding`, `Content-Type`, `Expires`, `x-amz-acl`, `x-amz-storage-class`, `x-amz-server-side-encryption`, `x-amz-meta-*`, `x-goog-acl` and `x-goog-meta-*`.
+          type: object
+        height:
+          description: Video frame height. If no height is supplied, we will use the original width, or scale to size or width setting. **Values must be divisible by 4.** Note that width and height take precedence over size.
+          type: integer
+        hint:
+          default: false
+          description: Turn on hinting of MP4 files for RTP/RTSP. The default `mtu_size` is 1450 bytes; use the `mtu_size` option to change this.
+          type: boolean
+        keyframe_interval:
+          default: 250
+          description: |-
+            Set the maximum number of frames between each keyframe. By default, a keyframe will be created at least every 250 frames. Specifying a different keyframe interval will allow you to create more or less keyframes in your video. Keyframe interval should be specified as a positive integer. For example, a value of 100 will create a keyframe every 100 frames.
+    
+            A greater number of keyframes will increase the size of your output file, but will allow for more precise scrubbing in most players.
+    
+            Note that this is a maximum keyframe interval. Depending on scene transitions and other things, more keyframes may be used to ensure high quality encoding.
+    
+            For H.264 video, keyframes are IDR frames.
+    
+            `keyframe_interval` takes precidence over `keyframe_rate`.
+          type: integer
+        keyframe_manifest_filename:
+          default: iframe_index.m3u8
+          description: |-
+            Unless specified, the filename used for the keyframe manifest is the same as the playlist filename, but with '-iframe-index' appended. For example, for the playlist 'master.m3u8', the keyframe manifest would be 'master-iframe-index.m3u8'.
+    
+            This option requires that `generate_keyframe_manifest` is `true`, or `hls_protocol_version` is `4` or greater.
+          example: my_iframe_index.m3u8
+          type: string
+        keyframe_rate:
+          default: (`keyframe_interval` of 250)
+          description: |-
+            Set the number of keyframes per second. So a value of 0.5 would result in one keyframe every two seconds. A value of 3 would result in three keyframes per second.
+    
+            The default is to control keyframes via `keyframe_interval`, with a default value of 250. Depending on the video frame rate, this results in a keyframe every 8-11 seconds.
+    
+            A greater number of keyframes will increase the size of your output file, but will allow for more precise scrubbing in most players.
+    
+            keyframe_interval takes precidence over keyframe_rate.
+          type: number
+        label:
+          description: An optional label for this output - must be unique for the job
+          type: string
+        lossless_video:
+          default: false
+          description: |-
+            Enables lossless video encoding if supported by the video codec.
+    
+            Currently only supported by Jpeg2000 (jp2).
+    
+            Cannot be used with `video_bitrate`.
+          type: boolean
+        master_display:
+          $ref: '#/components/schemas/MasterDisplay'
+        max_aac_profile:
+          default: he-aac-v2
+          description: >-
+            The AAC audio codec has several profiles. By default, Zencoder will pick the right profile based on the bitrate and number of channels used: stereo content under 40kbps will use HE-AAC v2 if max-aac-profile is set to `he-aac-v2`; stereo content under 84kbps will use HE-AAC if max-aac-profile is set to `he-aac`; and AAC-LC will be used for higher bitrate content, or if max-aac-profile is set to `aac-lc`. `he-aac` is the default value, which means that by default, 0-84kbps will use HE-AAC
+            and 85kbps and up will use AAC-LC.
+    
+    
+            * **AAC-LC** ("Low Complexity") is the most common AAC profile, and virtually every AAC decoder supports AAC-LC. AAC-LC allows mono and stereo, with sample rates from 8khz-96khz, and high bitrates (>300kbps). Use AAC-LC when encoding stereo content at 80kbps and above or mono content above 40kbps, or when you want to support devices that only play AAC-LC, like the Roku or old iPods.
+    
+            * **HE-AAC** ("High Efficiency") is a widely supported AAC profile that sounds better than AAC-LC at low bitrates by implementing Spectral Band Replication (SBR). HE-AAC supports mono and stereo content at sample rates of 16khz-48khz and bitrates ranging from 16kbps-128kbps. Most web and mobile decoders support HE-AAC, including Flash, HTML5 (wherever AAC is supported), iPhone, iPad, Android, etc. Use HE-AAC for stereo content below 80, or low bitrate mono content.
+    
+            * **HE-AAC v2** is optimized for even more aggressive compression than HE-AAC by adding Parametric Stereo (PS) to HE-AAC. This means that HE-AAC v2 is only suitable for stereo content; mono content can only use HE-AAC. HE-AAC v2 is supported by Flash, HTML5, and some mobile devices (Windows Phone 7, Android). Use HE-AAC v2 for stereo content below 40kbps or so, but not for iOS audio. (Newer iOS devices can play HE-AAC v2 content, but ignore the PS information, resulting in mono content.)
+          enum:
+            - aac-lc
+            - he-aac
+            - he-aad-v2
+          type: string
+        max_content_light_level:
+          description: Maximum light level for the content as a whole nits or candelas per square meter (cd/m2) - integer values (for HDR10 outputs)
+          maximum: 10000
+          minimum: 0
+          type: number
+        max_frame_average_light_level:
+          description: Maximum average light level for content frames nits or candelas per square meter (cd/m2) - integer values. Although values up to 10000 are allowed, values in the 100-200 range will generally produce the best results (for HDR10 outputs)
+          maximum: 10000
+          minimum: 5
+          type: number
+        max_frame_rate:
+          description: |-
+            'Limits the output frame rate to a certain number. If the frame rate would otherwise exceed this number (e.g. the input frame rate is too high), this will reduce the frame rate to the max_frame_rate setting
+    
+            Example: if you set max_frame_rate to 29.97, and the input has a frame rate of 59.94, the output file will have a frame rate of 29.97.
+    
+            We recommend using this setting rather than setting an exact `frame_rate`, for two reasons:
+    
+            First, changing a `frame_rate` can result in a visual quality drop due to stuttering and jerky motion.
+    
+            Second, setting frame rate to a fixed number may actually increase the frame rate of the output video beyond the frame rate of the input, which would result in an unneeded increase in file size (or decrease in quality).'
+          type: number
+        max_video_bitrate:
+          description: |-
+            A maximum average bitrate for a movie. Overrides both the quality and video_bitrate settings to ensure that a bitrate doesn't exceed the provided number.
+    
+            max_video_bitrate is especially useful when encoding for mobile devices using the quality setting, which autoselects a bitrate. Mobile devices sometimes have fixed bitrate limits; for example, the iPhone 3GS has a bitrate limit of 1500 kbps.
+    
+            **Note**: This option does not apply to the VP6 codec. It will be ignored if used with VP6.
+          maximum: 100000
+          type: integer
+        mtu_size:
+          default: 1450
+          description: MTU size in bytes for MP4 hinting.
+          maximum: 5000
+          minimum: 100
+          type: integer
+        one_pass:
+          default: false
+          description: |-
+            By default, we will use two-pass encoding whenever encoding to a target video_bitrate, and one_pass encoding when performing constant quality encoding (which doesn't benefit from a second pass). This option will force one_pass encoding when targeting a specific video_bitrate.
+    
+            We highly recommend not forcing one_pass encoding. The first pass in two-pass encoding is faster than the second pass, so going from two-pass encoding to one_pass encoding only results in a 25% encoding speedup, not 50% faster encoding. And two-pass encoding looks significantly better than one_pass encoding.
+          type: boolean
+        package_filename:
+          description: The filename of a packaged output
+          type: string
+        package_format:
+          description: Zip/packaging format to use for the output file(s)
+          enum:
+            - zip
+            - tar
+          type: string
+        parallel_upload_limit:
+          description: 'The maximum number of simultaneous uploads to attempt - defaults: `30` for S3, `10` for other destinations'
+          type: integer
+        playlist_format:
+          description: Sets format for a playlist (rendition manifest) output.
+          enum:
+            - dash
+            - mpd
+            - hls
+            - m3u
+            - m3u8
+            - ism
+            - mss
+            - highwinds
+          type: string
+        prepare_for_segmenting:
+          description: |-
+            'If you plan to transmux an output to HLS, MSS, and/or DASH after encoding it with captions to MP4, set this option to true to include captions and keyframe timing for segmenting. This allows the segmented versions to include HLS-compatible captions despite transmuxing, and provides for segmenting at consistent time intervals.
+    
+            Specify the type of segmented output(s) that this output will later be transmuxed to create, so that Zencoder can prepare the captions and keyframes as necessary.
+    
+            **Note:** Captions can not currently be added to HLS outputs when transmuxing.'
+          oneOf:
+            - items:
+                enum:
+                  - hls
+                  - mss
+                  - dash
+                type: string
+              type: array
+            - enum:
+                - hls
+                - mss
+                - dash
+              example: hls,dash
+              type: string
+        public:
+          default: false
+          description: |-
+            'By default, files put into a S3 bucket are not publicly readable. Instead, we use the canned access policy of [bucket-owner-full-control](http://docs.amazonwebservices.com/AmazonS3/latest/index.html?RESTAccessPolicy.html). This is true even if the bucket itself is publicly readable - a S3 bucket policy is not automatically inherited by new files added to the bucket.
+    
+            Use the public API setting to flag a file output to S3 as being publicly readable. This is done by granting the READ permission to the AllUsers group.
+    
+            This setting applies to both output video files and output thumbnails. By default, permissions set on an output file also apply to thumbnails. Setting `access_control` will override this setting.
+    
+            An alternative to manual permissions would be to use a [bucket policy](http://awspolicygen.s3.amazonaws.com/policygen.html).
+    
+            [More information](http://docs.amazonwebservices.com/AmazonS3/latest/dev/) from the Amazon S3 docs.'
+          type: boolean
+        quality:
+          default: 3
+          description: |-
+            'The desired output video quality, from 1 to 5. Automatically selects a video_bitrate to achieve this quality.
+    
+            This automatically chooses a video bitrate that produces a video of the desired quality. This is useful, because one video may need a higher bitrate than another to achieve a target visual quality, due to the complexity of the content, the resolution, etc.
+    
+            Higher quality means higher bitrate and vice versa.
+    
+            Quality 1: Highly compressed. Mediocre visual quality, but small files.
+            Quality 2: Acceptable quality.
+            Quality 3: Good quality. Better than most web video.
+            Quality 4: Great quality. Looks excellent.
+            Quality 5: Nearly lossless. Large files. Not recommended unless you plan to encode this output again.
+    
+            As a rule of thumb, lowering quality by a level will reduce file size by about 40%. Higher quality encoding is also a bit slower than lower quality encoding.
+    
+            Remember that the output bitrate will vary from file to file when using the quality setting, depending on the type of video. Even at the same Quality setting, low-complexity video (like a screencast) will generally result in lower bitrates than high-complexity video (like a movie).'
+          type: integer
+        rrs:
+          default: false
+          description: If you use Amazon S3's Reduced Redundancy Storage you can set this flag and Zencoder will pass the necessary headers to tell S3 to use RRS.
+          type: boolean
+        sample_aspect_ratio:
+          description: |-
+            The sample (pixel) aspect ratio to be used for the output video. The size, width, height, and aspect_mode mode options all refer to the encoded pixel dimensions, not the display dimensions.
+    
+            Sets the aspect ratio to use for sample/pixels of the output video, specified as "8:9", "32:27", or any other ratio of two positive integers, each between 1 and 65535.
+    
+            Specifying any (valid) value for this setting changes the default 'aspect_mode' from 'preserve' to 'stretch', which means that by default you'll also need to specify a width/height for the encoded output.
+    
+            Note: It may be useful to use the 'upscale' option in conjunction with this option for predictable output resolutions.
+    
+            This option only applies when using the H.264 and HEVC codecs.
+          example: '8:9'
+          type: string
+        secondary_url:
+          description: A S3, Cloud Files, GCS, FTP, FTPS, SFTP, Aspera, Azure or HTTP URL where Zencoder will put the transcoded file
+          type: string
+        segment_image_url:
+          description: When creating audio-only segments, use the specified image file as a thumbnail for each segment. Must be a public URL.
+          type: string
+        segment_seconds:
+          default: 10
+          description: Sets the maximum duration of each segment in a segmented output. Values less than 2.0 are only allowed when byte_range_segmenting is enabled. Because very short segments have been found to cause playback issues, the final segment may be longer than the specified value.
+          maximum: 3600
+          minimum: 1
+          type: number
+        segment_video_snapshots:
+          default: false
+          description: |-
+            When segmenting a video file into audio-only segments, take snapshots of the video as thumbnails for each segment.
+    
+            This option has no effect if segment_image_file is set.
+          type: boolean
+        select_audio_language:
+          description: |-
+            Set the language for auto-transcription output. 3-letter ISO 639-2 language code.
+            See [Auto Transcriptions](/encoding-settings/assets/encoding-settings-auto-captions.html)
+          example: eng
+          type: string
+        select_audio_service_type:
+          description: |-
+            'main',  'music_and_effects',  'visually_impaired',  'hearing_impaired', 'dialogue', 'commentary', 'emergency', 'voice_over'
+            See [Auto Transcriptions](/encoding-settings/assets/encoding-settings-auto-captions.html)
+
+            *Note: Only Dolby audio codecs (ac-3 and eac-3) support including audio service type metadata.  This is a feature of the codecs, not a limitation of Zencoder support.  AAC audio cannot contain service type metadata.*
+          example: main
+          type: string
+          enum:
+            - main
+            - music_and_effects
+            - visually_impaired
+            - hearing_impaired
+            - dialogue
+            - commentary
+            - emergency
+            - voice_over
+        size:
+          description: |-
+            The resolution of the output file, expressed as WxH, like 640×480 or 1280×720. Note that width and height take precedence over size.
+    
+            Aspect mode will be preserved by default, so if the input video is 16:9 and a 4:3 output resolution is requested, the output will maintain the 16:9 aspect ratio. This will result in the output dimensions not matching the requested size. Use `aspect_mode` to control this.
+          example: 640x360
+          type: string
+        skip:
+          $ref: '#/components/schemas/Skip'
+        skip_audio:
+          default: false
+          description: Do not output a audio track
+          type: boolean
+        skip_captions:
+          default: false
+          description: Don't add or pass through captions to the output file.
+          type: boolean
+        skip_video:
+          default: false
+          description: Do not output a video track
+          type: boolean
+        smil-base-url:
+          description: |-
+            'This will add the tag &lt;meta base="smil_base_url_value"/&gt; to the <head> section of an SMIL playlist.
+    
+            This example will output a playlist that looks like this:
+    
+            <pre><code>&lt;smil&gt;
+              &lt;head&gt;
+                &lt;meta base="rtmp://123.456.123.123/path/to/videos/"/&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;switch&gt;
+                  &lt;video src="mp4:test.mp4" system-bitrate="500000"/&gt;
+                &lt;/switch&gt;
+              &lt;/body&gt;
+            &lt;/smil&gt;</code></pre>
+    
+            **Note:** only functions on an output of type playlist, with a format of highwinds.'
+          type: string
+        source:
+          description: |-
+            References a label on another job and uses the video created by that output for processing instead of the input file.
+    
+            Using source in conjunction with a type of "transfer-only" allows transferring a single output video to a second url. Useful for sending a single video to multiple destinations.
+          type: string
+        speed:
+          default: 3
+          description: |-
+            A target transcoding speed. Slower transcoding allows for more advanced file compression, while faster transcoding is possible by skipping some advanced compression features. Valid values are 1-5.
+    
+            Note: at the moment, *only H.264 output has five speed levels. For VP6 content, 1-2 are a slower mode, and 3-5 are a faster mode. Other video codecs do not support this setting at all.*
+          maximum: 5
+          minimum: 1
+          type: integer
+        start_clip:
+          description: |-
+            Create a subclip of the original video, starting at a particular time. This can either be a timecode with a format of HH:MM:SS.S, or a decimal expressing the number of seconds to start at. Note that the actual start time may not be perfectly exact, depending on the arrangement of keyframes within the video.
+    
+            Valid Values: A timecode (HH:MM:SS.S), or a positive number representing a number of seconds
+    
+            Examples:
+    
+            * 00:00:10.0
+            * 01:31:08.3
+            * 60
+            * 12.5
+          type: string
+        streaming_delivery_format:
+          description: |-
+            Sets the format/protocol for an output that will be delivered using a specific streaming configuration, including necessary manifests, directory structures, or other packaging.
+    
+            For 'dash' outputs, this will also change the default segment_seconds to 2, enforce fixed keyframe intervals, include an MPD manifest, and create a directory structure with initialization and segment files.
+          example: dash
+          type: string
+        streaming_delivery_profile:
+          description: |-
+            Sets the profile of the streaming delivery format, ensuring options are selected for compatibility with the profile. Valid options depend on the selected streaming_delivery_format.
+    
+            For 'dash' outputs, the currently supported profiles are:
+    
+            <ul>
+              <li>`live` - Will set the DASH profile to "urn:mpeg:dash:profile:isoff-live:2011" and use a single SegmentTemplate for each AdaptationSet. For DRM, it will use an 8-byte IV, and for PlayReady will use version 1.1, including a PSSH atom in the media.</li>
+              <li>`hbbtv_1.5` - Will set the DASH profile to "urn:hbbtv:dash:profile:isoff-live:2012" and include required attributes for audio and video representations. For DRM, it will use a 16-byte IV, and for PlayReady will use version 1.0, excluding PSSH atoms.</li>
+              <li>`on_demand` - Will set the DASH profile to "urn:mpeg:dash:profile:isoff-on-demand:2011" and encode media as single fragmented files for each stream rather than segmenting them. Otherwise the same as live profile.</li>
+            </ul>
+          type: string
+        streams:
+          description: Provides a list of stream info to be reformatted as a playlist.
+          items:
+            $ref: '#/components/schemas/Stream'
+          type: array
+        strict:
+          default: false
+          description: |-
+            Enable strict mode. By default, we will try to correct encoding problems for you. This is called "compatible" mode. For example, if you set a video bitrate that is too low for our encoder, we will automatically correct and use the lowest possible bitrate. So if you ask for a bitrate of 150kbps, but the encoder can't do anything lower than 200kbps, we will automatically encode the video at 200kbps for you.
+    
+            If you enable "strict" mode, we will not correct encoding settings like these. Instead, we will fail the job, because we cannot meet your target spec.
+          type: boolean
+        thumbnails:
+          description: |-
+            For every output, you can ask for one or more thumbnails.
+    
+            Each output can have its own sets of thumbnails with unique size, base_url, and access_control set.
+    
+            Multiple sets of thumbnails can be created for a single output by passing multiple thumbnail hashes within an array. If thumbnail options are passed in an array, a label must be set for set.
+    
+            Set S3 access_control using the same options as you use for output videos.
+    
+            Thumbnails are limited to 100 per-set. If more thumbnails would be generated given the options requested a warning will be added to the output and creation of thumbnails will stop when the limit is reached.
+    
+            **Note:** There is no such thing as a thumbnail-only job. Specifying an output with just thumbnails will also create a billable, full-length mp4 with our default transcoding settings and upload it to temporary storage.
+          oneOf:
+            - items:
+                $ref: '#/components/schemas/Thumbnail'
+              type: array
+            - $ref: '#/components/schemas/Thumbnail'
+        # transcription_vocabulary_name:
+          # description: |-
+            # Custom vocabulary to be used for auto transcription.
+            # See [Auto Transcriptions](/encoding-settings/assets/encoding-settings-auto-captions.html)
+          # type: string
+        # transcription_vocabulary_filter:
+          # description: |-
+            # Custom vocabulary filter to be used for auto transcription.
+            # See [Auto Transcriptions](/encoding-settings/assets/encoding-settings-auto-captions.html)
+          # type: string
+        transfer_maximum_rate:
+          default: 250000
+          description: |-
+            Sets a transfer rate ceiling to use during file transfer with Aspera. This does not guarantee the rate will be reached, but if bandwidth is available then file transfer will not go above this speed.
+    
+            Setting maximum transfer rate is recommended when encoding a large number of jobs simultaneously, to avoid overwhleming the source and destination servers with traffic.
+    
+            This must be greater than `transfer_minimum_rate`.
+          maximum: 250000
+          minimum: 1001
+          type: integer
+        transfer_minimum_rate:
+          default: 1000
+          description: |-
+            Sets a transfer rate floor to use during file transfer with Aspera. This does not guarantee the rate will be reached, but if bandwidth is available then file transfer will not go below this speed.
+    
+            This must be less than `transfer_maximum_rate`.
+          maximum: 249999
+          minimum: 1000
+          type: integer
+        ts_audio_pid:
+          description: Override the packet id of audio data. Only for use with broadcast ts.
+          example: 33
+          maximum: 8191
+          minimum: 1
+          type: integer
+        ts_cbr:
+          default: false
+          description: |-
+            Create CBR output by stuffing packets at the transport stream layer.
+    
+            This is required for fully compliant broadcast streams but may create significantly larger files. Only for use with broadcast ts.
+          type: boolean
+        ts_muxrate:
+          description: The maximum rate in kbps that the transport stream can be muxed. Used with the ts format only.
+          example: 2600
+          maximum: 1000000
+          minimum: 1
+          type: integer
+        ts_pcr_pid:
+          description: Override the packet id of the Program Clock Reference. Only for use with broadcast ts.
+          example: 34
+          maximum: 8191
+          minimum: 1
+          type: integer
+        ts_pmt_pid:
+          description: Override the packet id of the Program Map Table. Only for use with broadcast ts.
+          example: 16
+          maximum: 8191
+          minimum: 1
+          type: integer
+        ts_video_pid:
+          description: Override the packet id of video data. Only for use with broadcast ts.
+          example: 32
+          maximum: 8191
+          minimum: 1
+          type: integer
+        type:
+          default: standard
+          description: The type of file to output
+          enum:
+            - standard
+            - segmented
+            - playlist
+            - transfer-only
+            - cae
+            - captions
+          type: string
+        upscale:
+          default: false
+          description: |-
+            By default, Zencoder will not increase the size of (or “upscale”) an input video to match the width and height you specify in an API request. Generally, upscaling a video just increases the size, but doesn’t really increase the quality. Your playback device (Flash, HTML5 Video, iPhone, etc.) can increase the size of a video rather than having the encoder do it.
+    
+            But if you do want to force Zencoder to increase the size of an input video, set “upscale” to true. If you do, an input video that is smaller than the output resolution will expand to fit the resolution. For example, if your output spec is 480×360, and someone submits a video that is 320×240, the video will be upsized to 480×360 if you set this option to true, and will remain at 320×240 otherwise.
+          type: boolean
+        url:
+          description: A S3, Cloud Files, GCS, FTP, FTPS, SFTP, Aspera, Azure or HTTP URL where Zencoder will put the transcoded file
+          type: string
+        video_bitrate:
+          description: |-
+            The desired output bitrate for a video, expressed in kbps. This results in a predictable output bitrate, but not predictable quality. For example, at 640x480, 500kbps might be enough for a video blog to look good, but an action movie might look bad at the same bitrate. Similarly, it might be too high for a screencast, resulting in a file that is larger than it needs to be.
+    
+            If a reliable bitrate is more important than reliable quality, choose video_bitrate. If a reliable visual quality is more important, use quality instead.
+    
+            video_bitrate uses two-pass, variable bitrate (VBR) encoding. one_pass encoding may be triggered via the one_pass option, though one_pass VBR encoding is typically of poor quality, and only results in a small speedup, so this is not recommended.
+    
+            Also keep in mind that bitrates that are too high or too low are unusable. By default, if you specify a bitrate that is too low, we will automatically correct to an acceptable bitrate. Enable strict mode if you would prefer a job to fail in this situation rather than auto-correcting.
+          type: integer
+        video_codec:
+          description: |-
+            'The output video codec to use. Zencoder currently supports the following codecs: h264 (default), hevc, jp2, theora, vp6, vp8, vp9, mpeg4, and wmv. By default, determined by the format, profile, or audio_codec. h264 if none are provided.
+    
+            Compatibility:
+    
+            * `h264` is compatible with aac (default) and mp3 audio and the mp4 (default), m4f, flv, or 3gp formats
+            * `hevc` is compatible with aac (default) or mp3 audio and the mp4 or m4f formats.
+            * `vp9` is compatible with vorbis audio and the webm format
+            * `vp8` is compatible with vorbis audio and the webm format
+            * `vp6` is compatible with mp3 (default) or aac audio, and the flv format
+            * `theora` is compatible with vorbis audio and the ogg format
+            * `mpeg4` is compatible with aac (default) and mp3 audio, and the mp4 (default) or 3gp formats
+            * `wmv` is compatible with wma (default) or mp3 audio, and the wmv format
+            * `jp2` is compatible with pcm audio and the mj2 format.'
+          enum:
+            - h264
+            - hevc
+            - jp2
+            - mpeg4
+            - theora
+            - vp6
+            - vp8
+            - vp9
+            - wmv
+          type: string
+        video_codec_preset:
+          description: |-
+            Video encoding preset to allow compatibility with specific industry standards.
+    
+            Standards:
+    
+            * avci_50 is AVC 10-bit intra-frame only compression. 50 Mbit/s, High 10 Intra Profile, Level 3.2, 4. See SMTP RP 2027:2007.
+            * avci_100 is AVC 10-bit intra-frame only compression. 100 Mbit/s, High 4:2:2 Intra Profile, Level 4.1. See SMTP RP 2027:2007.
+          enum:
+            - avci_50
+            - avci_100
+          type: string
+        vp6_2pass_min_section:
+          default: 40
+          description: |-
+            For two-pass VBR encoding, this controls the lowest datarate that the encoder will allow for any section, no matter how easy the section is. This value is used to prevent difficult sections from stealing too many bits from easy sections. Expressed as a percentage, as an integer.
+    
+            For example, if `video_bitrate` is set to `1000` kbps and `vp6_2_pass_min_section` is set to `50`, the lowest bitrate of any section will be 500kbps (`1000 * 50%`).
+          maximum: 100
+          minimum: 0
+          type: integer
+        vp6_compression_mode:
+          default: good
+          description: Affects the speed of encoding, compared to the quality of output. `good` balances speed and quality. `best` prioritizes quality over speed, resulting in higher compression but slower encoding. If you set speed to 1 or 2 and use VP6, we will use the `best` mode; otherwise, we use `good`.
+          enum:
+            - good
+            - best
+          type: string
+        vp6_deinterlace_mode:
+          default: adaptive
+          description: If `deinterlace` is enabled, this option sets the deinterlacing filter that will be applied. Valid options are `adaptive`, `blur` (for 1:2:1 Blur deinterlacing), and `drop` (for Drop Field deinterlacing).
+          enum:
+            - adaptive
+            - blur
+            - drop
+          type: string
+        vp6_denoise_level:
+          default: 0
+          description: Specifies the noise level of the source. Any value greater than 0 implies a constant and known level of noise within the source. A value of 0 will cause the filter to estimate the noise level, allowing it to vary from frame to frame. Larger noise levels indicate a noisier source resulting in increased removal by the filter, at the cost of sharpness.
+          maximum: 1
+          minimum: 0
+          type: number
+        vp6_profile:
+          default: vp6e
+          description: Either `vp6s` or `vp6e`. vp6e is designed for general use. vp6s is optimized for high resolution/datarate video by decreasing decoding complexity, which allows playback on resource constrained machines.
+          enum:
+            - vp6e
+            - vp6s
+          type: string
+        vp6_stream_max_buffer:
+          description: The maximum size of the buffer, in seconds. Valid for `constant_bitrate` encoding only.
+          example: 5
+          type: integer
+        vp6_stream_prebuffer:
+          default: 6
+          description: Seconds of preload that are necessary before starting playback. The buffer is used to maintain a consistent datarate and minimize playback interruption. Valid for `constant_bitrate` encoding only.
+          type: integer
+        vp6_temporal_down_watermark:
+          default: 20
+          description: Codec parameter for temporal down watermark percentage. Specifies the percentage of the datarate buffer remaining below which the encoder is allowed to start dropping frames. Only used if `vp6_temporal_resampling` is enabled. A larger percentage will make it more likely frames will be dropped to achieve the requested video bitrate. The converse is also true.
+          maximum: 100
+          minimum: 0
+          type: integer
+        vp6_temporal_resampling:
+          default: '`true` when encoding with a low number of bits per pixel. Otherwise, `false`.'
+          description: |-
+            Codec parameter for temporal resampling. In particularly difficult regions, if enabled, the encoder will drop frames to achieve the target the data rate. The value of `vp6_temporal_down_watermark` determines the percentage of the datarate buffer below which the encoder is enabled to start dropping frames.
+    
+            Default is true on files using a low number of bits per pixel, and false on files using a high number of bits per pixel. To calculate, divide the video_bitrate in bits per second by `width * height * frame_rate`. If this number is below 0.07, `vp6_temporal_resampling` will default to true. For example: 600,000 bits per second (about 600 kbps) divided by (`640x480 * 30 fps`) = 0.065, so in this case, `vp6_temporal_resampling` would be on.
+    
+            Note: when using `constant_bitrate` mode, this option is forced to true. Adjust `vp6_temporal_down_watermark` to adjust results.
+          type: boolean
+        vp6_undershoot_pct:
+          default: 75
+          description: Creates output that targets a slightly lower datarate so there are bits available in the buffer to improve difficult sections. This is a percentage, so valid values are 0-100.
+          maximum: 100
+          minimum: 0
+          type: integer
+        watermarks:
+          description: |-
+            You can add one or more watermarks to an output video using our watermarking API. Zencoder supports up to 4 watermark files per output in GIF, JPEG, BMP, or PNG format.
+    
+            **Note:** 32 bit RGB+alpha and 64-bit RGB+alpha watermark images are not supported.
+            Watermarks that extend beyond the edges of the video will not be applied. A warning will be raised on the output if this occurs.
+    
+            **Note:** When using the VP6 codec there are some additional limitations. You may only apply one watermark to the video (if passed multiple watermarks only the first will be used). Additionally, watermark scaling is not supported and the watermark image must be a PNG file.
+          oneOf:
+            - items:
+                $ref: '#/components/schemas/Watermark'
+              type: array
+            - $ref: '#/components/schemas/Watermark'
+        width:
+          description: Video frame width. If no width is supplied, we will use the original width, or scale to size or height setting. **Values must be divisible by 4.** Note that width and height take precedence over size.
+          type: integer
+      title: Output Object
+      type: object
+    MasterDisplay:
+      title: Master Display
+      description: Hash of HDR10 output settings
+      properties:
+        red:
+          type: object
+          description: Hash of red color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for red (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.7400
+            y:
+              type: number
+              description: Color volume y setting for red (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.8400
+        greeen:
+          type: object
+          description: Hash of green color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for green (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.7400
+            y:
+              type: number
+              description: Color volume y setting for green (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.8400
+        blue:
+          type: object
+          description: Hash of blue color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for blue (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.7400
+            y:
+              type: number
+              description: Color volume y setting for blue (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.8400
+        white_point:
+          type: object
+          description: Hash of white point color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for white point (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.7400
+            y:
+              type: number
+              description: Color volume y setting for white point (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.8400
+        luminence:
+          type: object
+          description: Hash of luminance settings for HDR10 output settings
+          properties:
+            min:
+              type: number
+              description: Minimum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 5.0
+            max:
+              type: number
+              description: Maximum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
+              minimum: 5.0
+              maximum: 10000.0
+    DRM:
+      title: DRM
+      type: object
+      description: Hash of DRM options
+      properties:
+        method:
+          type: string
+          description: The Digital Rights Management (DRM) method used to protect content
+          enum:
+            - cenc
+            - playready
+        provider:
+          type: string
+          description: The Digital Rights Management (DRM) provider used. Only required for PlayReady.
+        key_id:
+          type: string
+          description: |-
+            '32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use. This is specified with all bytes in standard (big-endian) order..Some DRM services return key IDs in little-endian order formatted as a GUID; to specify the key in that format see [key_guid]{/encoding-settings/content-protection/encoding-settings-drm.html#key_guid}.'
+        key_guid:
+          type: string
+          description: |-
+            32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use, in GUID-formatted little-endian order. Some DRM services return key IDs using this formatting. If a `key_id` is not also specified, this will be converted to use as the `key_id`. For specifying the key ID in a standard big-endian binary or UUID format, see `key_id`
+        user_key:
+          type: string
+          description: |-
+            32 hexadecimal characters (with optional dashes for UUID formatting). The user key from the DRM provider.
+        server_key:
+          type: string
+          description: |-
+            32 hexadecimal characters (with optional dashes for UUID formatting). The server key from the DRM provider.
+        media_id:
+          type: string
+          description: |-
+            32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the media.
+        content_id:
+          type: string
+          description: |-
+            32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
+        content_key:
+          type: string
+          description: |-
+            32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
+        schemas:
+          type: array
+          description: |-
+            When using Common Encryption to encrypt an output (or set of outputs), information about the DRM providers is specified as a schema including the schema type, and provider-specific infomration.
+
+            This is generally only specified on playlist outputs for multi-bitrate encoding jobs, but may also be specified for a CENC-encoded output to ensure that output is playable on its own.
+          items:
+            $ref: '#/components/schemas/Schema'
+    Schema:
+      title: Schema
+      type: object
+      properties:
+        type:
+          type: string
+          description: Provider type for this DRM schema.
+          enum:
+            - widevine
+            - playready
+            - marlin
+        license_acquisition_url:
+          type: string
+          description: License acquisition URL for Playready CENC DRM schema.
+    Skip:
+      title: Skip
+      description: |-
+        An object containing conditions for skipping the output
+
+        **Note**: Due to the nature of video metadata and inconsistencies between video types some source files may have their dimensions read incorrectly during inspection, resulting in conditions being applied or ignored incorrectly.
+      properties:
+        min_size:
+          type: string
+          description: |-
+            If the source's dimensions are smaller than the requested size, the output will be skipped.
+
+            Dimensions are calculated by mutliplying the height and the width of the source and comparing to the product of provided dimensions.
+          example: 640x360
+        max_size:
+          type: string
+          description: |-
+            If the source's dimensions are larger than the requested size, the output will be skipped.
+
+            Dimensions are calculated by mutliplying the height and the width of the source and comparing to the product of provided dimensions.
+          example: 640x360
+        min_duration:
+          type: integer
+          description: |-
+            If the source's duration is shorter than the requested duration, the output will be skipped.
+
+            Duration must be provided in seconds. To skip an output if the source is shorter than 5 minutes, use `300`.
+          example: 300
+        max_duration:
+          type: integer
+          description: |-
+            If the source's duration is longer than the requested duration, the output will be skipped.
+
+            Duration must be provided in seconds. To skip an output if the source is longer than 10 minutes, use `600`.
+          example: 600
+        min_audio_bitrate:
+          type: integer
+          description: |-
+            If the source's audio bitrate is less than the specified bitrate (in kbps), the output will be skipped.
+
+            **Source files without an audio track or without a recognizable audio bitrate will ignore this setting.** (See [require_audio](/encoding-settings/general/encoding-settings-conditional-outputs.html#require-audio) for more options.) To skip an output if the source audio bitrate is less than 128 Kbps, use 128.
+          example: 128
+        max_audio_bitrate:
+          type: integer
+          description: |-
+            If the source's audio bitrate is greater than the specified bitrate (in kbps), the output will be skipped.
+
+            '**Source files without an audio track or without a recognizable audio bitrate will ignore this setting.** (See [require_audio](encoding-settings/general/encoding-settings-conditional-outputs.html#require-audio) for more options.) To skip an output if the source audio bitrate is greater than 160 Kbps, use 160.'
+          example: 160
+        min_video_bitrate:
+          type: integer
+          description: |-
+            If the source's video bitrate is less than the specified bitrate (in kbps), the output will be skipped.
+
+            '**Source files without a video track or without a recognizable video bitrate will ignore this setting.** (See [require_video](encoding-settings/general/encoding-settings-conditional-outputs.html#require-video) for more options.) To skip an output if the source video bitrate is less than 800 Kbps, use 800.'
+          example: 800
+        max_video_bitrate:
+          type: integer
+          description: |-
+            If the source's video bitrate is greater than the specified bitrate (in kbps), the output will be skipped.
+
+            '**Source files without a video track or without a recognizable video bitrate will ignore this setting.** (See [require_video](encoding-settings/general/encoding-settings-conditional-outputs.html#require-video) for more options.) To skip an output if the source video bitrate is greater than 2000 Kbps, use 2000.'
+          example: 2000
+        require_audio:
+          type: boolean
+          description: To skip an output if the source does not have an audio track, set this option to true.
+        require_video:
+          type: boolean
+          description: To skip an output if the source does not have an video track, set this option to true.
+    AlternateAudio:
+      title: Alternate Audio
+      type: object
+      description: |-
+        Provides a set of alternate audio streams for HLS playlists. Requires max_hls_protocol_version to be 4 or greater.
+
+        This option will insert EXT-X-MEDIA tags into the playlist. If name is not set, then a name will be generated based on the given language.
+
+        Valid Options for Alternate Audio Renditions
+
+        <ul>
+          <li>`language`: The ISO 639 code for the language of the audio track, like "en", "es", or "zh".</li>
+          `name` (optional): The name of the alternate audio <li>`group`. If name is not set, this will default to the language `name`.</li>
+          <li>`path` (optional): An optional path to the M3U8 playlist for this audio rendition. If the path is not set, this alternate audio stream describes the the audio contained in the source stream.</li>
+          <li>`source` (optional): The label on a media output of the same job. This can be used to set the codec for renditions that use this audio stream.</li>
+        </ul>
+      example: {
+          "input": "s3://zencodertesting/test.mov",
+          "outputs": [
+            {
+              "type": "playlist",
+              "alternate_audio": {
+                "custom_audio_group": [
+                  {
+                    "source": "english-audio",
+                    "path": "alternate-audio-en.m3u8",
+                    "language": "en"
+                  },
+                  {
+                    "source": "french-audio",
+                    "path": "alternate-audio-fr.m3u8",
+                    "language": "fr"
+                  }
+                ],
+                "secondary_audio_group": {
+                  "path": "path/to/secondary-audio-group.m3u8",
+                  "language": "en",
+                  "name": "Secondary English Audio Track",
+                  "source": "secondary-english-audio"
+                }
+              }
+            }
+          ]
+        }
+    Stream:
+      title: Stream
+      type: object
+      description: |-
+        Playlist stream info
+      properties:
+        path:
+          type: string
+          description: |-
+            String containing an absolute or relative path to a stream manifest file.
+
+            *Note: Required for each stream for HLS, Microsoft Smooth Streaming, and Highwinds SMIL playlists.*
+          example: 'http://example.com/video/high/index.m3u8'
+        bandwidth:
+          type: integer
+          description: |-
+            Specifies the bandwidth (kbps) of a playlist stream. Overrides bandwidth determined from a `source`.
+
+            *Note: Required for each stream for HLS and Highwinds SMIL playlists, unless a `source` is provided.*
+          example: 500
+        resolution:
+          type: string
+          description: |-
+            Specifies the resolution of a playlist stream. Overrides resolution determined from a `source`.
+
+            Valid Values: String containing width and height as: '800x600'
+          example: 800x600
+        codecs:
+          type: string
+          description: |-
+            Specifies the codecs used in a playlist stream. Overrides codecs determined from a `source`.
+
+            String containing codecs in HTML5 format, such as: `mp4a.40.2`
+        audio:
+          type: string
+          description: |-
+            Specifies an alternate audio track for the playlist.
+
+            String containing the name of the audio GROUP-ID to use. This value must have been defined as an `alternate_audio` grouping. The codecs setting should reflect all `codecs` of the alternate audio group.
+          example: {
+              "input": "s3://zencodertesting/test.mov",
+              "outputs": [
+                {
+                  "type": "playlist",
+                  "alternate_audio": {
+                    "ac3_audio": {
+                      "path": "path/to/ac3-audio.m3u8",
+                      "language": "en",
+                      "default": true,
+                      "source": "ac3-audio-rendition"
+                    },
+                    "source_audio": {
+                      "language": "en",
+                      "default": true
+                    }
+                  },
+                  "streams": [
+                    {
+                      "path": "low/index.m3u8",
+                      "source": "low-hls-rendition",
+                      "audio": "ac3_audio"
+                    },
+                    {
+                      "path": "low/index.m3u8",
+                      "source": "low-hls-rendition",
+                      "audio": "source_audio"
+                    }
+                  ]
+                }
+              ]
+            }
+        source:
+          type: string
+          description: |-
+            References a label on a `media` output of the same job, to fill in the corresponding data in the playlist.
+
+            For HLS, the bandwidth, codecs, and resolution values are inferred from the source by default. Any bandwidth, codecs, or resolution values specified for the same stream will override the inferred values.
+
+            **`source` is not compatible with SMIL outputs.**
+    CuePoint:
+      title: Cue Point
+      description: |-
+        Zencoder supports adding event and navigation cue points to VP6 Flash Video (FLV) files. Cue points are embedded in the FLV stream and FLV metadata packet when you encode the FLV file.
+
+        There are two cue point types: "navigation" and "event". Navigation cue points can be used to let users seek to a specified part of a video file. Navigation cue points create a keyframe at the specified cue point location, so you can use code to move a video player’s playhead to that location. You can set particular points in an FLV file where you might want users to seek. For example, your video might have multiple chapters or segments, and you can control the video by embedding navigation cue points in the video file.
+
+        Event cue points can be used to perform actions in a SWF video player that are triggered at specified points during FLV playback.
+      properties:
+        type:
+          type: string
+          description: |-
+            A `cue_point` type: either `navigation` or `event`.
+          enum:
+            - navigation
+            - event
+        time:
+          type: number
+          description: |-
+            The time for a `cue_point`, in seconds.
+          example: 30.4
+        name:
+          type: number
+          description: |-
+            A name for a `cue_point`.
+          example: First cue point
+        data:
+          type: number
+          description: |-
+            Data for a `cue_point`, as a hash of key/value pairs.
+          example: {
+              "input": "s3://zencodertesting/test.mov",
+              "outputs": [
+                {
+                  "cue_points": [
+                    {
+                      "type": "navigation",
+                      "time": 30.4,
+                      "name": "My Cue Point",
+                      "data": {
+                        "mykey": "myvalue"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+    Thumbnail:
+      title: Thumbnail
+      description: |-
+        Hash of thumbnail properties
+      properties:
+        label:
+          type: string
+          description: |-
+            A name for the thumbnail set. Required when requesting thumbnail sets in an array.
+        format:
+          type: string
+          description: |-
+            The format of the thumbnail image.
+          enum:
+            - png
+            - jpg
+          default: png
+        public:
+          type: boolean
+          description:
+            By default, files put into a S3 bucket are not publicly readable. Instead, we use the canned access policy of [bucket-owner-full-control](http://docs.amazonwebservices.com/AmazonS3/latest/index.html?RESTAccessPolicy.html). This is true even if the bucket itself is publicly readable - a S3 bucket policy is not automatically inherited by new files added to the bucket.
+
+            Use the public API setting to flag a file output to S3 as being publicly readable. This is done by granting the READ permission to the AllUsers group.
+
+            This setting applies to both output video files and output thumbnails. By default, permissions set on an output file also apply to thumbnails. Setting `access_control` will override this setting.
+
+            An alternative to manual permissions would be to use a [bucket policy](http://awspolicygen.s3.amazonaws.com/policygen.html).
+
+            [More information](http://docs.amazonwebservices.com/AmazonS3/latest/dev/) from the Amazon S3 docs.
+          default: false
+    Watermark:
+      title: Watermark
+      description: |-
+        Hash of watermark properties
+      type: object
+      properties:
+        url:
+          type: string
+          description: |-
+            A valid URL of a remote image file to use as a watermark. Use the input URL syntax. Supports S3, GCS, Cloud Files, HTTP/S, FTP, and SFTP, with or without authentication.
+
+            Zencoder supports watermark files in GIF, JPEG, BMP, or PNG format.
+
+            For transparent watermarks, use PNGs with alpha or index transparency.
+
+            **Supported PNG Formats**
+            - 8-bit RGB
+            - 8-bit RGB+Alpha
+            - 8-bit Grayscale
+            - 8-bit Indexed
+            - 8-bit Indexed+Transparency
+            - 16-bit RGB
+            - 16-bit Grayscale
+
+            **Unsupported PNG Formats**
+            - 8-bit Grayscale+Alpha
+            - 16-bit Grayscale+Alpha
+            - 16-bit RGB+Alpha
+        x:
+          oneOf:
+            - type: string
+            - type: integer
+          description: |-
+            Where to place the watermark within the video, on the x axis (left/right). Can be a number of pixels (e.g. `100` or `-20`), a percent of the video width (e.g. `25%` or `-5%`), or `centered` to align the watermark to the center of the video. Use a positive number to place relative to the left side of the video, and a negative number to place relative to the right side of the video. Use "-0" (as a *string*) to lock to the right side.
+
+            By default, position is based on the visible content area, not including any padding. Use `origin` to set watermark position based on the full output.
+        y:
+          oneOf:
+            - type: string
+            - type: integer
+          description: |-
+            Where to place the watermark within the video, on the y axis (top/bottom). Can be a number of pixels (e.g. `100` or `-20`), a percent of the video width (e.g. `25%` or `-5%`), or `centered` to align the watermark to the center of the video. Use a positive number to place relative to the left side of the video, and a negative number to place relative to the right side of the video. Use "-0" (as a *string*) to lock to the bottom.
+
+            By default, position is based on the visible content area, not including any padding. Use `origin` to set watermark position based on the full output.
+        width:
+          oneOf:
+            - type: string
+            - type: integer
+          description: |-
+            The width of the watermark, expressed as a number of pixels (e.g. `64`) or as a percent of the video width (e.g. `10%`). If `height` is provided, but not `width`, the watermark image will be scaled proportionately. Note that percentage values must be strings - pixel values may be strings or numbers.
+          default: Scale to `height`, or original image width
+        height:
+          oneOf:
+            - type: string
+            - type: integer
+          description: |-
+            The height of the watermark, expressed as a number of pixels (e.g. `64`) or as a percent of the video width (e.g. `10%`). If `width` is provided, but not `height`, the watermark image will be scaled proportionately.
+          default: Scale to `width`, or original image height
+        origin:
+          type: string
+          description: |-
+            The part of the video to base the watermark's positioning on. This only affects jobs where aspect_mode is 'pad'.
+
+            - `frame` bases the placement on the full resolution of the output, including any padding.
+            - `content` bases the placement on the visible content area, not including padding.
+          default: content
+          enum:
+            - content
+            - frame
+        opacity:
+          type: number
+          description: |-
+            Make the watermark transparent by setting an opacity value between `0.0` (transparent) and `1.0` (opaque).
+          default: 1.0
+          minimum: 0.0
+          maximum: 1.0
+    CreateJobResponse:
+      title: Create Encoding Job Response
+      description: Success response for job creation
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The job id, an integer in the 64-bit range.
+          example: 365524597
+          readOnly: true
+        outputs:
+          type: array
+          description: Details on each output rendition of the Live job.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique id for the rendition, an integer in the 64-bit range.
+                example: 1294836780
+                readOnly: true
+              url:
+                type: string
+                description: URL for the media or manifest for the specified rendition (non-SSAI).
+              label:
+                type: string
+                description: Label for the output (from the input)
+    InputMediaFile:
+      type: object
+      readOnly: true
+      description: Object containing properties for the input media file.
+      properties:
+        audio_bitrate_in_kbps:
+          type: integer
+          description: Audio bitrate of the input media file
+          example: 90
+          readOnly: true
+        audio_codec:
+          type: string
+          description: Audio codec of the input media file
+          example: aac
+          readOnly: true
+        audio_sample_rate:
+          type: integer
+          description: Audio sample rate of the input media file
+          example: 44100
+          readOnly: true
+        audio_tracks:
+          type: integer
+          description: The number of audio tracks in the input media file
+          example: 2
+          readOnly: true
+        channels:
+          type: integer
+          description: The number of audio channels in the input media file
+          example: 2
+          readOnly: true
+        created_at:
+          type: string
+          description: ISO 8601 date-time string representing when the input file was created
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        updated_at:
+          type: string
+          description: ISO 8601 date-time string representing when state of processing on the input file last changed
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        finished_at:
+          type: string
+          description: ISO 8601 date-time string representing when processing the input file finished
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        duration_in_ms:
+          type: integer
+          description: Duration in ms of the input media file
+          example: 51312
+          readOnly: true
+        error_class:
+          type: string
+          description: The type of error thrown if an error occurred in processing the input file
+          example: InvalidAudioSettingsError
+          readOnly: true
+        error_message:
+          type: string
+          description: The error message thrown if an error occurred in processing the input file
+          example: The supplied audio encoding settings were not valid
+          readOnly: true
+        file_size_bytes:
+          type: integer
+          description: The file size in bytes of the input file
+          example: 922620
+          readOnly: true
+        format:
+          type: string
+          description: The format of the input file
+          example: mpeg4
+          readOnly: true
+        frame_rate:
+          type: integer
+          description: The frame_rate of the input file
+          example: 30
+          readOnly: true
+        height:
+          type: integer
+          description: The frame height of the input file in pixels
+          example: 360
+          readOnly: true
+        id:
+          type: integer
+          description: The id of the input file, an integer in the 64-bit range.
+          example: 365495537
+          readOnly: true
+        md5_checksum:
+          type: integer
+          description: The checksum of the input file
+          example: 9c98085f2e10ca0490aa3e2b6746f7dd
+          readOnly: true
+        privacy:
+          type: boolean
+          description: Privacy mode
+          example: true
+          readOnly: true
+        state:
+          type: string
+          description: |-
+            The current state of the file:
+            - pending (not yet submitted to Zencoder)
+            - submitting (currently submitting to Zencoder)
+            - finished (Zencoder finished processing the file)
+            - failed (Zencoder was unable to process the file)
+        test:
+          type: boolean
+          description: Test mode
+          example: true
+          readOnly: true
+        video_bitrate_in_kbps:
+          type: integer
+          description: video bitrate of the input file
+          example: 1402
+          readOnly: true
+        video_codec:
+          type: string
+          description: video codec of the input file
+          example: h264
+          readOnly: true
+        width:
+          type: integer
+          description: frame width of the input file in pixels
+          example: 640
+          readOnly: true
+        total_bitrate_in_kbps:
+          type: integer
+          description: 'total audio+video bitrate of the input file'
+          example: 7906
+          readOnly: true
+        url:
+          type: string
+          description: 'URL of the input file'
+          example: 's3://zencodertesting/test.mov'
+          readOnly: true
+    OutputMediaFile:
+      type: object
+      readOnly: true
+      description: Object containing properties for an output media file.
+      properties:
+        audio_bitrate_in_kbps:
+          type: integer
+          description: Audio bitrate of the output media file
+          example: 90
+          readOnly: true
+        audio_codec:
+          type: string
+          description: Audio codec of the output media file
+          example: aac
+          readOnly: true
+        audio_sample_rate:
+          type: integer
+          description: Audio sample rate of the output media file
+          example: 44100
+          readOnly: true
+        channels:
+          type: integer
+          description: The number of audio channels in the output media file
+          example: 2
+          readOnly: true
+        created_at:
+          type: string
+          description: ISO 8601 date-time string representing when the output file was created
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        updated_at:
+          type: string
+          description: ISO 8601 date-time string representing when state of processing on the output file last changed
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        finished_at:
+          type: string
+          description: ISO 8601 date-time string representing when processing the output file finished
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        duration_in_ms:
+          type: integer
+          description: Duration in ms of the output media file
+          example: 51312
+          readOnly: true
+        error_class:
+          type: string
+          description: The type of error thrown if an error occurred in processing the output file
+          example: InvalidAudioSettingsError
+          readOnly: true
+        error_message:
+          type: string
+          description: The error message thrown if an error occurred in processing the output file
+          example: The supplied audio encoding settings were not valid
+          readOnly: true
+        file_size_bytes:
+          type: integer
+          description: The file size in bytes of the output file
+          example: 922620
+          readOnly: true
+        fragment_duration_in_ms:
+          type: integer
+          description: Duration of final fragment for segmented types
+          example: 5478
+          readOnly: true
+        format:
+          type: string
+          description: The format of the output file
+          example: mpeg4
+          readOnly: true
+        frame_rate:
+          type: integer
+          description: The frame_rate of the output file
+          example: 30
+          readOnly: true
+        height:
+          type: integer
+          description: The frame height of the output file in pixels
+          example: 360
+          readOnly: true
+        id:
+          type: integer
+          description: The id of the output file, an integer in the 64-bit range.
+          example: 365495537
+          readOnly: true
+        label:
+          type: string
+          description: Label for the output
+          example: mp4 high
+          readOnly: true
+        md5_checksum:
+          type: integer
+          description: The checksum of the output file
+          example: 9c98085f2e10ca0490aa3e2b6746f7dd
+          readOnly: true
+        privacy:
+          type: boolean
+          description: Privacy mode
+          example: true
+          readOnly: true
+        rfc_6381_audio_codec:
+          type: string
+          description: Audio codec for industry compatibility
+          example: avc1.42001e
+          readOnly: true
+        rfc_6381_video_codec:
+          type: string
+          description: Video codec for industry compatibility
+          example: mp4a.40.2
+          readOnly: true
+        state:
+          type: string
+          description: |-
+            The current state of the file:
+            - pending (not yet submitted to Zencoder)
+            - submitting (currently submitting to Zencoder)
+            - transcoding (currently transcoding)
+            - uploading (currently uploading the output file)
+            - finished (Zencoder finished processing the file)
+            - failed (Zencoder was unable to process the file)
+        test:
+          type: boolean
+          description: Test mode
+          example: true
+          readOnly: true
+        video_bitrate_in_kbps:
+          type: integer
+          description: video bitrate of the output file
+          example: 1402
+          readOnly: true
+        video_codec:
+          type: string
+          description: video codec of the output file
+          example: h264
+          readOnly: true
+        width:
+          type: integer
+          description: frame width of the output file in pixels
+          example: 640
+          readOnly: true
+        total_bitrate_in_kbps:
+          type: integer
+          description: 'total audio+video bitrate of the output file'
+          example: 7906
+          readOnly: true
+        url:
+          type: string
+          description: 'URL of the output file'
+          example: 's3://zencodertesting/test.mov'
+          readOnly: true
+    ListJobsResponse:
+      title: List Jobs Response
+      description: Success response for list jobs request
+      type: array
+      items:
+        $ref: '#/components/schemas/JobResponseFields'
+    GetProgressResponse:
+      title: Get Job Progress Response
+      type: object
+      properties:
+        state:
+          type: string
+          description: |-
+            The current state of the job:
+            - pending (not yet submitted to Zencoder)
+            - submitting (currently submitting to Zencoder)
+            - transcoding (successfully submitted to Zencoder)
+            - finished (Zencoder finished transcoding, and the job is done)
+            - failed (Zencoder was unable to transcode the video)
+        progress:
+          type: number
+          description: The percentage complete
+        input:
+          $ref: '#/components/schemas/InputProgressResponse'
+        output:
+          $ref: '#/components/schemas/OutputProgressResponse'
+    InputProgressResponse:
+      title: Job Input Progress Response
+      description: |-
+        Progress in the processing of a job input file
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The input id, an integer in the 64-bit range.
+          readOnly: true
+        state:
+          type: string
+          description: |-
+            The state of input processing
+          enum:
+            - waiting
+            - pending
+            - assigning
+            - processing
+            - finished
+            - failed
+            - cancelled
+        progress:
+          type: number
+          description: Input processing percentage completed
+        current_event:
+          type: string
+          description: The current activity
+          enum:
+            - downloading
+            - inspecting
+        current_event_progress:
+          type: number
+          description: The current activity percentage completed
+    OutputProgressResponse:
+      title: Job Input Progress Response
+      description: |-
+        Progress in the processing of a job input file
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The output id, an integer in the 64-bit range.
+          readOnly: true
+        state:
+          type: string
+          description: |-
+            The state of output processing
+          enum:
+            - waiting
+            - queued
+            - assigning
+            - processing
+            - finished
+            - failed
+            - cancelle`
+            - no input
+            - skipped
+        progress:
+          type: number
+          description: Input processing percentage completed
+        current_event:
+          type: string
+          description: The current activity
+          enum:
+            - downloading
+            - transcoding
+            - uploading
+        current_event_progress:
+          type: number
+          description: The current activity percentage completed
+    CreateAccountFields:
+      title: Create Account Request Body Fields
+      type: object
+      description: >-
+        Required fields for a request to create a free test account on Zencoder
+      required:
+        - terms_of_service
+        - email
+        - first_name
+        - last_name
+        - company
+        - country
+      properties:
+        terms_of_service:
+          type: string
+          description: >-
+            Indication that you agree with the terms of service - the only allowed value is `"1"` (a string)
+          enum:
+            - 1
+        first_name:
+          type: string
+          description: >-
+            First name of the account holder
+        last_name:
+          type: string
+          description: >-
+            Last name of the account holder
+        company:
+          type: string
+          description: >-
+            Name of the company
+        country:
+          type: string
+          description: >-
+            Country where the company is headquartered
+          enum:
+            - Afghanistan
+            - Albania
+            - Algeria
+            - American Samoa
+            - Andorra
+            - Anguilla
+            - Antarctica
+            - Antigua And Barbuda
+            - Argentina
+            - Armenia
+            - Aruba
+            - Australia
+            - Austria
+            - Azerbaijan
+            - Bahamas
+            - Bahrain
+            - Bangladesh
+            - Barbados
+            - Belarus
+            - Belgium
+            - Belize
+            - Benin
+            - Bermuda
+            - Bhutan
+            - Bolivia
+            - Bosnia and Herzegovina
+            - Botswana
+            - Bouvet Island
+            - Brazil
+            - British Indian Ocean Territory
+            - Brunei Darussalam
+            - Bulgaria
+            - Burkina Faso
+            - Burundi
+            - Cambodia
+            - Cameroon
+            - Canada
+            - Cape Verde
+            - Cayman Islands
+            - Central African Republic
+            - Chad
+            - Chile
+            - China
+            - Christmas Island
+            - Cocos (Keeling) Islands
+            - Colombia
+            - Comoros
+            - Congo
+            - Congo, the Democratic Republic of the
+            - Cook Islands
+            - Costa Rica
+            - Cote d'Ivoire
+            - Croatia
+            - Cyprus
+            - Czech Republic
+            - Denmark
+            - Djibouti
+            - Dominica
+            - Dominican Republic
+            - East Timor
+            - Ecuador
+            - Egypt
+            - El Salvador
+            - Equatorial Guinea
+            - Estonia
+            - Ethiopia
+            - Falkland Islands
+            - Faroe Islands
+            - Fiji
+            - Finland
+            - France
+            - French Guiana
+            - French Polynesia
+            - French Southern Territories
+            - Gabon
+            - Gambia
+            - Georgia
+            - Germany
+            - Ghana
+            - Gibraltar
+            - Great Britain
+            - Greece
+            - Greenland
+            - Grenada
+            - Guadeloupe
+            - Guam
+            - Guatemala
+            - Guinea
+            - Guinea-Bissau
+            - Guyana
+            - Haiti
+            - Heard and Mc Donald Islands
+            - Honduras
+            - Hong Kong
+            - Hungary
+            - Iceland
+            - India
+            - Indonesia
+            - Ireland
+            - Israel
+            - Italy
+            - Jamaica
+            - Japan
+            - Jordan
+            - Kazakhstan
+            - Kenya
+            - Kiribati
+            - Korea, Republic of
+            - Korea (South)
+            - Kuwait
+            - Kyrgyzstan
+            - Lao People's Democratic Republic
+            - Latvia
+            - Lebanon
+            - Lesotho
+            - Liberia
+            - Libya
+            - Liechtenstein
+            - Lithuania
+            - Luxembourg
+            - Macau
+            - Macedonia
+            - Madagascar
+            - Malawi
+            - Malaysia
+            - Maldives
+            - Mali
+            - Malta
+            - Marshall Islands
+            - Martinique
+            - Mauritania
+            - Mauritius
+            - Mayotte
+            - Mexico
+            - Micronesia, Federated States of
+            - Moldova, Republic of
+            - Monaco
+            - Mongolia
+            - Montserrat
+            - Morocco
+            - Mozambique
+            - Myanmar
+            - Namibia
+            - Nauru
+            - Nepal
+            - Netherlands
+            - Netherlands Antilles
+            - New Caledonia
+            - New Zealand
+            - Nicaragua
+            - Niger
+            - Nigeria
+            - Niue
+            - Norfolk Island
+            - Northern Ireland
+            - Northern Mariana Islands
+            - Norway
+            - Oman
+            - Pakistan
+            - Palau
+            - Panama
+            - Papua New Guinea
+            - Paraguay
+            - Peru
+            - Philippines
+            - Pitcairn
+            - Poland
+            - Portugal
+            - Puerto Rico
+            - Qatar
+            - Reunion
+            - Romania
+            - Russia
+            - Russian Federation
+            - Rwanda
+            - Saint Kitts and Nevis
+            - Saint Lucia
+            - Saint Vincent and the Grenadines
+            - Samoa (Independent)
+            - San Marino
+            - Sao Tome and Principe
+            - Saudi Arabia
+            - Scotland
+            - Senegal
+            - Serbia and Montenegro
+            - Seychelles
+            - Sierra Leone
+            - Singapore
+            - Slovakia
+            - Slovenia
+            - Solomon Islands
+            - Somalia
+            - South Africa
+            - South Georgia and the South Sandwich Islands
+            - South Korea
+            - Spain
+            - Sri Lanka
+            - St. Helena
+            - St. Pierre and Miquelon
+            - Suriname
+            - Svalbard and Jan Mayen Islands
+            - Swaziland
+            - Sweden
+            - Switzerland
+            - Taiwan
+            - Tajikistan
+            - Tanzania
+            - Thailand
+            - Togo
+            - Tokelau
+            - Tonga
+            - Trinidad
+            - Trinidad and Tobago
+            - Tunisia
+            - Turkey
+            - Turkmenistan
+            - Turks and Caicos Islands
+            - Tuvalu
+            - Uganda
+            - Ukraine
+            - United Arab Emirates
+            - United Kingdom
+            - United States
+            - Uruguay
+            - Uzbekistan
+            - Vanuatu
+            - Vatican City State (Holy See)
+            - Venezuela
+            - Viet Nam
+            - Virgin Islands (British)
+            - Virgin Islands (U.S.)
+            - Wales
+            - Wallis and Futuna Islands
+            - Western Sahara
+            - Yemen
+            - Zambia
+            - Zimbabwe        
+        email:
+          type: string
+          description: >-
+            email address for the account; the request will fail if the email address is already set for a Zencoder account
+        password:
+          type: string
+          description: password for the account
+        confirm_password:
+          type: string
+          description: enter the password again
+    CreateAccountResponse:
+      title: Create Account Response
+      type: object
+      properties:
+        api-key:
+          type: string
+          description: The API key to autheticate requests
+        password:
+          type: string
+          description: >-
+            The password submitted or auto-generated if none was submitted with the create account request
+    GetAccountDetailsResponse:
+      title: Get Account Details Response
+      type: object
+      properties:
+        account_state:
+          type: string
+          description: The current account state
+          enum:
+            - active
+            - stopped
+            - suspended
+            - cancelled
+        plan:
+          type: string
+          description: >-
+            The current account plan
+          example: growth
+        billing_state:
+          type: string
+          description: >-
+            The current billing state
+          enum:
+            - active
+            - past due
+            - cancelled
+        minutes_used:
+          type: integer
+          description: >-
+            Minutes of encoded output used this month
+          example: 12549
+        minutes_included:
+          type: integer
+          description: >-
+            Minutes of encoded output included in the plan per month
+          example: 25000
+        integration_mode:
+          type: boolean
+          description: >-
+            Whether the account is in integration (test) mode
+    GetUsageReportResponse:
+      title: Get Usage Report Response
+      type: object
+      description: Account usage report response
+      properties:
+        total:
+          type: object
+          description: Summary object
+          properties:
+            encoded_minutes:
+              type: integer
+              description: The total encoding minutes used
+              example: 2357
+            billable_minutes:
+              type: integer
+              description: The encoding minutes that were billable
+              example: 1896
+        statistics:
+          type: object
+          description: Reports by grouping
+          properties:
+            grouping:
+              type: string
+              description: The grouping for these jobs. `null` is for all ungrouped jobs
+            collected_on:
+              type: string
+              description: Date of the report in `YYYY-MM=DD` format
+            encoded_minutes:
+              type: integer
+              description: The total encoding minutes used for this group
+              example: 2357
+            billable_minutes:
+              type: integer
+              description: The encoding minutes that were billable for this group
+              example: 1896
+      example: {
+          "total": {
+            "encoded_minutes": 6,
+            "billable_minutes": 8
+          },
+          "statistics": [
+            {
+              "grouping": "myGroup",
+              "collected_on": "2017-03-10",
+              "encoded_minutes": 4,
+              "billable_minutes": 5
+            }, {
+              "grouping": null,
+              "collected_on": "2017-03-10",
+              "encoded_minutes": 2,
+              "billable_minutes": 3
+            }
+          ]
+        }

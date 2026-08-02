@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/zencoder-openapi-original.yml
+notes: >-
+  Cross-cutting API standards conformance for the Zencoder v2 API, derived from the OpenAPI and docs.
+  Zencoder is a media/transcoding API: it emits industry streaming/packaging and content-protection
+  formats (HLS, MPEG-DASH, HEVC/H.265, CMAF, Widevine/PlayReady/FairPlay DRM) as OUTPUTS, but its HTTP
+  interface uses a plain-JSON, API-key REST model rather than OAuth/OIDC or RFC 9457 problem details.
+  No public Zencoder-specific compliance certification page was found, so no Compliance pointer is
+  asserted.
+standards:
+- id: rest
+  conforms: true
+  evidence: Resource-oriented HTTP+JSON API (jobs/inputs/outputs/accounts/reports).
+- id: openapi-3.0
+  conforms: true
+  evidence: Provider publishes an OpenAPI 3.0.0 document at references/openapi.yaml.
+- id: api-key-auth
+  conforms: true
+  evidence: Zencoder-Api-Key header (also api_key query param).
+- id: oauth2
+  conforms: false
+- id: oidc
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors are plain JSON/XML with an `errors` array, not application/problem+json.
+- id: pagination
+  conforms: true
+  evidence: page/per_page (max 50) on GET /jobs.
+- id: idempotency
+  conforms: false
+  evidence: No Idempotency-Key mechanism documented.
+- id: webhooks
+  conforms: true
+  evidence: Per-job completion notifications (POST callbacks). See asyncapi/zencoder-notifications-webhooks.yml.
+- id: asyncapi
+  conforms: false
+  evidence: Webhook surface documented but no AsyncAPI document published.
+- id: hls
+  conforms: true
+  evidence: HTTP Live Streaming output packaging supported.
+- id: mpeg-dash
+  conforms: true
+  evidence: MPEG-DASH output packaging supported.
+- id: drm
+  conforms: true
+  evidence: Widevine / PlayReady / FairPlay DRM and encryption on outputs.

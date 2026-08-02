@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: searched
+source: https://zencoder.support.brightcove.com/references/release-notes.html
+versioning:
+  scheme: uri-path
+  current: v2
+  base_url: https://app.zencoder.com/api/v2
+  docs: https://zencoder.support.brightcove.com/references/reference.html
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: >-
+    No formal RFC 8594 Sunset/Deprecation-header policy is published. The prior v1 API was retired in
+    favor of v2; v2 is the current, stable surface under Brightcove.
+release_notes: https://zencoder.support.brightcove.com/references/release-notes.html
+known_issues: https://zencoder.support.brightcove.com/references/known-issues.html
+sla:
+  url: null
+  notes: SLA is governed by the Brightcove/Zencoder commercial agreement; no public uptime target page.
+status_page: https://status.brightcove.com/
+data_retention:
+  jobs_history_days: 60
+deprecated_operations: []

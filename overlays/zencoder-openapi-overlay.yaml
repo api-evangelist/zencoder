@@ -1,0 +1,23 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Zencoder API
+  version: 1.0.0
+extends: openapi/zencoder-openapi-original.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: zencoder
+    x-apievangelist-enriched: '2026-07-21'
+    x-authentication: header Zencoder-Api-Key (also api_key query param)
+    x-webhooks: asyncapi/zencoder-notifications-webhooks.yml
+    x-error-registry: errors/zencoder-error-codes.yml
+- target: $.components.securitySchemes
+  update:
+    ZencoderApiKey:
+      type: apiKey
+      in: header
+      name: Zencoder-Api-Key
+      description: >-
+        API Evangelist annotation — the credential the API requires. The published spec models this as
+        a required request parameter rather than a formal securityScheme; this overlay records the
+        equivalent apiKey scheme without mutating the original document.

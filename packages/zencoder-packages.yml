@@ -1,0 +1,68 @@
+generated: '2026-07-21'
+method: searched
+source: https://zencoder.support.brightcove.com/integration/faq-integration-libraries.html
+notes: >-
+  Official Zencoder integration libraries are published under the github.com/zencoder org and provided
+  on an as-is basis (not covered by Brightcove Support). Package-registry names verified live:
+  RubyGems `zencoder`, PyPI `zencoder`, npm `zencoder`, Packagist `zencoder/zencoder`, Hex `zencoder`.
+  Community-contributed libraries are listed separately and marked official: false.
+packages:
+- language: ruby
+  registry: rubygems
+  name: zencoder
+  url: https://rubygems.org/gems/zencoder
+  repository: https://github.com/zencoder/zencoder-rb
+  install: gem install zencoder
+  official: true
+- language: php
+  registry: packagist
+  name: zencoder/zencoder
+  url: https://packagist.org/packages/zencoder/zencoder
+  repository: https://github.com/zencoder/zencoder-php
+  install: composer require zencoder/zencoder
+  official: true
+- language: python
+  registry: pypi
+  name: zencoder
+  url: https://pypi.org/project/zencoder/
+  repository: https://github.com/zencoder/zencoder-py
+  install: pip install zencoder
+  official: true
+- language: javascript
+  registry: npm
+  name: zencoder
+  url: https://www.npmjs.com/package/zencoder
+  repository: https://github.com/zencoder/zencoder-node
+  install: npm install zencoder
+  official: true
+- language: java
+  registry: github
+  name: zencoder-java
+  url: https://github.com/zencoder/zencoder-java
+  repository: https://github.com/zencoder/zencoder-java
+  official: true
+- language: elixir
+  registry: hex
+  name: zencoder
+  url: https://hex.pm/packages/zencoder
+  repository: https://github.com/zencoder/zencoder-ex
+  install: mix deps.get
+  official: true
+- language: csharp
+  registry: github
+  name: zencoder-cs
+  url: https://github.com/ChadBurggraf/zencoder-cs
+  repository: https://github.com/ChadBurggraf/zencoder-cs
+  official: false
+- language: clojure
+  registry: github
+  name: zenclient
+  url: https://github.com/rcampbell/zenclient
+  repository: https://github.com/rcampbell/zenclient
+  official: false
+- language: go
+  registry: github
+  name: zencoder
+  url: https://github.com/brandscreen/zencoder
+  repository: https://github.com/brandscreen/zencoder
+  official: false

@@ -1,0 +1,20 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/zencoder-openapi-original.yml
+notes: >-
+  Packaged Agent Skills for the Zencoder v2 API. No provider-published skills/AGENTS.md was found;
+  these are generated from the OpenAPI operations plus the repo's conventions/errors/webhook artifacts.
+  Every operationId is verified against openapi/zencoder-openapi-original.yml.
+skills:
+- file: zencoder-encode-and-monitor.md
+  name: Encode a video and monitor it to completion
+  api: openapi/zencoder-openapi-original.yml
+  operations: [createJob, getJobProgress, getJob, getOutputDetails]
+- file: zencoder-cancel-and-resubmit.md
+  name: Cancel or resubmit an encoding job
+  api: openapi/zencoder-openapi-original.yml
+  operations: [getJobs, getJob, cancelJob, resubmitJob]
+- file: zencoder-usage-reporting.md
+  name: Pull Zencoder usage and minutes reports
+  api: openapi/zencoder-openapi-original.yml
+  operations: [getAccountDetails, getUsageReport, getMinutesUsed]
