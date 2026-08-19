@@ -1,0 +1,230 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Zencoder Accounts Jobs API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.zencoder.com/api/v2/jobs",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to return"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return for each page"
+              }
+            ]
+          },
+          "docs": "'A list of jobs can be obtained by sending an HTTP GET request to https://app.zencoder.com/api/v2/jobs?api_key=93h630j1dsyshjef620qlkavnmzui3 (replace the api_key with your own). It will return an array of jobs similar to the example below. The list of thumbnails will be empty until the job is completed. By default, the results are paginated with 50 jobs per page and sorted by ID in descending order. You can pass two parameters to control the paging: page and per_page. per_page has a limit of 50"
+        },
+        {
+          "info": {
+            "name": "Create an Encoding Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.zencoder.com/api/v2/jobs",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "'Encoding jobs are created by sending an HTTP POST request to https://app.zencoder.com/api/v2/jobs. The post body must include one thing: the URL of a video to process. It may also include output settings for the job, including an output destination, notification settings, and transcoding settings. You also must send a Zencoder API Key in a `Zencoder-Api-Key` header.'"
+        },
+        {
+          "info": {
+            "name": "Get Job Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.zencoder.com/api/v2/jobs/:job_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to return"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return for each page"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "The Zencoder job id"
+              }
+            ]
+          },
+          "docs": "Get Job Details. Job details are available for two months after the job is submitted."
+        },
+        {
+          "info": {
+            "name": "Resubmit a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.zencoder.com/api/v2/jobs/:job_id/resubmit",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to return"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return for each page"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "The Zencoder job id"
+              }
+            ]
+          },
+          "docs": "'If a job has failed processing with a transient error that may be solved by attempting processing again (such as a network timeout, or if you fix permissions on your server that had caused a download permission error) you may request that it be attempted again.\n\nYou may resubmit a job for processing by sending a PUT request to https://app.zencoder.com/api/v2/jobs/1234/resubmit?api_key=93h630j1dsyshjef620qlkavnmzui3. Only jobs that are not in the “finished” state may be resubmitted. If resubmiss"
+        },
+        {
+          "info": {
+            "name": "Get Job Progress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.zencoder.com/api/v2/jobs/:job_id/progress",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to return"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return for each page"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "The Zencoder job id"
+              }
+            ]
+          },
+          "docs": "'Get the progress of a job. The return will contain one or more of the following keys: `state`, `input`, `outputs`, and `progress`.'"
+        },
+        {
+          "info": {
+            "name": "Cancel a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.zencoder.com/api/v2/jobs/:job_id/cancel",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "The Zencoder job id"
+              }
+            ]
+          },
+          "docs": "'If you wish to cancel a job that has not yet finished processing you may send a request (using any HTTP method) to https://app.zencoder.com/api/v2/jobs/1234/cancel. If cancellation succeeds you will receive a 204 No Content response. Only jobs that are in the `waiting` or `processing` state may be cancelled. If you attempt to cancel a job in any other state you will receive a 409 Conflict response.'"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

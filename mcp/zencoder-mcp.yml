@@ -57,3 +57,9 @@ tools:
 - name: getMinutesUsed
   description: Get Minutes Used
   source_operation: openapi/zencoder-openapi-original.yml#getMinutesUsed
+deployment:
+  mode: none
+  verified: derived
+  tools: 16
+  checked: '2026-08-12'
+  source: catalog MCP census

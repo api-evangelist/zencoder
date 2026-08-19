@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Zencoder Accounts Inputs API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inputs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Input Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.zencoder.com/api/v2/inputs/:input_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to return"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return for each page"
+              },
+              {
+                "name": "input_id",
+                "value": "",
+                "type": "path",
+                "description": "A Zencoder job input id"
+              }
+            ]
+          },
+          "docs": "Get job input Details. Job details are available for two months after the job is submitted."
+        },
+        {
+          "info": {
+            "name": "Get Input Progress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.zencoder.com/api/v2/inputs/:input_id/progress",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to return"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return for each page"
+              },
+              {
+                "name": "input_id",
+                "value": "",
+                "type": "path",
+                "description": "A Zencoder job input id"
+              }
+            ]
+          },
+          "docs": "Get the progress of processing for the input file. The current_event_progress number is the percent complete of the current event – so if the event is Downloading, and current_event_progress is 99.3421, then the file is almost finished downloading, but hasn't started Inspecting yet.\n\nThe progress number is the overall percentage of completion for the input. The progress number is the percent complete of the current event – so if the event is Downloading, and progress is 99.3421, then the file is"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

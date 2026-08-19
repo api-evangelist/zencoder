@@ -1,0 +1,1515 @@
+{
+  "item": [
+    {
+      "id": "0790e66a-9001-47b7-921f-9842f29843e3",
+      "name": "Jobs",
+      "description": {
+        "content": "Operations for managing Zencoder encoding jobs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0d937cdc-fb4b-4f9e-9cf1-212d64b7cb19",
+          "name": "Create an Encoding Job",
+          "request": {
+            "name": "Create an Encoding Job",
+            "description": {
+              "content": "'Encoding jobs are created by sending an HTTP POST request to https://app.zencoder.com/api/v2/jobs. The post body must include one thing: the URL of a video to process. It may also include output settings for the job, including an output destination, notification settings, and transcoding settings. You also must send a Zencoder API Key in a `Zencoder-Api-Key` header.'",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your API key",
+                "key": "Zencoder-Api-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"dynamic_profile_options\": {\n    \"min_renditions\": 1,\n    \"max_renditions\": 8,\n    \"min_resolution\": {\n      \"height\": 108,\n      \"width\": 192\n    },\n    \"max_resolution\": {\n      \"height\": \"(sourse height)\",\n      \"width\": \"(source width)\"\n    },\n    \"max_frame_rate\": 30,\n    \"keyframe_rate\": 0.5,\n    \"fixed_frame_rate\": true,\n    \"max_bitrate\": 15000,\n    \"min_bitrate\": 200,\n    \"max_first_rendition_bitrate\": 700,\n    \"min_granularity\": 90,\n    \"max_granularity\": 30,\n    \"video_codec\": \"h264\",\n    \"bitrate_cap_to_bitrate_ratio\": 1.3,\n    \"buffer_size_to_bitrate_ratio\": 2,\n    \"bitrate_cap_offset\": 64,\n    \"buffer_size_offset\": 85,\n    \"quality_rate_tune\": 0,\n    \"select_baseline_profile_configuration\": true,\n    \"select_distinct_configurations\": false,\n    \"video_configurations\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  },\n  \"generate_dynamic_profile\": false,\n  \"region\": \"us\",\n  \"test\": false,\n  \"private\": false,\n  \"pass_through\": \"<string>\",\n  \"mock\": false,\n  \"grouping\": \"<string>\",\n  \"aspera_transfer_policy\": \"fair\",\n  \"transfer_minimum_rate\": 1800,\n  \"transfer_maximum_rate\": 250000,\n  \"expected_md5_checksum\": \"<string>\",\n  \"credentials\": \"<string>\",\n  \"notifications\": [\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": \"<object>\",\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"<string>\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": false,\n      \"caption_url\": \"<string>\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": \"<integer>\",\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": \"<number>\",\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": \"<number>\",\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"<string>\",\n      \"decryption_key_url\": \"<string>\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"<string>\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"<string>\",\n      \"encryption_key\": \"<string>\",\n      \"encryption_key_rotation_period\": \"<integer>\",\n      \"encryption_key_url\": \"<string>\",\n      \"encryption_key_url_prefix\": \"<string>\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"<string>\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"<string>\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"<string>\",\n      \"select_audio_service_type\": \"<string>\",\n      \"size\": \"<string>\",\n      \"skip\": {\n        \"min_size\": \"<string>\",\n        \"max_size\": \"<string>\",\n        \"min_duration\": \"<integer>\",\n        \"max_duration\": \"<integer>\",\n        \"min_audio_bitrate\": \"<integer>\",\n        \"max_audio_bitrate\": \"<integer>\",\n        \"min_video_bitrate\": \"<integer>\",\n        \"max_video_bitrate\": \"<integer>\",\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"<string>\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"<string>\",\n          \"bandwidth\": \"<integer>\",\n          \"resolution\": \"<string>\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"<string>\",\n          \"bandwidth\": \"<integer>\",\n          \"resolution\": \"<string>\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": \"<integer>\",\n      \"ts_cbr\": false,\n      \"ts_muxrate\": \"<integer>\",\n      \"ts_pcr_pid\": \"<integer>\",\n      \"ts_pmt_pid\": \"<integer>\",\n      \"ts_video_pid\": \"<integer>\",\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": \"<integer>\",\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    },\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": \"<object>\",\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"<string>\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": false,\n      \"caption_url\": \"<string>\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": \"<integer>\",\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": \"<number>\",\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": \"<number>\",\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"<string>\",\n      \"decryption_key_url\": \"<string>\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"<string>\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"<string>\",\n      \"encryption_key\": \"<string>\",\n      \"encryption_key_rotation_period\": \"<integer>\",\n      \"encryption_key_url\": \"<string>\",\n      \"encryption_key_url_prefix\": \"<string>\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"<string>\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"<string>\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"<string>\",\n      \"select_audio_service_type\": \"<string>\",\n      \"size\": \"<string>\",\n      \"skip\": {\n        \"min_size\": \"<string>\",\n        \"max_size\": \"<string>\",\n        \"min_duration\": \"<integer>\",\n        \"max_duration\": \"<integer>\",\n        \"min_audio_bitrate\": \"<integer>\",\n        \"max_audio_bitrate\": \"<integer>\",\n        \"min_video_bitrate\": \"<integer>\",\n        \"max_video_bitrate\": \"<integer>\",\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"<string>\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"<string>\",\n          \"bandwidth\": \"<integer>\",\n          \"resolution\": \"<string>\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"<string>\",\n          \"bandwidth\": \"<integer>\",\n          \"resolution\": \"<string>\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": \"<integer>\",\n      \"ts_cbr\": false,\n      \"ts_muxrate\": \"<integer>\",\n      \"ts_pcr_pid\": \"<integer>\",\n      \"ts_pmt_pid\": \"<integer>\",\n      \"ts_video_pid\": \"<integer>\",\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": \"<integer>\",\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a1a041a9-2cf5-4a81-9c67-7c840a3b257c",
+              "name": "A list of videos.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"s3://zencodertesting/test.mov\",\n  \"dynamic_profile_options\": {\n    \"min_renditions\": 1,\n    \"max_renditions\": 8,\n    \"min_resolution\": {\n      \"height\": 108,\n      \"width\": 192\n    },\n    \"max_resolution\": {\n      \"height\": \"(sourse height)\",\n      \"width\": \"(source width)\"\n    },\n    \"max_frame_rate\": 30,\n    \"keyframe_rate\": 0.5,\n    \"fixed_frame_rate\": true,\n    \"max_bitrate\": 15000,\n    \"min_bitrate\": 200,\n    \"max_first_rendition_bitrate\": 700,\n    \"min_granularity\": 90,\n    \"max_granularity\": 30,\n    \"video_codec\": \"h264\",\n    \"bitrate_cap_to_bitrate_ratio\": 1.3,\n    \"buffer_size_to_bitrate_ratio\": 2,\n    \"bitrate_cap_offset\": 64,\n    \"buffer_size_offset\": 85,\n    \"quality_rate_tune\": 0,\n    \"select_baseline_profile_configuration\": true,\n    \"select_distinct_configurations\": false,\n    \"video_configurations\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  },\n  \"generate_dynamic_profile\": false,\n  \"region\": \"us-virginia\",\n  \"test\": false,\n  \"private\": false,\n  \"pass_through\": \"my-custom-pass-through-value\",\n  \"mock\": false,\n  \"grouping\": \"my-custom-group-name\",\n  \"aspera_transfer_policy\": \"fair\",\n  \"transfer_minimum_rate\": 2500,\n  \"transfer_maximum_rate\": 300000,\n  \"expected_md5_checksum\": \"d5ed34b6b49f57a4a5f4be72fc0a2cd4\",\n  \"credentials\": \"my_s3_credentials\",\n  \"notifications\": [\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": {\n        \"input\": \"s3://zencodertesting/test.mov\",\n        \"outputs\": [\n          {\n            \"type\": \"playlist\",\n            \"alternate_audio\": {\n              \"custom_audio_group\": [\n                {\n                  \"source\": \"english-audio\",\n                  \"path\": \"alternate-audio-en.m3u8\",\n                  \"language\": \"en\"\n                },\n                {\n                  \"source\": \"french-audio\",\n                  \"path\": \"alternate-audio-fr.m3u8\",\n                  \"language\": \"fr\"\n                }\n              ],\n              \"secondary_audio_group\": {\n                \"path\": \"path/to/secondary-audio-group.m3u8\",\n                \"language\": \"en\",\n                \"name\": \"Secondary English Audio Track\",\n                \"source\": \"secondary-english-audio\"\n              }\n            }\n          }\n        ]\n      },\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"en-US\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": \"stc-episode-3-transcript.json\",\n      \"caption_url\": \"http://example.com/captions.scc\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": 26,\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"decryption_key_url\": \"http://example.com/encryption.key\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"super-secret-password\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key_rotation_period\": 10,\n      \"encryption_key_url\": \"http://example.com/encryption.key\",\n      \"encryption_key_url_prefix\": \"keys/\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"super-secret-password\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"my_iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"8:9\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"eng\",\n      \"select_audio_service_type\": \"main\",\n      \"size\": \"640x360\",\n      \"skip\": {\n        \"min_size\": \"640x360\",\n        \"max_size\": \"640x360\",\n        \"min_duration\": 300,\n        \"max_duration\": 600,\n        \"min_audio_bitrate\": 128,\n        \"max_audio_bitrate\": 160,\n        \"min_video_bitrate\": 800,\n        \"max_video_bitrate\": 2000,\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"dash\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": 33,\n      \"ts_cbr\": false,\n      \"ts_muxrate\": 2600,\n      \"ts_pcr_pid\": 34,\n      \"ts_pmt_pid\": 16,\n      \"ts_video_pid\": 32,\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": 5,\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    },\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": {\n        \"input\": \"s3://zencodertesting/test.mov\",\n        \"outputs\": [\n          {\n            \"type\": \"playlist\",\n            \"alternate_audio\": {\n              \"custom_audio_group\": [\n                {\n                  \"source\": \"english-audio\",\n                  \"path\": \"alternate-audio-en.m3u8\",\n                  \"language\": \"en\"\n                },\n                {\n                  \"source\": \"french-audio\",\n                  \"path\": \"alternate-audio-fr.m3u8\",\n                  \"language\": \"fr\"\n                }\n              ],\n              \"secondary_audio_group\": {\n                \"path\": \"path/to/secondary-audio-group.m3u8\",\n                \"language\": \"en\",\n                \"name\": \"Secondary English Audio Track\",\n                \"source\": \"secondary-english-audio\"\n              }\n            }\n          }\n        ]\n      },\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"en-US\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": \"stc-episode-3-transcript.json\",\n      \"caption_url\": \"http://example.com/captions.scc\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": 26,\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"decryption_key_url\": \"http://example.com/encryption.key\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"super-secret-password\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key_rotation_period\": 10,\n      \"encryption_key_url\": \"http://example.com/encryption.key\",\n      \"encryption_key_url_prefix\": \"keys/\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"super-secret-password\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"my_iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"8:9\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"eng\",\n      \"select_audio_service_type\": \"main\",\n      \"size\": \"640x360\",\n      \"skip\": {\n        \"min_size\": \"640x360\",\n        \"max_size\": \"640x360\",\n        \"min_duration\": 300,\n        \"max_duration\": 600,\n        \"min_audio_bitrate\": 128,\n        \"max_audio_bitrate\": 160,\n        \"min_video_bitrate\": 800,\n        \"max_video_bitrate\": 2000,\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"dash\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": 33,\n      \"ts_cbr\": false,\n      \"ts_muxrate\": 2600,\n      \"ts_pcr_pid\": 34,\n      \"ts_pmt_pid\": 16,\n      \"ts_video_pid\": 32,\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": 5,\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 365524597,\n  \"outputs\": [\n    {\n      \"id\": 1294836780,\n      \"url\": \"string\",\n      \"label\": \"string\"\n    },\n    {\n      \"id\": 1294836780,\n      \"url\": \"string\",\n      \"label\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4491ef93-5233-4970-b0ba-85e76772c50b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"s3://zencodertesting/test.mov\",\n  \"dynamic_profile_options\": {\n    \"min_renditions\": 1,\n    \"max_renditions\": 8,\n    \"min_resolution\": {\n      \"height\": 108,\n      \"width\": 192\n    },\n    \"max_resolution\": {\n      \"height\": \"(sourse height)\",\n      \"width\": \"(source width)\"\n    },\n    \"max_frame_rate\": 30,\n    \"keyframe_rate\": 0.5,\n    \"fixed_frame_rate\": true,\n    \"max_bitrate\": 15000,\n    \"min_bitrate\": 200,\n    \"max_first_rendition_bitrate\": 700,\n    \"min_granularity\": 90,\n    \"max_granularity\": 30,\n    \"video_codec\": \"h264\",\n    \"bitrate_cap_to_bitrate_ratio\": 1.3,\n    \"buffer_size_to_bitrate_ratio\": 2,\n    \"bitrate_cap_offset\": 64,\n    \"buffer_size_offset\": 85,\n    \"quality_rate_tune\": 0,\n    \"select_baseline_profile_configuration\": true,\n    \"select_distinct_configurations\": false,\n    \"video_configurations\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  },\n  \"generate_dynamic_profile\": false,\n  \"region\": \"us-virginia\",\n  \"test\": false,\n  \"private\": false,\n  \"pass_through\": \"my-custom-pass-through-value\",\n  \"mock\": false,\n  \"grouping\": \"my-custom-group-name\",\n  \"aspera_transfer_policy\": \"fair\",\n  \"transfer_minimum_rate\": 2500,\n  \"transfer_maximum_rate\": 300000,\n  \"expected_md5_checksum\": \"d5ed34b6b49f57a4a5f4be72fc0a2cd4\",\n  \"credentials\": \"my_s3_credentials\",\n  \"notifications\": [\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": {\n        \"input\": \"s3://zencodertesting/test.mov\",\n        \"outputs\": [\n          {\n            \"type\": \"playlist\",\n            \"alternate_audio\": {\n              \"custom_audio_group\": [\n                {\n                  \"source\": \"english-audio\",\n                  \"path\": \"alternate-audio-en.m3u8\",\n                  \"language\": \"en\"\n                },\n                {\n                  \"source\": \"french-audio\",\n                  \"path\": \"alternate-audio-fr.m3u8\",\n                  \"language\": \"fr\"\n                }\n              ],\n              \"secondary_audio_group\": {\n                \"path\": \"path/to/secondary-audio-group.m3u8\",\n                \"language\": \"en\",\n                \"name\": \"Secondary English Audio Track\",\n                \"source\": \"secondary-english-audio\"\n              }\n            }\n          }\n        ]\n      },\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"en-US\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": \"stc-episode-3-transcript.json\",\n      \"caption_url\": \"http://example.com/captions.scc\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": 26,\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"decryption_key_url\": \"http://example.com/encryption.key\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"super-secret-password\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key_rotation_period\": 10,\n      \"encryption_key_url\": \"http://example.com/encryption.key\",\n      \"encryption_key_url_prefix\": \"keys/\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"super-secret-password\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"my_iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"8:9\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"eng\",\n      \"select_audio_service_type\": \"main\",\n      \"size\": \"640x360\",\n      \"skip\": {\n        \"min_size\": \"640x360\",\n        \"max_size\": \"640x360\",\n        \"min_duration\": 300,\n        \"max_duration\": 600,\n        \"min_audio_bitrate\": 128,\n        \"max_audio_bitrate\": 160,\n        \"min_video_bitrate\": 800,\n        \"max_video_bitrate\": 2000,\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"dash\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": 33,\n      \"ts_cbr\": false,\n      \"ts_muxrate\": 2600,\n      \"ts_pcr_pid\": 34,\n      \"ts_pmt_pid\": 16,\n      \"ts_video_pid\": 32,\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": 5,\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    },\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": {\n        \"input\": \"s3://zencodertesting/test.mov\",\n        \"outputs\": [\n          {\n            \"type\": \"playlist\",\n            \"alternate_audio\": {\n              \"custom_audio_group\": [\n                {\n                  \"source\": \"english-audio\",\n                  \"path\": \"alternate-audio-en.m3u8\",\n                  \"language\": \"en\"\n                },\n                {\n                  \"source\": \"french-audio\",\n                  \"path\": \"alternate-audio-fr.m3u8\",\n                  \"language\": \"fr\"\n                }\n              ],\n              \"secondary_audio_group\": {\n                \"path\": \"path/to/secondary-audio-group.m3u8\",\n                \"language\": \"en\",\n                \"name\": \"Secondary English Audio Track\",\n                \"source\": \"secondary-english-audio\"\n              }\n            }\n          }\n        ]\n      },\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"en-US\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": \"stc-episode-3-transcript.json\",\n      \"caption_url\": \"http://example.com/captions.scc\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": 26,\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"decryption_key_url\": \"http://example.com/encryption.key\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"super-secret-password\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key_rotation_period\": 10,\n      \"encryption_key_url\": \"http://example.com/encryption.key\",\n      \"encryption_key_url_prefix\": \"keys/\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"super-secret-password\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"my_iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"8:9\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"eng\",\n      \"select_audio_service_type\": \"main\",\n      \"size\": \"640x360\",\n      \"skip\": {\n        \"min_size\": \"640x360\",\n        \"max_size\": \"640x360\",\n        \"min_duration\": 300,\n        \"max_duration\": 600,\n        \"min_audio_bitrate\": 128,\n        \"max_audio_bitrate\": 160,\n        \"min_video_bitrate\": 800,\n        \"max_video_bitrate\": 2000,\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"dash\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": 33,\n      \"ts_cbr\": false,\n      \"ts_muxrate\": 2600,\n      \"ts_pcr_pid\": 34,\n      \"ts_pmt_pid\": 16,\n      \"ts_video_pid\": 32,\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": 5,\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9c5202f3-600b-4fcf-800c-8f8890656efa",
+              "name": "Invalid query parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"s3://zencodertesting/test.mov\",\n  \"dynamic_profile_options\": {\n    \"min_renditions\": 1,\n    \"max_renditions\": 8,\n    \"min_resolution\": {\n      \"height\": 108,\n      \"width\": 192\n    },\n    \"max_resolution\": {\n      \"height\": \"(sourse height)\",\n      \"width\": \"(source width)\"\n    },\n    \"max_frame_rate\": 30,\n    \"keyframe_rate\": 0.5,\n    \"fixed_frame_rate\": true,\n    \"max_bitrate\": 15000,\n    \"min_bitrate\": 200,\n    \"max_first_rendition_bitrate\": 700,\n    \"min_granularity\": 90,\n    \"max_granularity\": 30,\n    \"video_codec\": \"h264\",\n    \"bitrate_cap_to_bitrate_ratio\": 1.3,\n    \"buffer_size_to_bitrate_ratio\": 2,\n    \"bitrate_cap_offset\": 64,\n    \"buffer_size_offset\": 85,\n    \"quality_rate_tune\": 0,\n    \"select_baseline_profile_configuration\": true,\n    \"select_distinct_configurations\": false,\n    \"video_configurations\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  },\n  \"generate_dynamic_profile\": false,\n  \"region\": \"us-virginia\",\n  \"test\": false,\n  \"private\": false,\n  \"pass_through\": \"my-custom-pass-through-value\",\n  \"mock\": false,\n  \"grouping\": \"my-custom-group-name\",\n  \"aspera_transfer_policy\": \"fair\",\n  \"transfer_minimum_rate\": 2500,\n  \"transfer_maximum_rate\": 300000,\n  \"expected_md5_checksum\": \"d5ed34b6b49f57a4a5f4be72fc0a2cd4\",\n  \"credentials\": \"my_s3_credentials\",\n  \"notifications\": [\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": {\n        \"input\": \"s3://zencodertesting/test.mov\",\n        \"outputs\": [\n          {\n            \"type\": \"playlist\",\n            \"alternate_audio\": {\n              \"custom_audio_group\": [\n                {\n                  \"source\": \"english-audio\",\n                  \"path\": \"alternate-audio-en.m3u8\",\n                  \"language\": \"en\"\n                },\n                {\n                  \"source\": \"french-audio\",\n                  \"path\": \"alternate-audio-fr.m3u8\",\n                  \"language\": \"fr\"\n                }\n              ],\n              \"secondary_audio_group\": {\n                \"path\": \"path/to/secondary-audio-group.m3u8\",\n                \"language\": \"en\",\n                \"name\": \"Secondary English Audio Track\",\n                \"source\": \"secondary-english-audio\"\n              }\n            }\n          }\n        ]\n      },\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"en-US\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": \"stc-episode-3-transcript.json\",\n      \"caption_url\": \"http://example.com/captions.scc\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": 26,\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"decryption_key_url\": \"http://example.com/encryption.key\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"super-secret-password\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key_rotation_period\": 10,\n      \"encryption_key_url\": \"http://example.com/encryption.key\",\n      \"encryption_key_url_prefix\": \"keys/\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"super-secret-password\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"my_iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"8:9\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"eng\",\n      \"select_audio_service_type\": \"main\",\n      \"size\": \"640x360\",\n      \"skip\": {\n        \"min_size\": \"640x360\",\n        \"max_size\": \"640x360\",\n        \"min_duration\": 300,\n        \"max_duration\": 600,\n        \"min_audio_bitrate\": 128,\n        \"max_audio_bitrate\": 160,\n        \"min_video_bitrate\": 800,\n        \"max_video_bitrate\": 2000,\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"dash\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": 33,\n      \"ts_cbr\": false,\n      \"ts_muxrate\": 2600,\n      \"ts_pcr_pid\": 34,\n      \"ts_pmt_pid\": 16,\n      \"ts_video_pid\": 32,\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": 5,\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    },\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": {\n        \"input\": \"s3://zencodertesting/test.mov\",\n        \"outputs\": [\n          {\n            \"type\": \"playlist\",\n            \"alternate_audio\": {\n              \"custom_audio_group\": [\n                {\n                  \"source\": \"english-audio\",\n                  \"path\": \"alternate-audio-en.m3u8\",\n                  \"language\": \"en\"\n                },\n                {\n                  \"source\": \"french-audio\",\n                  \"path\": \"alternate-audio-fr.m3u8\",\n                  \"language\": \"fr\"\n                }\n              ],\n              \"secondary_audio_group\": {\n                \"path\": \"path/to/secondary-audio-group.m3u8\",\n                \"language\": \"en\",\n                \"name\": \"Secondary English Audio Track\",\n                \"source\": \"secondary-english-audio\"\n              }\n            }\n          }\n        ]\n      },\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"en-US\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": \"stc-episode-3-transcript.json\",\n      \"caption_url\": \"http://example.com/captions.scc\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": 26,\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"decryption_key_url\": \"http://example.com/encryption.key\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"super-secret-password\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key_rotation_period\": 10,\n      \"encryption_key_url\": \"http://example.com/encryption.key\",\n      \"encryption_key_url_prefix\": \"keys/\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"super-secret-password\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"my_iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"8:9\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"eng\",\n      \"select_audio_service_type\": \"main\",\n      \"size\": \"640x360\",\n      \"skip\": {\n        \"min_size\": \"640x360\",\n        \"max_size\": \"640x360\",\n        \"min_duration\": 300,\n        \"max_duration\": 600,\n        \"min_audio_bitrate\": 128,\n        \"max_audio_bitrate\": 160,\n        \"min_video_bitrate\": 800,\n        \"max_video_bitrate\": 2000,\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"dash\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": 33,\n      \"ts_cbr\": false,\n      \"ts_muxrate\": 2600,\n      \"ts_pcr_pid\": 34,\n      \"ts_pmt_pid\": 16,\n      \"ts_video_pid\": 32,\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": 5,\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7b65d2dc-bdb0-4f70-aa9f-316cc520898f",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"s3://zencodertesting/test.mov\",\n  \"dynamic_profile_options\": {\n    \"min_renditions\": 1,\n    \"max_renditions\": 8,\n    \"min_resolution\": {\n      \"height\": 108,\n      \"width\": 192\n    },\n    \"max_resolution\": {\n      \"height\": \"(sourse height)\",\n      \"width\": \"(source width)\"\n    },\n    \"max_frame_rate\": 30,\n    \"keyframe_rate\": 0.5,\n    \"fixed_frame_rate\": true,\n    \"max_bitrate\": 15000,\n    \"min_bitrate\": 200,\n    \"max_first_rendition_bitrate\": 700,\n    \"min_granularity\": 90,\n    \"max_granularity\": 30,\n    \"video_codec\": \"h264\",\n    \"bitrate_cap_to_bitrate_ratio\": 1.3,\n    \"buffer_size_to_bitrate_ratio\": 2,\n    \"bitrate_cap_offset\": 64,\n    \"buffer_size_offset\": 85,\n    \"quality_rate_tune\": 0,\n    \"select_baseline_profile_configuration\": true,\n    \"select_distinct_configurations\": false,\n    \"video_configurations\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  },\n  \"generate_dynamic_profile\": false,\n  \"region\": \"us-virginia\",\n  \"test\": false,\n  \"private\": false,\n  \"pass_through\": \"my-custom-pass-through-value\",\n  \"mock\": false,\n  \"grouping\": \"my-custom-group-name\",\n  \"aspera_transfer_policy\": \"fair\",\n  \"transfer_minimum_rate\": 2500,\n  \"transfer_maximum_rate\": 300000,\n  \"expected_md5_checksum\": \"d5ed34b6b49f57a4a5f4be72fc0a2cd4\",\n  \"credentials\": \"my_s3_credentials\",\n  \"notifications\": [\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"format\": \"<string>\",\n      \"headers\": \"<object>\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": {\n        \"input\": \"s3://zencodertesting/test.mov\",\n        \"outputs\": [\n          {\n            \"type\": \"playlist\",\n            \"alternate_audio\": {\n              \"custom_audio_group\": [\n                {\n                  \"source\": \"english-audio\",\n                  \"path\": \"alternate-audio-en.m3u8\",\n                  \"language\": \"en\"\n                },\n                {\n                  \"source\": \"french-audio\",\n                  \"path\": \"alternate-audio-fr.m3u8\",\n                  \"language\": \"fr\"\n                }\n              ],\n              \"secondary_audio_group\": {\n                \"path\": \"path/to/secondary-audio-group.m3u8\",\n                \"language\": \"en\",\n                \"name\": \"Secondary English Audio Track\",\n                \"source\": \"secondary-english-audio\"\n              }\n            }\n          }\n        ]\n      },\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"en-US\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": \"stc-episode-3-transcript.json\",\n      \"caption_url\": \"http://example.com/captions.scc\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": 26,\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"decryption_key_url\": \"http://example.com/encryption.key\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"super-secret-password\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key_rotation_period\": 10,\n      \"encryption_key_url\": \"http://example.com/encryption.key\",\n      \"encryption_key_url_prefix\": \"keys/\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"super-secret-password\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"my_iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"8:9\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"eng\",\n      \"select_audio_service_type\": \"main\",\n      \"size\": \"640x360\",\n      \"skip\": {\n        \"min_size\": \"640x360\",\n        \"max_size\": \"640x360\",\n        \"min_duration\": 300,\n        \"max_duration\": 600,\n        \"min_audio_bitrate\": 128,\n        \"max_audio_bitrate\": 160,\n        \"min_video_bitrate\": 800,\n        \"max_video_bitrate\": 2000,\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"dash\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": 33,\n      \"ts_cbr\": false,\n      \"ts_muxrate\": 2600,\n      \"ts_pcr_pid\": 34,\n      \"ts_pmt_pid\": 16,\n      \"ts_video_pid\": 32,\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": 5,\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    },\n    {\n      \"aac-lc\": \"he-aac-v2\",\n      \"access_control\": [\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        },\n        {\n          \"grantee\": \"<string>\",\n          \"permission\": \"<string>\"\n        }\n      ],\n      \"allow_skipped_sources\": false,\n      \"alpha_transparency\": false,\n      \"alternate_audio\": {\n        \"input\": \"s3://zencodertesting/test.mov\",\n        \"outputs\": [\n          {\n            \"type\": \"playlist\",\n            \"alternate_audio\": {\n              \"custom_audio_group\": [\n                {\n                  \"source\": \"english-audio\",\n                  \"path\": \"alternate-audio-en.m3u8\",\n                  \"language\": \"en\"\n                },\n                {\n                  \"source\": \"french-audio\",\n                  \"path\": \"alternate-audio-fr.m3u8\",\n                  \"language\": \"fr\"\n                }\n              ],\n              \"secondary_audio_group\": {\n                \"path\": \"path/to/secondary-audio-group.m3u8\",\n                \"language\": \"en\",\n                \"name\": \"Secondary English Audio Track\",\n                \"source\": \"secondary-english-audio\"\n              }\n            }\n          }\n        ]\n      },\n      \"aspect_mode\": \"preserve\",\n      \"aspera_transfer_policy\": \"fair\",\n      \"audio_bitrate\": \"<integer>\",\n      \"audio_codec\": \"<string>\",\n      \"audio_constant_bitrate\": false,\n      \"audio_language\": \"en-US\",\n      \"audio_quality\": 3,\n      \"base_url\": \"<string>\",\n      \"byte_range_segmenting\": false,\n      \"cae_options\": {\n        \"min_renditions\": 1,\n        \"max_renditions\": 8,\n        \"min_resolution\": {\n          \"height\": 108,\n          \"width\": 192\n        },\n        \"max_resolution\": {\n          \"height\": \"(sourse height)\",\n          \"width\": \"(source width)\"\n        },\n        \"max_frame_rate\": 30,\n        \"keyframe_rate\": 0.5,\n        \"fixed_frame_rate\": true,\n        \"max_bitrate\": 15000,\n        \"min_bitrate\": 200,\n        \"max_first_rendition_bitrate\": 700,\n        \"min_granularity\": 90,\n        \"max_granularity\": 30,\n        \"video_codec\": \"h264\",\n        \"bitrate_cap_to_bitrate_ratio\": 1.3,\n        \"buffer_size_to_bitrate_ratio\": 2,\n        \"bitrate_cap_offset\": 64,\n        \"buffer_size_offset\": 85,\n        \"quality_rate_tune\": 0,\n        \"select_baseline_profile_configuration\": true,\n        \"select_distinct_configurations\": false,\n        \"video_configurations\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      },\n      \"caption_from_audio_transcription\": false,\n      \"include_transcription_json\": false,\n      \"transcription_filename\": \"stc-episode-3-transcript.json\",\n      \"caption_url\": \"http://example.com/captions.scc\",\n      \"clip_length\": \"<string>\",\n      \"constant_bitrate\": false,\n      \"copy_audio\": false,\n      \"copy_video\": false,\n      \"credentials\": \"<string>\",\n      \"crf\": 26,\n      \"cue_points\": [\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"time\": 30.4,\n          \"name\": \"<number>\",\n          \"data\": \"<number>\"\n        }\n      ],\n      \"decimate\": \"<integer>\",\n      \"decoder_bitrate_cap\": \"<integer>\",\n      \"decoder_buffer_size\": \"<integer>\",\n      \"decryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"decryption_key_url\": \"http://example.com/encryption.key\",\n      \"decryption_method\": \"<string>\",\n      \"decryption_password\": \"super-secret-password\",\n      \"device_profile\": \"<string>\",\n      \"drm\": {\n        \"method\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"key_id\": \"<string>\",\n        \"key_guid\": \"<string>\",\n        \"user_key\": \"<string>\",\n        \"server_key\": \"<string>\",\n        \"media_id\": \"<string>\",\n        \"content_id\": \"<string>\",\n        \"content_key\": \"<string>\",\n        \"schemas\": [\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"license_acquisition_url\": \"<string>\"\n          }\n        ]\n      },\n      \"dynamic_profile_rendition\": \"<integer>\",\n      \"encryption_iv\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key\": \"a5f6a7d6ef5d6a7a02a23dd35dd56a63\",\n      \"encryption_key_rotation_period\": 10,\n      \"encryption_key_url\": \"http://example.com/encryption.key\",\n      \"encryption_key_url_prefix\": \"keys/\",\n      \"encryption_method\": \"<string>\",\n      \"encryption_password\": \"super-secret-password\",\n      \"filename\": \"<string>\",\n      \"fixed_keyframe_interval\": false,\n      \"force_interlace_headers\": false,\n      \"forced_keyframe_interval\": \"<integer>\",\n      \"forced_keyframe_rate\": \"<number>\",\n      \"forensic_watermark\": \"<string>\",\n      \"forensic_watermark_stub_mode\": \"<boolean>\",\n      \"format\": \"<string>\",\n      \"format_preset\": \"<string>\",\n      \"frame_index_filename\": false,\n      \"frame_rate\": \"(original frame rate)\",\n      \"generate_frame_index\": false,\n      \"generate_keyframe_manifest\": false,\n      \"generate_md5_checksum\": false,\n      \"headers\": \"<object>\",\n      \"height\": \"<integer>\",\n      \"hint\": false,\n      \"keyframe_interval\": 250,\n      \"keyframe_manifest_filename\": \"my_iframe_index.m3u8\",\n      \"keyframe_rate\": \"(`keyframe_interval` of 250)\",\n      \"label\": \"<string>\",\n      \"lossless_video\": false,\n      \"master_display\": {\n        \"red\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"greeen\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"blue\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"white_point\": {\n          \"x\": \"<number>\",\n          \"y\": \"<number>\"\n        },\n        \"luminence\": {\n          \"min\": \"<number>\",\n          \"max\": \"<number>\"\n        }\n      },\n      \"max_aac_profile\": \"he-aac-v2\",\n      \"max_content_light_level\": \"<number>\",\n      \"max_frame_average_light_level\": \"<number>\",\n      \"max_frame_rate\": \"<number>\",\n      \"max_video_bitrate\": \"<integer>\",\n      \"mtu_size\": 1450,\n      \"one_pass\": false,\n      \"package_filename\": \"<string>\",\n      \"package_format\": \"<string>\",\n      \"parallel_upload_limit\": \"<integer>\",\n      \"playlist_format\": \"<string>\",\n      \"prepare_for_segmenting\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"public\": false,\n      \"quality\": 3,\n      \"rrs\": false,\n      \"sample_aspect_ratio\": \"8:9\",\n      \"secondary_url\": \"<string>\",\n      \"segment_image_url\": \"<string>\",\n      \"segment_seconds\": 10,\n      \"segment_video_snapshots\": false,\n      \"select_audio_language\": \"eng\",\n      \"select_audio_service_type\": \"main\",\n      \"size\": \"640x360\",\n      \"skip\": {\n        \"min_size\": \"640x360\",\n        \"max_size\": \"640x360\",\n        \"min_duration\": 300,\n        \"max_duration\": 600,\n        \"min_audio_bitrate\": 128,\n        \"max_audio_bitrate\": 160,\n        \"min_video_bitrate\": 800,\n        \"max_video_bitrate\": 2000,\n        \"require_audio\": \"<boolean>\",\n        \"require_video\": \"<boolean>\"\n      },\n      \"skip_audio\": false,\n      \"skip_captions\": false,\n      \"skip_video\": false,\n      \"smil-base-url\": \"<string>\",\n      \"source\": \"<string>\",\n      \"speed\": 3,\n      \"start_clip\": \"<string>\",\n      \"streaming_delivery_format\": \"dash\",\n      \"streaming_delivery_profile\": \"<string>\",\n      \"streams\": [\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        {\n          \"path\": \"http://example.com/video/high/index.m3u8\",\n          \"bandwidth\": 500,\n          \"resolution\": \"800x600\",\n          \"codecs\": \"<string>\",\n          \"audio\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      ],\n      \"strict\": false,\n      \"thumbnails\": [\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        },\n        {\n          \"label\": \"<string>\",\n          \"format\": \"png\",\n          \"public\": false\n        }\n      ],\n      \"transfer_maximum_rate\": 250000,\n      \"transfer_minimum_rate\": 1000,\n      \"ts_audio_pid\": 33,\n      \"ts_cbr\": false,\n      \"ts_muxrate\": 2600,\n      \"ts_pcr_pid\": 34,\n      \"ts_pmt_pid\": 16,\n      \"ts_video_pid\": 32,\n      \"type\": \"standard\",\n      \"upscale\": false,\n      \"url\": \"<string>\",\n      \"video_bitrate\": \"<integer>\",\n      \"video_codec\": \"<string>\",\n      \"video_codec_preset\": \"<string>\",\n      \"vp6_2pass_min_section\": 40,\n      \"vp6_compression_mode\": \"good\",\n      \"vp6_deinterlace_mode\": \"adaptive\",\n      \"vp6_denoise_level\": 0,\n      \"vp6_profile\": \"vp6e\",\n      \"vp6_stream_max_buffer\": 5,\n      \"vp6_stream_prebuffer\": 6,\n      \"vp6_temporal_down_watermark\": 20,\n      \"vp6_temporal_resampling\": \"`true` when encoding with a low number of bits per pixel. Otherwise, `false`.\",\n      \"vp6_undershoot_pct\": 75,\n      \"watermarks\": [\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        },\n        {\n          \"url\": \"<string>\",\n          \"x\": \"<string>\",\n          \"y\": \"<string>\",\n          \"width\": \"<string>\",\n          \"height\": \"<string>\",\n          \"origin\": \"content\",\n          \"opacity\": 1\n        }\n      ],\n      \"width\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be98f0b8-ca66-404f-a2e2-8bfb5ce8ece7",
+          "name": "List jobs",
+          "request": {
+            "name": "List jobs",
+            "description": {
+              "content": "'A list of jobs can be obtained by sending an HTTP GET request to https://app.zencoder.com/api/v2/jobs?api_key=93h630j1dsyshjef620qlkavnmzui3 (replace the api_key with your own). It will return an array of jobs similar to the example below. The list of thumbnails will be empty until the job is completed. By default, the results are paginated with 50 jobs per page and sorted by ID in descending order. You can pass two parameters to control the paging: page and per_page. per_page has a limit of 50. Note that historical jobs data is kept by Zencoder for 60 days - if you need to keep jobs data for longer periods, you need to retrieve it within 60 days and save it in your own data storage.'",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "The number of results to return for each page"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your API key",
+                "key": "Zencoder-Api-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "88430213-ac4c-45a1-a3ba-c4a8e62a33d3",
+              "name": "A List of Jobs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 365524597,\n    \"submitted_at\": \"2017-04-20T16:08:02Z\",\n    \"created_at\": \"2017-04-20T16:08:02Z\",\n    \"updated_at\": \"2017-04-20T16:08:02Z\",\n    \"finished_at\": \"2017-04-20T16:08:02Z\",\n    \"state\": \"submitting\",\n    \"input_media_file\": {\n      \"audio_bitrate_in_kbps\": 90,\n      \"audio_codec\": \"aac\",\n      \"audio_sample_rate\": 44100,\n      \"audio_tracks\": 2,\n      \"channels\": 2,\n      \"created_at\": \"2017-04-20T16:08:02Z\",\n      \"updated_at\": \"2017-04-20T16:08:02Z\",\n      \"finished_at\": \"2017-04-20T16:08:02Z\",\n      \"duration_in_ms\": 51312,\n      \"error_class\": \"InvalidAudioSettingsError\",\n      \"error_message\": \"The supplied audio encoding settings were not valid\",\n      \"file_size_bytes\": 922620,\n      \"format\": \"mpeg4\",\n      \"frame_rate\": 30,\n      \"height\": 360,\n      \"id\": 365495537,\n      \"md5_checksum\": 4936,\n      \"privacy\": true,\n      \"state\": \"string\",\n      \"test\": true,\n      \"video_bitrate_in_kbps\": 1402,\n      \"video_codec\": \"h264\",\n      \"width\": 640,\n      \"total_bitrate_in_kbps\": 7906,\n      \"url\": \"s3://zencodertesting/test.mov\"\n    },\n    \"output_media_files\": [\n      {\n        \"audio_bitrate_in_kbps\": 90,\n        \"audio_codec\": \"aac\",\n        \"audio_sample_rate\": 44100,\n        \"channels\": 2,\n        \"created_at\": \"2017-04-20T16:08:02Z\",\n        \"updated_at\": \"2017-04-20T16:08:02Z\",\n        \"finished_at\": \"2017-04-20T16:08:02Z\",\n        \"duration_in_ms\": 51312,\n        \"error_class\": \"InvalidAudioSettingsError\",\n        \"error_message\": \"The supplied audio encoding settings were not valid\",\n        \"file_size_bytes\": 922620,\n        \"fragment_duration_in_ms\": 5478,\n        \"format\": \"mpeg4\",\n        \"frame_rate\": 30,\n        \"height\": 360,\n        \"id\": 365495537,\n        \"label\": \"mp4 high\",\n        \"md5_checksum\": 1399,\n        \"privacy\": true,\n        \"rfc_6381_audio_codec\": \"avc1.42001e\",\n        \"rfc_6381_video_codec\": \"mp4a.40.2\",\n        \"state\": \"string\",\n        \"test\": true,\n        \"video_bitrate_in_kbps\": 1402,\n        \"video_codec\": \"h264\",\n        \"width\": 640,\n        \"total_bitrate_in_kbps\": 7906,\n        \"url\": \"s3://zencodertesting/test.mov\"\n      },\n      {\n        \"audio_bitrate_in_kbps\": 90,\n        \"audio_codec\": \"aac\",\n        \"audio_sample_rate\": 44100,\n        \"channels\": 2,\n        \"created_at\": \"2017-04-20T16:08:02Z\",\n        \"updated_at\": \"2017-04-20T16:08:02Z\",\n        \"finished_at\": \"2017-04-20T16:08:02Z\",\n        \"duration_in_ms\": 51312,\n        \"error_class\": \"InvalidAudioSettingsError\",\n        \"error_message\": \"The supplied audio encoding settings were not valid\",\n        \"file_size_bytes\": 922620,\n        \"fragment_duration_in_ms\": 5478,\n        \"format\": \"mpeg4\",\n        \"frame_rate\": 30,\n        \"height\": 360,\n        \"id\": 365495537,\n        \"label\": \"mp4 high\",\n        \"md5_checksum\": 137,\n        \"privacy\": true,\n        \"rfc_6381_audio_codec\": \"avc1.42001e\",\n        \"rfc_6381_video_codec\": \"mp4a.40.2\",\n        \"state\": \"string\",\n        \"test\": true,\n        \"video_bitrate_in_kbps\": 1402,\n        \"video_codec\": \"h264\",\n        \"width\": 640,\n        \"total_bitrate_in_kbps\": 7906,\n        \"url\": \"s3://zencodertesting/test.mov\"\n      }\n    ]\n  },\n  {\n    \"id\": 365524597,\n    \"submitted_at\": \"2017-04-20T16:08:02Z\",\n    \"created_at\": \"2017-04-20T16:08:02Z\",\n    \"updated_at\": \"2017-04-20T16:08:02Z\",\n    \"finished_at\": \"2017-04-20T16:08:02Z\",\n    \"state\": \"pending\",\n    \"input_media_file\": {\n      \"audio_bitrate_in_kbps\": 90,\n      \"audio_codec\": \"aac\",\n      \"audio_sample_rate\": 44100,\n      \"audio_tracks\": 2,\n      \"channels\": 2,\n      \"created_at\": \"2017-04-20T16:08:02Z\",\n      \"updated_at\": \"2017-04-20T16:08:02Z\",\n      \"finished_at\": \"2017-04-20T16:08:02Z\",\n      \"duration_in_ms\": 51312,\n      \"error_class\": \"InvalidAudioSettingsError\",\n      \"error_message\": \"The supplied audio encoding settings were not valid\",\n      \"file_size_bytes\": 922620,\n      \"format\": \"mpeg4\",\n      \"frame_rate\": 30,\n      \"height\": 360,\n      \"id\": 365495537,\n      \"md5_checksum\": 453,\n      \"privacy\": true,\n      \"state\": \"string\",\n      \"test\": true,\n      \"video_bitrate_in_kbps\": 1402,\n      \"video_codec\": \"h264\",\n      \"width\": 640,\n      \"total_bitrate_in_kbps\": 7906,\n      \"url\": \"s3://zencodertesting/test.mov\"\n    },\n    \"output_media_files\": [\n      {\n        \"audio_bitrate_in_kbps\": 90,\n        \"audio_codec\": \"aac\",\n        \"audio_sample_rate\": 44100,\n        \"channels\": 2,\n        \"created_at\": \"2017-04-20T16:08:02Z\",\n        \"updated_at\": \"2017-04-20T16:08:02Z\",\n        \"finished_at\": \"2017-04-20T16:08:02Z\",\n        \"duration_in_ms\": 51312,\n        \"error_class\": \"InvalidAudioSettingsError\",\n        \"error_message\": \"The supplied audio encoding settings were not valid\",\n        \"file_size_bytes\": 922620,\n        \"fragment_duration_in_ms\": 5478,\n        \"format\": \"mpeg4\",\n        \"frame_rate\": 30,\n        \"height\": 360,\n        \"id\": 365495537,\n        \"label\": \"mp4 high\",\n        \"md5_checksum\": 5467,\n        \"privacy\": true,\n        \"rfc_6381_audio_codec\": \"avc1.42001e\",\n        \"rfc_6381_video_codec\": \"mp4a.40.2\",\n        \"state\": \"string\",\n        \"test\": true,\n        \"video_bitrate_in_kbps\": 1402,\n        \"video_codec\": \"h264\",\n        \"width\": 640,\n        \"total_bitrate_in_kbps\": 7906,\n        \"url\": \"s3://zencodertesting/test.mov\"\n      },\n      {\n        \"audio_bitrate_in_kbps\": 90,\n        \"audio_codec\": \"aac\",\n        \"audio_sample_rate\": 44100,\n        \"channels\": 2,\n        \"created_at\": \"2017-04-20T16:08:02Z\",\n        \"updated_at\": \"2017-04-20T16:08:02Z\",\n        \"finished_at\": \"2017-04-20T16:08:02Z\",\n        \"duration_in_ms\": 51312,\n        \"error_class\": \"InvalidAudioSettingsError\",\n        \"error_message\": \"The supplied audio encoding settings were not valid\",\n        \"file_size_bytes\": 922620,\n        \"fragment_duration_in_ms\": 5478,\n        \"format\": \"mpeg4\",\n        \"frame_rate\": 30,\n        \"height\": 360,\n        \"id\": 365495537,\n        \"label\": \"mp4 high\",\n        \"md5_checksum\": 215,\n        \"privacy\": true,\n        \"rfc_6381_audio_codec\": \"avc1.42001e\",\n        \"rfc_6381_video_codec\": \"mp4a.40.2\",\n        \"state\": \"string\",\n        \"test\": true,\n        \"video_bitrate_in_kbps\": 1402,\n        \"video_codec\": \"h264\",\n        \"width\": 640,\n        \"total_bitrate_in_kbps\": 7906,\n        \"url\": \"s3://zencodertesting/test.mov\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eebb4836-112b-42e0-822f-75699f459f74",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6902c60e-c5aa-491a-817c-1d34c2d1397e",
+              "name": "Invalid query parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "599efc2f-81f7-413f-871b-4775ca9bf9ec",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "013d1770-584a-4ea5-8308-4916755aac82",
+          "name": "Get Job Details",
+          "request": {
+            "name": "Get Job Details",
+            "description": {
+              "content": "Get Job Details. Job details are available for two months after the job is submitted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":job_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "The number of results to return for each page"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) The Zencoder job id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your API key",
+                "key": "Zencoder-Api-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "acf1b102-7fcd-4eae-b542-716dfc0e5cfd",
+              "name": "Job properties.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 365524597,\n  \"submitted_at\": \"2017-04-20T16:08:02Z\",\n  \"created_at\": \"2017-04-20T16:08:02Z\",\n  \"updated_at\": \"2017-04-20T16:08:02Z\",\n  \"finished_at\": \"2017-04-20T16:08:02Z\",\n  \"state\": \"submitting\",\n  \"input_media_file\": {\n    \"audio_bitrate_in_kbps\": 90,\n    \"audio_codec\": \"aac\",\n    \"audio_sample_rate\": 44100,\n    \"audio_tracks\": 2,\n    \"channels\": 2,\n    \"created_at\": \"2017-04-20T16:08:02Z\",\n    \"updated_at\": \"2017-04-20T16:08:02Z\",\n    \"finished_at\": \"2017-04-20T16:08:02Z\",\n    \"duration_in_ms\": 51312,\n    \"error_class\": \"InvalidAudioSettingsError\",\n    \"error_message\": \"The supplied audio encoding settings were not valid\",\n    \"file_size_bytes\": 922620,\n    \"format\": \"mpeg4\",\n    \"frame_rate\": 30,\n    \"height\": 360,\n    \"id\": 365495537,\n    \"md5_checksum\": 8277,\n    \"privacy\": true,\n    \"state\": \"string\",\n    \"test\": true,\n    \"video_bitrate_in_kbps\": 1402,\n    \"video_codec\": \"h264\",\n    \"width\": 640,\n    \"total_bitrate_in_kbps\": 7906,\n    \"url\": \"s3://zencodertesting/test.mov\"\n  },\n  \"output_media_files\": [\n    {\n      \"audio_bitrate_in_kbps\": 90,\n      \"audio_codec\": \"aac\",\n      \"audio_sample_rate\": 44100,\n      \"channels\": 2,\n      \"created_at\": \"2017-04-20T16:08:02Z\",\n      \"updated_at\": \"2017-04-20T16:08:02Z\",\n      \"finished_at\": \"2017-04-20T16:08:02Z\",\n      \"duration_in_ms\": 51312,\n      \"error_class\": \"InvalidAudioSettingsError\",\n      \"error_message\": \"The supplied audio encoding settings were not valid\",\n      \"file_size_bytes\": 922620,\n      \"fragment_duration_in_ms\": 5478,\n      \"format\": \"mpeg4\",\n      \"frame_rate\": 30,\n      \"height\": 360,\n      \"id\": 365495537,\n      \"label\": \"mp4 high\",\n      \"md5_checksum\": 4469,\n      \"privacy\": true,\n      \"rfc_6381_audio_codec\": \"avc1.42001e\",\n      \"rfc_6381_video_codec\": \"mp4a.40.2\",\n      \"state\": \"string\",\n      \"test\": true,\n      \"video_bitrate_in_kbps\": 1402,\n      \"video_codec\": \"h264\",\n      \"width\": 640,\n      \"total_bitrate_in_kbps\": 7906,\n      \"url\": \"s3://zencodertesting/test.mov\"\n    },\n    {\n      \"audio_bitrate_in_kbps\": 90,\n      \"audio_codec\": \"aac\",\n      \"audio_sample_rate\": 44100,\n      \"channels\": 2,\n      \"created_at\": \"2017-04-20T16:08:02Z\",\n      \"updated_at\": \"2017-04-20T16:08:02Z\",\n      \"finished_at\": \"2017-04-20T16:08:02Z\",\n      \"duration_in_ms\": 51312,\n      \"error_class\": \"InvalidAudioSettingsError\",\n      \"error_message\": \"The supplied audio encoding settings were not valid\",\n      \"file_size_bytes\": 922620,\n      \"fragment_duration_in_ms\": 5478,\n      \"format\": \"mpeg4\",\n      \"frame_rate\": 30,\n      \"height\": 360,\n      \"id\": 365495537,\n      \"label\": \"mp4 high\",\n      \"md5_checksum\": 4621,\n      \"privacy\": true,\n      \"rfc_6381_audio_codec\": \"avc1.42001e\",\n      \"rfc_6381_video_codec\": \"mp4a.40.2\",\n      \"state\": \"string\",\n      \"test\": true,\n      \"video_bitrate_in_kbps\": 1402,\n      \"video_codec\": \"h264\",\n      \"width\": 640,\n      \"total_bitrate_in_kbps\": 7906,\n      \"url\": \"s3://zencodertesting/test.mov\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "939e4f64-9fff-4f93-90e3-86cb5f53b196",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6714dc93-0324-403f-91b6-9b6c7d1b5319",
+              "name": "Invalid query parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9e93fdfc-63fd-4c57-993a-6d6ed3c11f8d",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "217b10ec-c679-4e6b-b6a9-7d27b5f8c724",
+          "name": "Resubmit a Job",
+          "request": {
+            "name": "Resubmit a Job",
+            "description": {
+              "content": "'If a job has failed processing with a transient error that may be solved by attempting processing again (such as a network timeout, or if you fix permissions on your server that had caused a download permission error) you may request that it be attempted again.\n\nYou may resubmit a job for processing by sending a PUT request to https://app.zencoder.com/api/v2/jobs/1234/resubmit?api_key=93h630j1dsyshjef620qlkavnmzui3. Only jobs that are not in the “finished” state may be resubmitted. If resubmission succeeds you will receive a 204 No Content response. If you attempt to resubmit a “finished” job you will receive a 409 Conflict response.\n\nResubmit requests are limited to prevent runaway scripts from repeatedly resubmitting a failing job. If you attempt to resubmit a job more times than the limit amount, you will receive a 403 Forbidden response. The limit is currently 5 attempts, but may change without warning.'",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":job_id",
+                "resubmit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "The number of results to return for each page"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) The Zencoder job id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your API key",
+                "key": "Zencoder-Api-Key",
+                "value": "<string>"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0d0b1361-b696-4d16-973a-df23b36a6d75",
+              "name": "No content.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id",
+                    "resubmit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "28cf6813-6102-41cd-87f5-e39b273f3f6b",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id",
+                    "resubmit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bf0e1325-6555-4c69-bdce-c4a5455a67ee",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id",
+                    "resubmit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e18c53c-bc7e-4592-a9dc-885c1bfaacaf",
+          "name": "Get Job Progress",
+          "request": {
+            "name": "Get Job Progress",
+            "description": {
+              "content": "'Get the progress of a job. The return will contain one or more of the following keys: `state`, `input`, `outputs`, and `progress`.'",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":job_id",
+                "progress"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "The number of results to return for each page"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) The Zencoder job id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your API key",
+                "key": "Zencoder-Api-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ead30aa-eb4f-47a3-b58c-3280559fb026",
+              "name": "Success.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id",
+                    "progress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"state\": \"string\",\n  \"progress\": 4461.334720289839,\n  \"input\": {\n    \"id\": 9549,\n    \"state\": \"finished\",\n    \"progress\": 925.9822275546636,\n    \"current_event\": \"downloading\",\n    \"current_event_progress\": 2648.964418947293\n  },\n  \"output\": {\n    \"id\": 8003,\n    \"state\": \"assigning\",\n    \"progress\": 6655.12572401332,\n    \"current_event\": \"transcoding\",\n    \"current_event_progress\": 225.22040608481842\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0aa8d1ac-e61e-4421-bb69-d37e61f1b01d",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id",
+                    "progress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3a755e48-9e05-4242-b2f6-2ca9c9ab0be0",
+          "name": "Cancel a Job",
+          "request": {
+            "name": "Cancel a Job",
+            "description": {
+              "content": "'If you wish to cancel a job that has not yet finished processing you may send a request (using any HTTP method) to https://app.zencoder.com/api/v2/jobs/1234/cancel. If cancellation succeeds you will receive a 204 No Content response. Only jobs that are in the `waiting` or `processing` state may be cancelled. If you attempt to cancel a job in any other state you will receive a 409 Conflict response.'",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":job_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) The Zencoder job id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your API key",
+                "key": "Zencoder-Api-Key",
+                "value": "<string>"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "671ac573-6d8c-4c43-a297-97213c0fafd9",
+              "name": "No content.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1f2fd545-c1db-4f30-b8de-80b0a835e386",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d79409cc-bea9-4df9-83fc-9b0d39b201f5",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":job_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The Zencoder job id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Content-Type: application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your API key",
+                    "key": "Zencoder-Api-Key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.zencoder.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bceff87d-a176-4641-a3ef-11704fb4da21",
+    "name": "Zencoder Accounts Jobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Zencoder. Zencoder offers a fast and reliable transcoding service for video and audio files, as well as live streams. It can produce outputs for the web and a wide variety of devices, and can easily be integrated with your CMS and other applications.\n\n**Base URL: https://app.zencoder.com/api/v2**",
+      "type": "text/plain"
+    }
+  }
+}

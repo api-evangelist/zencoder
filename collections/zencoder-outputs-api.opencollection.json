@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Zencoder Accounts Outputs API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Outputs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Output Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.zencoder.com/api/v2/outputs/:output_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to return"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return for each page"
+              },
+              {
+                "name": "output_id",
+                "value": "",
+                "type": "path",
+                "description": "A Zencoder job output id"
+              }
+            ]
+          },
+          "docs": "Get details for a job output. Job details are available for two months after the job is submitted."
+        },
+        {
+          "info": {
+            "name": "Get Output Progress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.zencoder.com/api/v2/outputs/:output_id/progress",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to return"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return for each page"
+              },
+              {
+                "name": "output_id",
+                "value": "",
+                "type": "path",
+                "description": "A Zencoder job output id"
+              }
+            ]
+          },
+          "docs": "Get the progress of processing for an output file. The current_event_progress number is the percent complete of the current event – so if the event is Transcoding, and current_event_progress is 99.3421, then the file is almost finished transcoding, but hasn't started uploading yet.\n\nThe progress number is the overall percentage of completion for the output. The progress number is the percent complete of the current event – so if the event is Transcoding, and progress is 99.3421, then the file is"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

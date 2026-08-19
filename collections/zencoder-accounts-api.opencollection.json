@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Zencoder Accounts API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Account Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.zencoder.com/api/v2/account",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "'Account details may be retrieved by issuing an HTTP GET to https://app.zencoder.com/api/v2/account. Account states are `Active`, `Stopped`, `Suspended`, and `Cancelled`. Billing states are `Active`, `Past Due`, and `Cancelled`.'"
+        },
+        {
+          "info": {
+            "name": "Create an Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.zencoder.com/api/v2/account",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "All that is required is an email address and an agreement to the terms of service. You can also send a password, but if you don't one will be generated. New accounts will be created under the Test (Free) plan."
+        },
+        {
+          "info": {
+            "name": "Turn on Integration Mode",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.zencoder.com/api/v2/account/integration",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "'Integration (test) mode can be turned on by issuing a PUT request to https://app.zencoder.com/api/v2/account/integration. A successful response will be indicated by a HTTP status of 204 No Content.'"
+        },
+        {
+          "info": {
+            "name": "Turn off Integration Mode",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.zencoder.com/api/v2/account/live",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Zencoder-Api-Key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "'Integration (test) mode can be turned off by issuing a PUT request to https://app.zencoder.com/api/v2/account/live. A successful response will be indicated by a HTTP status of 204 No Content.'"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
