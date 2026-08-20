@@ -61,6 +61,8 @@ apis:
   humanURL: https://zencoder.support.brightcove.com/references/reference.html
   baseURL: https://app.zencoder.com/api/v2
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -101,6 +103,8 @@ apis:
   humanURL: https://zencoder.support.brightcove.com/references/reference.html
   baseURL: https://app.zencoder.com/api/v2
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
