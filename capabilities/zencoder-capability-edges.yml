@@ -1,0 +1,36 @@
+slug: zencoder
+provider: Zencoder
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Media, Entertainment & Telecom Content
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Jobs
+  spec_file: zencoder-jobs-api-openapi.yml
+  capability_id: BC-3710.40
+  capability_id_l1: BC-3710
+  capability_name: Transcoding & Format Conversion
+  confidence: 0.92
+  evidence: 'POST /jobs  createJob  Create an Encoding Job; schemas: DRM, OutputMediaFile, Watermark,
+    Thumbnail, AlternateAudio, Stream'
+  reason: The job surface submits and manages encoding jobs that turn source media into multiple distribution
+    renditions (MP4, HLS, DASH), which is precisely transcoding and packaging of media assets. Schema
+    names (OutputMediaFile, Stream, DRM, Watermark) confirm the media-processing reading.
+- tag: Outputs
+  spec_file: zencoder-outputs-api-openapi.yml
+  capability_id: BC-3710.40
+  capability_id_l1: BC-3710
+  capability_name: Transcoding & Format Conversion
+  confidence: 0.78
+  evidence: 'GET /outputs/{output_id}  getOutputDetails; schemas: OutputMediaFile, OutputProgressResponse'
+  reason: Outputs are the transcoded renditions produced by encoding jobs; the endpoints report their
+    details and conversion progress, which belongs to transcoding and format conversion. Read-only status
+    endpoints make this slightly less definitive than the Jobs surface.

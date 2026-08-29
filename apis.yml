@@ -172,6 +172,9 @@ apis:
   - type: Webhooks
     url: asyncapi/zencoder-notifications-webhooks.yml
 common:
+- type: CapabilityMap
+  url: capabilities/zencoder-capability-edges.yml
+  name: Zencoder Business Capability Map
 - type: DomainSecurity
   url: security/zencoder-domain-security.yml
 - type: Website
