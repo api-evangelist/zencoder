@@ -172,6 +172,11 @@ apis:
   - type: Webhooks
     url: asyncapi/zencoder-notifications-webhooks.yml
 common:
+- type: ParentCompany
+  url: https://apis.io/providers/brightcove/
+  name: Brightcove
+  x-relationship: acquired
+  x-evidence: "Originally an a16z / GV / 500 Global-backed startup, Zencoder was acquired by Brightcove and its API is documented and supported under the Brightcove developer surface."
 - type: CapabilityMap
   url: capabilities/zencoder-capability-edges.yml
   name: Zencoder Business Capability Map
