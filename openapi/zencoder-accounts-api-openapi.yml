@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'API for Zencoder. Zencoder offers a fast and reliable transcoding service for video and audio files, as well as live streams. It can produce outputs for the web and a wide variety of devices, and can easily be integrated with your CMS and other applications.
 
@@ -127,6 +127,16 @@ paths:
         IsMultiContentStreaming: false
 components:
   schemas:
+    CreateAccountResponse:
+      title: Create Account Response
+      type: object
+      properties:
+        api-key:
+          type: string
+          description: The API key to autheticate requests
+        password:
+          type: string
+          description: The password submitted or auto-generated if none was submitted with the create account request
     GetAccountDetailsResponse:
       title: Get Account Details Response
       type: object
@@ -437,17 +447,14 @@ components:
         confirm_password:
           type: string
           description: enter the password again
-    CreateAccountResponse:
-      title: Create Account Response
-      type: object
-      properties:
-        api-key:
-          type: string
-          description: The API key to autheticate requests
-        password:
-          type: string
-          description: The password submitted or auto-generated if none was submitted with the create account request
   parameters:
+    ZencoderApiKey:
+      name: Zencoder-Api-Key
+      in: header
+      description: Your API key
+      required: true
+      schema:
+        type: string
     ContentType:
       name: Content-Type
       in: header
@@ -455,13 +462,6 @@ components:
       required: true
       style: simple
       explode: false
-      schema:
-        type: string
-    ZencoderApiKey:
-      name: Zencoder-Api-Key
-      in: header
-      description: Your API key
-      required: true
       schema:
         type: string
 x-bc-implicit-head: true

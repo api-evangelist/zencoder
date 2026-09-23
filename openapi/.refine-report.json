@@ -1,11 +1,7 @@
 {
   "provider": "zencoder",
   "sources": [
-    "zencoder-accounts-api-openapi.yml",
-    "zencoder-inputs-api-openapi.yml",
-    "zencoder-jobs-api-openapi.yml",
-    "zencoder-outputs-api-openapi.yml",
-    "zencoder-reports-api-openapi.yml"
+    "_original/zencoder-openapi-original.yml"
   ],
   "outputs": [
     "zencoder-accounts-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "zencoder-openapi-original.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "zencoder-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zencoder-inputs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zencoder-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zencoder-outputs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zencoder-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
