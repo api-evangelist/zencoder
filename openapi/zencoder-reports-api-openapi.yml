@@ -86,10 +86,10 @@ components:
       explode: true
       schema:
         type: string
-    Grouping:
-      name: grouping
+    From:
+      name: from
       in: query
-      description: A grouping name set in the [Create Job](#operation/createJob) operation
+      description: 'Start date in the format YYYY-MM-DD (default: 30 days ago)'
       style: form
       explode: true
       schema:
@@ -110,10 +110,10 @@ components:
       explode: false
       schema:
         type: string
-    From:
-      name: from
+    Grouping:
+      name: grouping
       in: query
-      description: 'Start date in the format YYYY-MM-DD (default: 30 days ago)'
+      description: A grouping name set in the [Create Job](#operation/createJob) operation
       style: form
       explode: true
       schema:

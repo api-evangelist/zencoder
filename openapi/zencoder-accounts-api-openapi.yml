@@ -127,16 +127,6 @@ paths:
         IsMultiContentStreaming: false
 components:
   schemas:
-    CreateAccountResponse:
-      title: Create Account Response
-      type: object
-      properties:
-        api-key:
-          type: string
-          description: The API key to autheticate requests
-        password:
-          type: string
-          description: The password submitted or auto-generated if none was submitted with the create account request
     GetAccountDetailsResponse:
       title: Get Account Details Response
       type: object
@@ -171,6 +161,16 @@ components:
         integration_mode:
           type: boolean
           description: Whether the account is in integration (test) mode
+    CreateAccountResponse:
+      title: Create Account Response
+      type: object
+      properties:
+        api-key:
+          type: string
+          description: The API key to autheticate requests
+        password:
+          type: string
+          description: The password submitted or auto-generated if none was submitted with the create account request
     CreateAccountFields:
       title: Create Account Request Body Fields
       type: object

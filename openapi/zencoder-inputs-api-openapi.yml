@@ -111,51 +111,39 @@ paths:
         AllowDynamicFormParameters: false
         IsMultiContentStreaming: false
 components:
-  parameters:
-    InputId:
-      name: input_id
-      in: path
-      description: A Zencoder job input id
-      required: true
-      style: simple
-      explode: false
-      schema:
-        type: string
-    PerPage:
-      name: per_page
-      in: query
-      description: The number of results to return for each page
-      style: form
-      explode: true
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 50
-    ZencoderApiKey:
-      name: Zencoder-Api-Key
-      in: header
-      description: Your API key
-      required: true
-      schema:
-        type: string
-    ContentType:
-      name: Content-Type
-      in: header
-      description: 'Content-Type: application/json'
-      required: true
-      style: simple
-      explode: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: The page of results to return
-      style: form
-      explode: true
-      schema:
-        type: integer
   schemas:
+    InputProgressResponse:
+      title: Job Input Progress Response
+      description: Progress in the processing of a job input file
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The input id, an integer in the 64-bit range.
+          readOnly: true
+        state:
+          type: string
+          description: The state of input processing
+          enum:
+          - waiting
+          - pending
+          - assigning
+          - processing
+          - finished
+          - failed
+          - cancelled
+        progress:
+          type: number
+          description: Input processing percentage completed
+        current_event:
+          type: string
+          description: The current activity
+          enum:
+          - downloading
+          - inspecting
+        current_event_progress:
+          type: number
+          description: The current activity percentage completed
     InputMediaFile:
       type: object
       readOnly: true
@@ -292,38 +280,50 @@ components:
           description: URL of the input file
           example: s3://zencodertesting/test.mov
           readOnly: true
-    InputProgressResponse:
-      title: Job Input Progress Response
-      description: Progress in the processing of a job input file
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The input id, an integer in the 64-bit range.
-          readOnly: true
-        state:
-          type: string
-          description: The state of input processing
-          enum:
-          - waiting
-          - pending
-          - assigning
-          - processing
-          - finished
-          - failed
-          - cancelled
-        progress:
-          type: number
-          description: Input processing percentage completed
-        current_event:
-          type: string
-          description: The current activity
-          enum:
-          - downloading
-          - inspecting
-        current_event_progress:
-          type: number
-          description: The current activity percentage completed
+  parameters:
+    ZencoderApiKey:
+      name: Zencoder-Api-Key
+      in: header
+      description: Your API key
+      required: true
+      schema:
+        type: string
+    ContentType:
+      name: Content-Type
+      in: header
+      description: 'Content-Type: application/json'
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: The page of results to return
+      style: form
+      explode: true
+      schema:
+        type: integer
+    InputId:
+      name: input_id
+      in: path
+      description: A Zencoder job input id
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    PerPage:
+      name: per_page
+      in: query
+      description: The number of results to return for each page
+      style: form
+      explode: true
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
 x-bc-implicit-head: true
 x-bc-implicit-options: true
 x-bc-upstream: http://backend_server
