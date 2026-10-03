@@ -118,41 +118,6 @@ paths:
         IsMultiContentStreaming: false
 components:
   schemas:
-    OutputProgressResponse:
-      title: Job Input Progress Response
-      description: Progress in the processing of a job input file
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The output id, an integer in the 64-bit range.
-          readOnly: true
-        state:
-          type: string
-          description: The state of output processing
-          enum:
-          - waiting
-          - queued
-          - assigning
-          - processing
-          - finished
-          - failed
-          - cancelle`
-          - no input
-          - skipped
-        progress:
-          type: number
-          description: Input processing percentage completed
-        current_event:
-          type: string
-          description: The current activity
-          enum:
-          - downloading
-          - transcoding
-          - uploading
-        current_event_progress:
-          type: number
-          description: The current activity percentage completed
     OutputMediaFile:
       type: object
       readOnly: true
@@ -308,14 +273,58 @@ components:
           description: URL of the output file
           example: s3://zencodertesting/test.mov
           readOnly: true
+    OutputProgressResponse:
+      title: Job Input Progress Response
+      description: Progress in the processing of a job input file
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The output id, an integer in the 64-bit range.
+          readOnly: true
+        state:
+          type: string
+          description: The state of output processing
+          enum:
+          - waiting
+          - queued
+          - assigning
+          - processing
+          - finished
+          - failed
+          - cancelle`
+          - no input
+          - skipped
+        progress:
+          type: number
+          description: Input processing percentage completed
+        current_event:
+          type: string
+          description: The current activity
+          enum:
+          - downloading
+          - transcoding
+          - uploading
+        current_event_progress:
+          type: number
+          description: The current activity percentage completed
   parameters:
-    OutputId:
-      name: output_id
-      in: path
-      description: A Zencoder job output id
-      required: true
-      style: simple
-      explode: false
+    PerPage:
+      name: per_page
+      in: query
+      description: The number of results to return for each page
+      style: form
+      explode: true
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+    Page:
+      name: page
+      in: query
+      description: The page of results to return
+      style: form
+      explode: true
       schema:
         type: integer
     ZencoderApiKey:
@@ -334,24 +343,15 @@ components:
       explode: false
       schema:
         type: string
-    Page:
-      name: page
-      in: query
-      description: The page of results to return
-      style: form
-      explode: true
+    OutputId:
+      name: output_id
+      in: path
+      description: A Zencoder job output id
+      required: true
+      style: simple
+      explode: false
       schema:
         type: integer
-    PerPage:
-      name: per_page
-      in: query
-      description: The number of results to return for each page
-      style: form
-      explode: true
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 50
 x-bc-implicit-head: true
 x-bc-implicit-options: true
 x-bc-upstream: http://backend_server

@@ -77,47 +77,6 @@ paths:
         AllowDynamicFormParameters: false
         IsMultiContentStreaming: false
 components:
-  parameters:
-    To:
-      name: to
-      in: query
-      description: 'End date in the format YYYY-MM-DD (default: today)'
-      style: form
-      explode: true
-      schema:
-        type: string
-    From:
-      name: from
-      in: query
-      description: 'Start date in the format YYYY-MM-DD (default: 30 days ago)'
-      style: form
-      explode: true
-      schema:
-        type: string
-    ZencoderApiKey:
-      name: Zencoder-Api-Key
-      in: header
-      description: Your API key
-      required: true
-      schema:
-        type: string
-    ContentType:
-      name: Content-Type
-      in: header
-      description: 'Content-Type: application/json'
-      required: true
-      style: simple
-      explode: false
-      schema:
-        type: string
-    Grouping:
-      name: grouping
-      in: query
-      description: A grouping name set in the [Create Job](#operation/createJob) operation
-      style: form
-      explode: true
-      schema:
-        type: string
   schemas:
     GetUsageReportResponse:
       title: Get Usage Report Response
@@ -167,6 +126,47 @@ components:
           collected_on: '2017-03-10'
           encoded_minutes: 2
           billable_minutes: 3
+  parameters:
+    Grouping:
+      name: grouping
+      in: query
+      description: A grouping name set in the [Create Job](#operation/createJob) operation
+      style: form
+      explode: true
+      schema:
+        type: string
+    To:
+      name: to
+      in: query
+      description: 'End date in the format YYYY-MM-DD (default: today)'
+      style: form
+      explode: true
+      schema:
+        type: string
+    From:
+      name: from
+      in: query
+      description: 'Start date in the format YYYY-MM-DD (default: 30 days ago)'
+      style: form
+      explode: true
+      schema:
+        type: string
+    ZencoderApiKey:
+      name: Zencoder-Api-Key
+      in: header
+      description: Your API key
+      required: true
+      schema:
+        type: string
+    ContentType:
+      name: Content-Type
+      in: header
+      description: 'Content-Type: application/json'
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
 x-bc-implicit-head: true
 x-bc-implicit-options: true
 x-bc-upstream: http://backend_server
