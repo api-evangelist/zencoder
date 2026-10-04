@@ -203,50 +203,6 @@ paths:
         AllowDynamicFormParameters: false
         IsMultiContentStreaming: false
 components:
-  parameters:
-    JobId:
-      name: job_id
-      in: path
-      description: The Zencoder job id
-      required: true
-      style: simple
-      explode: false
-      schema:
-        type: string
-    PerPage:
-      name: per_page
-      in: query
-      description: The number of results to return for each page
-      style: form
-      explode: true
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 50
-    ContentType:
-      name: Content-Type
-      in: header
-      description: 'Content-Type: application/json'
-      required: true
-      style: simple
-      explode: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: The page of results to return
-      style: form
-      explode: true
-      schema:
-        type: integer
-    ZencoderApiKey:
-      name: Zencoder-Api-Key
-      in: header
-      description: Your API key
-      required: true
-      schema:
-        type: string
   schemas:
     Skip:
       title: Skip
@@ -317,184 +273,355 @@ components:
         require_video:
           type: boolean
           description: To skip an output if the source does not have an video track, set this option to true.
-    InputProgressResponse:
-      title: Job Input Progress Response
-      description: Progress in the processing of a job input file
+    MasterDisplay:
+      title: Master Display
+      description: Hash of HDR10 output settings
+      properties:
+        red:
+          type: object
+          description: Hash of red color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for red (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.74
+            y:
+              type: number
+              description: Color volume y setting for red (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.84
+        greeen:
+          type: object
+          description: Hash of green color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for green (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.74
+            y:
+              type: number
+              description: Color volume y setting for green (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.84
+        blue:
+          type: object
+          description: Hash of blue color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for blue (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.74
+            y:
+              type: number
+              description: Color volume y setting for blue (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.84
+        white_point:
+          type: object
+          description: Hash of white point color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for white point (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.74
+            y:
+              type: number
+              description: Color volume y setting for white point (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.84
+        luminence:
+          type: object
+          description: Hash of luminance settings for HDR10 output settings
+          properties:
+            min:
+              type: number
+              description: Minimum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 5.0
+            max:
+              type: number
+              description: Maximum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
+              minimum: 5.0
+              maximum: 10000.0
+    ListJobsResponse:
+      title: List Jobs Response
+      description: Success response for list jobs request
+      type: array
+      items:
+        $ref: '#/components/schemas/JobResponseFields'
+    DynamicProfileOptions:
+      title: Dynamic Profile Options
+      type: object
+      deprecated: true
+      description: '''hash of options for CAE (Context Aware Encoding) jobs. With CAE the number of outputs and parameters of such outputs may change dynamically for each input file. The dynamic_profile_options settings define the way renditions should be created. See [CAE Settings](/encoding-settings/general/cae-settings.html) for details. You must also set generate_dynamic_profile equal to true to use this feature.'''
+      properties:
+        min_renditions:
+          type: integer
+          description: The minimum number of renditions to generate.
+          minimum: 1
+          maximum: 15
+          default: 1
+        max_renditions:
+          type: integer
+          description: The maximum number of renditions to generate.
+          minimum: 1
+          maximum: 15
+          default: 8
+        min_resolution:
+          type: object
+          description: Minimum resolution to be considered for the ladder.
+          properties:
+            height:
+              type: integer
+              minimum: 16
+              maximum: 8192
+              default: 108
+            width:
+              type: integer
+              minimum: 16
+              maximum: 8192
+              default: 192
+        max_resolution:
+          type: object
+          description: Maximum resolution to be considered for the ladder.
+          properties:
+            height:
+              type: integer
+              minimum: 16
+              maximum: 8192
+              default: (sourse height)
+            width:
+              type: integer
+              minimum: 16
+              maximum: 8192
+              default: (source width)
+        max_frame_rate:
+          type: number
+          description: Maximum frame rate that can be used.
+          minimum: 0.1
+          maximum: 120
+          default: 30
+        keyframe_rate:
+          type: number
+          description: Keyframe rate. This value can be either 0.5 or 1. For SSAI enabled content, this value needs to be 1.
+          minimum: 0.5
+          maximum: 1.0
+          default: 0.5
+        fixed_frame_rate:
+          type: boolean
+          description: Instructs generator to use same frame rate across all renditions. If false, H.264 baseline profile renditions at resolutions below 360p will be assigned halved frame rate.
+          default: true
+        max_bitrate:
+          type: integer
+          description: Maximum bitrate [kbps] that can be used.
+          minimum: 400
+          maximum: 40000
+          default: 15000
+        min_bitrate:
+          type: integer
+          description: Minimum bitrate [kbps] that can be used.
+          minimum: 40
+          maximum: 400
+          default: 200
+        max_first_rendition_bitrate:
+          type: integer
+          description: Maximum bitrate [kbps] that can be used for first rendition.
+          minimum: 40
+          maximum: 1000
+          default: 700
+        min_granularity:
+          type: integer
+          description: Minimum relative change in bitrate between renditions as a percentage.
+          minimum: 1
+          maximum: 100
+          default: 90
+        max_granularity:
+          type: integer
+          description: Maximum relative change in bitrate between renditions as a percentage.
+          minimum: 1
+          maximum: 100
+          default: 30
+        video_codec:
+          type: string
+          description: Video codec to use.
+          enum:
+          - h264
+          - hevc
+          default: h264
+        bitrate_cap_to_bitrate_ratio:
+          type: number
+          description: Ratio of maximum bit rate to average bitrate to be used for VBR encoding.
+          minimum: 1.0
+          maximum: 2.0
+          default: 1.3
+        buffer_size_to_bitrate_ratio:
+          type: number
+          description: Ratio of decoder buffer size to average bitrate to be used for VBR encoding.
+          minimum: 1.0
+          maximum: 4.0
+          default: 2.0
+        bitrate_cap_offset:
+          type: integer
+          description: Constant added when computing maximum bitrate (KBPS).
+          default: 64
+        buffer_size_offset:
+          type: integer
+          description: Constant added when computing VBV buffer size.
+          default: 85
+        quality_rate_tune:
+          type: integer
+          description: Quality vs rate tuning parameter.
+          minimum: -40
+          maximum: 40
+          default: 0
+        select_baseline_profile_configuration:
+          type: boolean
+          description: At least one rendition used in the profile will be baseline profile. Note that `select_baseline_profile_configuration`is `true` by default, and it requires *at least one rendition* to have a resolution at or below 512x288.
+          default: true
+        select_distinct_configurations:
+          type: boolean
+          description: 'If true, CAE will ensure that no two renditions use the same combination of: resolution, frame rate, and codec profile.'
+          default: false
+        video_configurations:
+          type: array
+          description: '''An array of structures describing resolutions, frame rates and associated codec settings that should be preferentially or mandatorily generated as part of the CAE encoding. See the [CAE encoding guide](/encoding-settings/general/cae-settings.html#video_configurations) for details.'''
+          items:
+            type: object
+    Notification:
+      properties:
+        url:
+          description: A valid HTTP or HTTPS URL to notify, optionally including HTTP Auth credential
+          type: string
+        format:
+          type: string
+          description: A format and content type for notifications
+          enum:
+          - json
+          - xml
+        headers:
+          type: object
+          description: By default, HTTP notifications are sent with an HTTP Content-Type, along with a User-Agent; if your application requires additional headers, they can be specified here
+      title: notification
+      type: object
+    CreateJobResponse:
+      title: Create Encoding Job Response
+      description: Success response for job creation
       type: object
       properties:
         id:
           type: integer
-          description: The input id, an integer in the 64-bit range.
+          description: The job id, an integer in the 64-bit range.
+          example: 365524597
           readOnly: true
-        state:
-          type: string
-          description: The state of input processing
-          enum:
-          - waiting
-          - pending
-          - assigning
-          - processing
-          - finished
-          - failed
-          - cancelled
-        progress:
-          type: number
-          description: Input processing percentage completed
-        current_event:
-          type: string
-          description: The current activity
-          enum:
-          - downloading
-          - inspecting
-        current_event_progress:
-          type: number
-          description: The current activity percentage completed
-    CreateJobFields:
-      title: Create Job Request Body Fields
-      type: object
-      description: Hash of Zencoder job properties
-      required:
-      - input
-      properties:
-        dynamic_profile_options:
-          $ref: '#/components/schemas/DynamicProfileOptions'
-        generate_dynamic_profile:
-          type: boolean
-          deprecated: true
-          description: '''With CAE the number of outputs and parameters of such outputs may change dynamically for each input file. To specify limits on the number of outputs to be generated as well as other profile constraints, CAE job request must also include dynamic_profile_options object. The outputs reserved for CAE use should not include resolution, bitrate, or codec-related parameters. Instead, they should include labels dynamic_profile_rendition. The number of outputs reserved for CAE use must match the number specified as max_renditions in dynamic_profile_options.'''
-          default: false
-        input:
-          type: string
-          description: '''A valid URL to a media file (HTTP/HTTPS, FTP/FTPS, SFTP, Azure, GCS, CF or S3), with or without authentication'''
-          example: s3://zencodertesting/test.mov
-        region:
-          type: string
-          description: '''The AWS region or Google Compute Engine instance (beta) where Zencoder should process the job'''
-          enum:
-          - us
-          - europe
-          - asia
-          - sa
-          - australia
-          - us-virginia
-          - us-oregon
-          - us-n-california
-          - eu-dublin
-          - asia-singapore
-          - asia-tokyo
-          - sa-saopaulo
-          - australia-sydney
-          default: us
-          example: us-virginia
-        test:
-          type: boolean
-          description: '''Enable test mode ("Integration Mode") for a job'''
-          default: false
-        private:
-          type: boolean
-          description: Enable privacy mode for a job
-          default: false
-        pass_through:
-          type: string
-          description: Optional information to store alongside this job
-          example: my-custom-pass-through-value
-        mock:
-          type: boolean
-          description: Send a mocked job request
-          default: false
-        grouping:
-          type: string
-          description: A report grouping for this job
-          example: my-custom-group-name
-        aspera_transfer_policy:
-          type: string
-          description: How to allocate available bandwidth for Aspera file transfers
-          enum:
-          - fair
-          - low
-          default: fair
-        transfer_minimum_rate:
-          type: integer
-          description: A targeted rate in Kbps for data transfer minimums
-          default: 1800
-          example: 2500
-        transfer_maximum_rate:
-          type: integer
-          description: A targeted rate in Kbps for data transfer maximums
-          default: 250000
-          example: 300000
-        expected_md5_checksum:
-          type: string
-          description: The expected MD5 checksum of the input file. If the file's checksum does not match the provided checksum the job will fail.
-          example: d5ed34b6b49f57a4a5f4be72fc0a2cd4
-        credentials:
-          type: string
-          description: References saved credentials by a nickname
-          example: my_s3_credentials
-        notifications:
-          description: 'Array of notification destination objects or strings - notifications defined here are for job-level events.  A notification will be sent to the destination when selected event occurs. You can use a simple string with a url: &quot;http://log:pass@httpbin.org/post&quot;, or you can use an object.  <br> Retry strategy: In the event of a failed request to send a notification, the default retry strategy is to retry 50 times with an exponential delay between attempts: <br>
-
-            `max_retry_times = 50` <br> `delay_delta_s = 5` <br>
-
-            `next_retry = now_s + retry_count * delay_delta_s`'
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/Notification'
-            - type: string
-              description: A URL or email address to send notifications to
-          type: array
-          example:
-          - dev@example.com
-          - http://user:pass@example.com/path/to/notification/action
-          - url: https://example.com/notifications.html
         outputs:
           type: array
-          description: Array of output specifications
+          description: Details on each output rendition of the Live job.
           items:
-            $ref: '#/components/schemas/Output'
-    DRM:
-      title: DRM
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique id for the rendition, an integer in the 64-bit range.
+                example: 1294836780
+                readOnly: true
+              url:
+                type: string
+                description: URL for the media or manifest for the specified rendition (non-SSAI).
+              label:
+                type: string
+                description: Label for the output (from the input)
+    Stream:
+      title: Stream
       type: object
-      description: Hash of DRM options
+      description: Playlist stream info
       properties:
-        method:
+        path:
           type: string
-          description: The Digital Rights Management (DRM) method used to protect content
-          enum:
-          - cenc
-          - playready
-        provider:
-          type: string
-          description: The Digital Rights Management (DRM) provider used. Only required for PlayReady.
-        key_id:
-          type: string
-          description: '''32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use. This is specified with all bytes in standard (big-endian) order..Some DRM services return key IDs in little-endian order formatted as a GUID; to specify the key in that format see [key_guid]{/encoding-settings/content-protection/encoding-settings-drm.html#key_guid}.'''
-        key_guid:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use, in GUID-formatted little-endian order. Some DRM services return key IDs using this formatting. If a `key_id` is not also specified, this will be converted to use as the `key_id`. For specifying the key ID in a standard big-endian binary or UUID format, see `key_id`
-        user_key:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). The user key from the DRM provider.
-        server_key:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). The server key from the DRM provider.
-        media_id:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the media.
-        content_id:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
-        content_key:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
-        schemas:
-          type: array
-          description: 'When using Common Encryption to encrypt an output (or set of outputs), information about the DRM providers is specified as a schema including the schema type, and provider-specific infomration.
+          description: 'String containing an absolute or relative path to a stream manifest file.
 
 
-            This is generally only specified on playlist outputs for multi-bitrate encoding jobs, but may also be specified for a CENC-encoded output to ensure that output is playable on its own.'
-          items:
-            $ref: '#/components/schemas/Schema'
+            *Note: Required for each stream for HLS, Microsoft Smooth Streaming, and Highwinds SMIL playlists.*'
+          example: http://example.com/video/high/index.m3u8
+        bandwidth:
+          type: integer
+          description: 'Specifies the bandwidth (kbps) of a playlist stream. Overrides bandwidth determined from a `source`.
+
+
+            *Note: Required for each stream for HLS and Highwinds SMIL playlists, unless a `source` is provided.*'
+          example: 500
+        resolution:
+          type: string
+          description: 'Specifies the resolution of a playlist stream. Overrides resolution determined from a `source`.
+
+
+            Valid Values: String containing width and height as: ''800x600'''
+          example: 800x600
+        codecs:
+          type: string
+          description: 'Specifies the codecs used in a playlist stream. Overrides codecs determined from a `source`.
+
+
+            String containing codecs in HTML5 format, such as: `mp4a.40.2`'
+        audio:
+          type: string
+          description: 'Specifies an alternate audio track for the playlist.
+
+
+            String containing the name of the audio GROUP-ID to use. This value must have been defined as an `alternate_audio` grouping. The codecs setting should reflect all `codecs` of the alternate audio group.'
+          example:
+            input: s3://zencodertesting/test.mov
+            outputs:
+            - type: playlist
+              alternate_audio:
+                ac3_audio:
+                  path: path/to/ac3-audio.m3u8
+                  language: en
+                  default: true
+                  source: ac3-audio-rendition
+                source_audio:
+                  language: en
+                  default: true
+              streams:
+              - path: low/index.m3u8
+                source: low-hls-rendition
+                audio: ac3_audio
+              - path: low/index.m3u8
+                source: low-hls-rendition
+                audio: source_audio
+        source:
+          type: string
+          description: 'References a label on a `media` output of the same job, to fill in the corresponding data in the playlist.
+
+
+            For HLS, the bandwidth, codecs, and resolution values are inferred from the source by default. Any bandwidth, codecs, or resolution values specified for the same stream will override the inferred values.
+
+
+            **`source` is not compatible with SMIL outputs.**'
+    AlternateAudio:
+      title: Alternate Audio
+      type: object
+      description: "Provides a set of alternate audio streams for HLS playlists. Requires max_hls_protocol_version to be 4 or greater.\n\nThis option will insert EXT-X-MEDIA tags into the playlist. If name is not set, then a name will be generated based on the given language.\n\nValid Options for Alternate Audio Renditions\n\n<ul>\n  <li>`language`: The ISO 639 code for the language of the audio track, like \"en\", \"es\", or \"zh\".</li>\n  `name` (optional): The name of the alternate audio <li>`group`. If name is not set, this will default to the language `name`.</li>\n  <li>`path` (optional): An optional path to the M3U8 playlist for this audio rendition. If the path is not set, this alternate audio stream describes the the audio contained in the source stream.</li>\n  <li>`source` (optional): The label on a media output of the same job. This can be used to set the codec for renditions that use this audio stream.</li>\n</ul>"
+      example:
+        input: s3://zencodertesting/test.mov
+        outputs:
+        - type: playlist
+          alternate_audio:
+            custom_audio_group:
+            - source: english-audio
+              path: alternate-audio-en.m3u8
+              language: en
+            - source: french-audio
+              path: alternate-audio-fr.m3u8
+              language: fr
+            secondary_audio_group:
+              path: path/to/secondary-audio-group.m3u8
+              language: en
+              name: Secondary English Audio Track
+              source: secondary-english-audio
     OutputMediaFile:
       type: object
       readOnly: true
@@ -650,291 +777,6 @@ components:
           description: URL of the output file
           example: s3://zencodertesting/test.mov
           readOnly: true
-    MasterDisplay:
-      title: Master Display
-      description: Hash of HDR10 output settings
-      properties:
-        red:
-          type: object
-          description: Hash of red color volumes for HDR10 output settings
-          properties:
-            x:
-              type: number
-              description: Color volume x setting for red (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.74
-            y:
-              type: number
-              description: Color volume y setting for red (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.84
-        greeen:
-          type: object
-          description: Hash of green color volumes for HDR10 output settings
-          properties:
-            x:
-              type: number
-              description: Color volume x setting for green (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.74
-            y:
-              type: number
-              description: Color volume y setting for green (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.84
-        blue:
-          type: object
-          description: Hash of blue color volumes for HDR10 output settings
-          properties:
-            x:
-              type: number
-              description: Color volume x setting for blue (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.74
-            y:
-              type: number
-              description: Color volume y setting for blue (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.84
-        white_point:
-          type: object
-          description: Hash of white point color volumes for HDR10 output settings
-          properties:
-            x:
-              type: number
-              description: Color volume x setting for white point (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.74
-            y:
-              type: number
-              description: Color volume y setting for white point (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.84
-        luminence:
-          type: object
-          description: Hash of luminance settings for HDR10 output settings
-          properties:
-            min:
-              type: number
-              description: Minimum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 5.0
-            max:
-              type: number
-              description: Maximum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
-              minimum: 5.0
-              maximum: 10000.0
-    Schema:
-      title: Schema
-      type: object
-      properties:
-        type:
-          type: string
-          description: Provider type for this DRM schema.
-          enum:
-          - widevine
-          - playready
-          - marlin
-        license_acquisition_url:
-          type: string
-          description: License acquisition URL for Playready CENC DRM schema.
-    JobResponseFields:
-      title: Create Job Request Body Fields
-      type: object
-      description: Hash of Zencoder job properties
-      required:
-      - input
-      properties:
-        id:
-          type: integer
-          description: The job id, an integer in the 64-bit range.
-          example: 365524597
-          readOnly: true
-        submitted_at:
-          type: string
-          description: ISO 8601 date-time string representing when the job was submitted
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        created_at:
-          type: string
-          description: ISO 8601 date-time string representing when the job was created
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        updated_at:
-          type: string
-          description: ISO 8601 date-time string representing when the job was last updated
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        finished_at:
-          type: string
-          description: ISO 8601 date-time string representing when the job was completed
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        state:
-          type: string
-          description: 'The current state of the job:
-
-            - pending (not yet submitted to Zencoder)
-
-            - submitting (currently submitting to Zencoder)
-
-            - transcoding (successfully submitted to Zencoder)
-
-            - finished (Zencoder finished transcoding, and the job is done)
-
-            - failed (Zencoder was unable to transcode the video)'
-          enum:
-          - pending
-          - submitting
-          - transcoding
-          - finished
-          - failed
-          readOnly: true
-        input_media_file:
-          $ref: '#/components/schemas/InputMediaFile'
-        output_media_files:
-          type: array
-          description: Array of objects containing the properties of the output files
-          items:
-            $ref: '#/components/schemas/OutputMediaFile'
-    DynamicProfileOptions:
-      title: Dynamic Profile Options
-      type: object
-      deprecated: true
-      description: '''hash of options for CAE (Context Aware Encoding) jobs. With CAE the number of outputs and parameters of such outputs may change dynamically for each input file. The dynamic_profile_options settings define the way renditions should be created. See [CAE Settings](/encoding-settings/general/cae-settings.html) for details. You must also set generate_dynamic_profile equal to true to use this feature.'''
-      properties:
-        min_renditions:
-          type: integer
-          description: The minimum number of renditions to generate.
-          minimum: 1
-          maximum: 15
-          default: 1
-        max_renditions:
-          type: integer
-          description: The maximum number of renditions to generate.
-          minimum: 1
-          maximum: 15
-          default: 8
-        min_resolution:
-          type: object
-          description: Minimum resolution to be considered for the ladder.
-          properties:
-            height:
-              type: integer
-              minimum: 16
-              maximum: 8192
-              default: 108
-            width:
-              type: integer
-              minimum: 16
-              maximum: 8192
-              default: 192
-        max_resolution:
-          type: object
-          description: Maximum resolution to be considered for the ladder.
-          properties:
-            height:
-              type: integer
-              minimum: 16
-              maximum: 8192
-              default: (sourse height)
-            width:
-              type: integer
-              minimum: 16
-              maximum: 8192
-              default: (source width)
-        max_frame_rate:
-          type: number
-          description: Maximum frame rate that can be used.
-          minimum: 0.1
-          maximum: 120
-          default: 30
-        keyframe_rate:
-          type: number
-          description: Keyframe rate. This value can be either 0.5 or 1. For SSAI enabled content, this value needs to be 1.
-          minimum: 0.5
-          maximum: 1.0
-          default: 0.5
-        fixed_frame_rate:
-          type: boolean
-          description: Instructs generator to use same frame rate across all renditions. If false, H.264 baseline profile renditions at resolutions below 360p will be assigned halved frame rate.
-          default: true
-        max_bitrate:
-          type: integer
-          description: Maximum bitrate [kbps] that can be used.
-          minimum: 400
-          maximum: 40000
-          default: 15000
-        min_bitrate:
-          type: integer
-          description: Minimum bitrate [kbps] that can be used.
-          minimum: 40
-          maximum: 400
-          default: 200
-        max_first_rendition_bitrate:
-          type: integer
-          description: Maximum bitrate [kbps] that can be used for first rendition.
-          minimum: 40
-          maximum: 1000
-          default: 700
-        min_granularity:
-          type: integer
-          description: Minimum relative change in bitrate between renditions as a percentage.
-          minimum: 1
-          maximum: 100
-          default: 90
-        max_granularity:
-          type: integer
-          description: Maximum relative change in bitrate between renditions as a percentage.
-          minimum: 1
-          maximum: 100
-          default: 30
-        video_codec:
-          type: string
-          description: Video codec to use.
-          enum:
-          - h264
-          - hevc
-          default: h264
-        bitrate_cap_to_bitrate_ratio:
-          type: number
-          description: Ratio of maximum bit rate to average bitrate to be used for VBR encoding.
-          minimum: 1.0
-          maximum: 2.0
-          default: 1.3
-        buffer_size_to_bitrate_ratio:
-          type: number
-          description: Ratio of decoder buffer size to average bitrate to be used for VBR encoding.
-          minimum: 1.0
-          maximum: 4.0
-          default: 2.0
-        bitrate_cap_offset:
-          type: integer
-          description: Constant added when computing maximum bitrate (KBPS).
-          default: 64
-        buffer_size_offset:
-          type: integer
-          description: Constant added when computing VBV buffer size.
-          default: 85
-        quality_rate_tune:
-          type: integer
-          description: Quality vs rate tuning parameter.
-          minimum: -40
-          maximum: 40
-          default: 0
-        select_baseline_profile_configuration:
-          type: boolean
-          description: At least one rendition used in the profile will be baseline profile. Note that `select_baseline_profile_configuration`is `true` by default, and it requires *at least one rendition* to have a resolution at or below 512x288.
-          default: true
-        select_distinct_configurations:
-          type: boolean
-          description: 'If true, CAE will ensure that no two renditions use the same combination of: resolution, frame rate, and codec profile.'
-          default: false
-        video_configurations:
-          type: array
-          description: '''An array of structures describing resolutions, frame rates and associated codec settings that should be preferentially or mandatorily generated as part of the CAE encoding. See the [CAE encoding guide](/encoding-settings/general/cae-settings.html#video_configurations) for details.'''
-          items:
-            type: object
     OutputProgressResponse:
       title: Job Input Progress Response
       description: Progress in the processing of a job input file
@@ -967,6 +809,38 @@ components:
           - downloading
           - transcoding
           - uploading
+        current_event_progress:
+          type: number
+          description: The current activity percentage completed
+    InputProgressResponse:
+      title: Job Input Progress Response
+      description: Progress in the processing of a job input file
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The input id, an integer in the 64-bit range.
+          readOnly: true
+        state:
+          type: string
+          description: The state of input processing
+          enum:
+          - waiting
+          - pending
+          - assigning
+          - processing
+          - finished
+          - failed
+          - cancelled
+        progress:
+          type: number
+          description: Input processing percentage completed
+        current_event:
+          type: string
+          description: The current activity
+          enum:
+          - downloading
+          - inspecting
         current_event_progress:
           type: number
           description: The current activity percentage completed
@@ -1106,167 +980,6 @@ components:
           description: URL of the input file
           example: s3://zencodertesting/test.mov
           readOnly: true
-    GetProgressResponse:
-      title: Get Job Progress Response
-      type: object
-      properties:
-        state:
-          type: string
-          description: 'The current state of the job:
-
-            - pending (not yet submitted to Zencoder)
-
-            - submitting (currently submitting to Zencoder)
-
-            - transcoding (successfully submitted to Zencoder)
-
-            - finished (Zencoder finished transcoding, and the job is done)
-
-            - failed (Zencoder was unable to transcode the video)'
-        progress:
-          type: number
-          description: The percentage complete
-        input:
-          $ref: '#/components/schemas/InputProgressResponse'
-        output:
-          $ref: '#/components/schemas/OutputProgressResponse'
-    ListJobsResponse:
-      title: List Jobs Response
-      description: Success response for list jobs request
-      type: array
-      items:
-        $ref: '#/components/schemas/JobResponseFields'
-    CreateJobResponse:
-      title: Create Encoding Job Response
-      description: Success response for job creation
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The job id, an integer in the 64-bit range.
-          example: 365524597
-          readOnly: true
-        outputs:
-          type: array
-          description: Details on each output rendition of the Live job.
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: The unique id for the rendition, an integer in the 64-bit range.
-                example: 1294836780
-                readOnly: true
-              url:
-                type: string
-                description: URL for the media or manifest for the specified rendition (non-SSAI).
-              label:
-                type: string
-                description: Label for the output (from the input)
-    Stream:
-      title: Stream
-      type: object
-      description: Playlist stream info
-      properties:
-        path:
-          type: string
-          description: 'String containing an absolute or relative path to a stream manifest file.
-
-
-            *Note: Required for each stream for HLS, Microsoft Smooth Streaming, and Highwinds SMIL playlists.*'
-          example: http://example.com/video/high/index.m3u8
-        bandwidth:
-          type: integer
-          description: 'Specifies the bandwidth (kbps) of a playlist stream. Overrides bandwidth determined from a `source`.
-
-
-            *Note: Required for each stream for HLS and Highwinds SMIL playlists, unless a `source` is provided.*'
-          example: 500
-        resolution:
-          type: string
-          description: 'Specifies the resolution of a playlist stream. Overrides resolution determined from a `source`.
-
-
-            Valid Values: String containing width and height as: ''800x600'''
-          example: 800x600
-        codecs:
-          type: string
-          description: 'Specifies the codecs used in a playlist stream. Overrides codecs determined from a `source`.
-
-
-            String containing codecs in HTML5 format, such as: `mp4a.40.2`'
-        audio:
-          type: string
-          description: 'Specifies an alternate audio track for the playlist.
-
-
-            String containing the name of the audio GROUP-ID to use. This value must have been defined as an `alternate_audio` grouping. The codecs setting should reflect all `codecs` of the alternate audio group.'
-          example:
-            input: s3://zencodertesting/test.mov
-            outputs:
-            - type: playlist
-              alternate_audio:
-                ac3_audio:
-                  path: path/to/ac3-audio.m3u8
-                  language: en
-                  default: true
-                  source: ac3-audio-rendition
-                source_audio:
-                  language: en
-                  default: true
-              streams:
-              - path: low/index.m3u8
-                source: low-hls-rendition
-                audio: ac3_audio
-              - path: low/index.m3u8
-                source: low-hls-rendition
-                audio: source_audio
-        source:
-          type: string
-          description: 'References a label on a `media` output of the same job, to fill in the corresponding data in the playlist.
-
-
-            For HLS, the bandwidth, codecs, and resolution values are inferred from the source by default. Any bandwidth, codecs, or resolution values specified for the same stream will override the inferred values.
-
-
-            **`source` is not compatible with SMIL outputs.**'
-    AlternateAudio:
-      title: Alternate Audio
-      type: object
-      description: "Provides a set of alternate audio streams for HLS playlists. Requires max_hls_protocol_version to be 4 or greater.\n\nThis option will insert EXT-X-MEDIA tags into the playlist. If name is not set, then a name will be generated based on the given language.\n\nValid Options for Alternate Audio Renditions\n\n<ul>\n  <li>`language`: The ISO 639 code for the language of the audio track, like \"en\", \"es\", or \"zh\".</li>\n  `name` (optional): The name of the alternate audio <li>`group`. If name is not set, this will default to the language `name`.</li>\n  <li>`path` (optional): An optional path to the M3U8 playlist for this audio rendition. If the path is not set, this alternate audio stream describes the the audio contained in the source stream.</li>\n  <li>`source` (optional): The label on a media output of the same job. This can be used to set the codec for renditions that use this audio stream.</li>\n</ul>"
-      example:
-        input: s3://zencodertesting/test.mov
-        outputs:
-        - type: playlist
-          alternate_audio:
-            custom_audio_group:
-            - source: english-audio
-              path: alternate-audio-en.m3u8
-              language: en
-            - source: french-audio
-              path: alternate-audio-fr.m3u8
-              language: fr
-            secondary_audio_group:
-              path: path/to/secondary-audio-group.m3u8
-              language: en
-              name: Secondary English Audio Track
-              source: secondary-english-audio
-    Notification:
-      properties:
-        url:
-          description: A valid HTTP or HTTPS URL to notify, optionally including HTTP Auth credential
-          type: string
-        format:
-          type: string
-          description: A format and content type for notifications
-          enum:
-          - json
-          - xml
-        headers:
-          type: object
-          description: By default, HTTP notifications are sent with an HTTP Content-Type, along with a User-Agent; if your application requires additional headers, they can be specified here
-      title: notification
-      type: object
     Output:
       properties:
         aac-lc:
@@ -2634,6 +2347,32 @@ components:
           type: integer
       title: Output Object
       type: object
+    Thumbnail:
+      title: Thumbnail
+      description: Hash of thumbnail properties
+      properties:
+        label:
+          type: string
+          description: A name for the thumbnail set. Required when requesting thumbnail sets in an array.
+        format:
+          type: string
+          description: The format of the thumbnail image.
+          enum:
+          - png
+          - jpg
+          default: png
+        public:
+          type: boolean
+          description: 'By default, files put into a S3 bucket are not publicly readable. Instead, we use the canned access policy of [bucket-owner-full-control](http://docs.amazonwebservices.com/AmazonS3/latest/index.html?RESTAccessPolicy.html). This is true even if the bucket itself is publicly readable - a S3 bucket policy is not automatically inherited by new files added to the bucket.
+
+            Use the public API setting to flag a file output to S3 as being publicly readable. This is done by granting the READ permission to the AllUsers group.
+
+            This setting applies to both output video files and output thumbnails. By default, permissions set on an output file also apply to thumbnails. Setting `access_control` will override this setting.
+
+            An alternative to manual permissions would be to use a [bucket policy](http://awspolicygen.s3.amazonaws.com/policygen.html).
+
+            [More information](http://docs.amazonwebservices.com/AmazonS3/latest/dev/) from the Amazon S3 docs.'
+          default: false
     Watermark:
       title: Watermark
       description: Hash of watermark properties
@@ -2720,32 +2459,79 @@ components:
           default: 1.0
           minimum: 0.0
           maximum: 1.0
-    Thumbnail:
-      title: Thumbnail
-      description: Hash of thumbnail properties
+    JobResponseFields:
+      title: Create Job Request Body Fields
+      type: object
+      description: Hash of Zencoder job properties
+      required:
+      - input
       properties:
-        label:
+        id:
+          type: integer
+          description: The job id, an integer in the 64-bit range.
+          example: 365524597
+          readOnly: true
+        submitted_at:
           type: string
-          description: A name for the thumbnail set. Required when requesting thumbnail sets in an array.
-        format:
+          description: ISO 8601 date-time string representing when the job was submitted
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        created_at:
           type: string
-          description: The format of the thumbnail image.
+          description: ISO 8601 date-time string representing when the job was created
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        updated_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was last updated
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        finished_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was completed
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        state:
+          type: string
+          description: 'The current state of the job:
+
+            - pending (not yet submitted to Zencoder)
+
+            - submitting (currently submitting to Zencoder)
+
+            - transcoding (successfully submitted to Zencoder)
+
+            - finished (Zencoder finished transcoding, and the job is done)
+
+            - failed (Zencoder was unable to transcode the video)'
           enum:
-          - png
-          - jpg
-          default: png
-        public:
-          type: boolean
-          description: 'By default, files put into a S3 bucket are not publicly readable. Instead, we use the canned access policy of [bucket-owner-full-control](http://docs.amazonwebservices.com/AmazonS3/latest/index.html?RESTAccessPolicy.html). This is true even if the bucket itself is publicly readable - a S3 bucket policy is not automatically inherited by new files added to the bucket.
-
-            Use the public API setting to flag a file output to S3 as being publicly readable. This is done by granting the READ permission to the AllUsers group.
-
-            This setting applies to both output video files and output thumbnails. By default, permissions set on an output file also apply to thumbnails. Setting `access_control` will override this setting.
-
-            An alternative to manual permissions would be to use a [bucket policy](http://awspolicygen.s3.amazonaws.com/policygen.html).
-
-            [More information](http://docs.amazonwebservices.com/AmazonS3/latest/dev/) from the Amazon S3 docs.'
-          default: false
+          - pending
+          - submitting
+          - transcoding
+          - finished
+          - failed
+          readOnly: true
+        input_media_file:
+          $ref: '#/components/schemas/InputMediaFile'
+        output_media_files:
+          type: array
+          description: Array of objects containing the properties of the output files
+          items:
+            $ref: '#/components/schemas/OutputMediaFile'
+    Schema:
+      title: Schema
+      type: object
+      properties:
+        type:
+          type: string
+          description: Provider type for this DRM schema.
+          enum:
+          - widevine
+          - playready
+          - marlin
+        license_acquisition_url:
+          type: string
+          description: License acquisition URL for Playready CENC DRM schema.
     CuePoint:
       title: Cue Point
       description: 'Zencoder supports adding event and navigation cue points to VP6 Flash Video (FLV) files. Cue points are embedded in the FLV stream and FLV metadata packet when you encode the FLV file.
@@ -2782,6 +2568,220 @@ components:
                 name: My Cue Point
                 data:
                   mykey: myvalue
+    GetProgressResponse:
+      title: Get Job Progress Response
+      type: object
+      properties:
+        state:
+          type: string
+          description: 'The current state of the job:
+
+            - pending (not yet submitted to Zencoder)
+
+            - submitting (currently submitting to Zencoder)
+
+            - transcoding (successfully submitted to Zencoder)
+
+            - finished (Zencoder finished transcoding, and the job is done)
+
+            - failed (Zencoder was unable to transcode the video)'
+        progress:
+          type: number
+          description: The percentage complete
+        input:
+          $ref: '#/components/schemas/InputProgressResponse'
+        output:
+          $ref: '#/components/schemas/OutputProgressResponse'
+    CreateJobFields:
+      title: Create Job Request Body Fields
+      type: object
+      description: Hash of Zencoder job properties
+      required:
+      - input
+      properties:
+        dynamic_profile_options:
+          $ref: '#/components/schemas/DynamicProfileOptions'
+        generate_dynamic_profile:
+          type: boolean
+          deprecated: true
+          description: '''With CAE the number of outputs and parameters of such outputs may change dynamically for each input file. To specify limits on the number of outputs to be generated as well as other profile constraints, CAE job request must also include dynamic_profile_options object. The outputs reserved for CAE use should not include resolution, bitrate, or codec-related parameters. Instead, they should include labels dynamic_profile_rendition. The number of outputs reserved for CAE use must match the number specified as max_renditions in dynamic_profile_options.'''
+          default: false
+        input:
+          type: string
+          description: '''A valid URL to a media file (HTTP/HTTPS, FTP/FTPS, SFTP, Azure, GCS, CF or S3), with or without authentication'''
+          example: s3://zencodertesting/test.mov
+        region:
+          type: string
+          description: '''The AWS region or Google Compute Engine instance (beta) where Zencoder should process the job'''
+          enum:
+          - us
+          - europe
+          - asia
+          - sa
+          - australia
+          - us-virginia
+          - us-oregon
+          - us-n-california
+          - eu-dublin
+          - asia-singapore
+          - asia-tokyo
+          - sa-saopaulo
+          - australia-sydney
+          default: us
+          example: us-virginia
+        test:
+          type: boolean
+          description: '''Enable test mode ("Integration Mode") for a job'''
+          default: false
+        private:
+          type: boolean
+          description: Enable privacy mode for a job
+          default: false
+        pass_through:
+          type: string
+          description: Optional information to store alongside this job
+          example: my-custom-pass-through-value
+        mock:
+          type: boolean
+          description: Send a mocked job request
+          default: false
+        grouping:
+          type: string
+          description: A report grouping for this job
+          example: my-custom-group-name
+        aspera_transfer_policy:
+          type: string
+          description: How to allocate available bandwidth for Aspera file transfers
+          enum:
+          - fair
+          - low
+          default: fair
+        transfer_minimum_rate:
+          type: integer
+          description: A targeted rate in Kbps for data transfer minimums
+          default: 1800
+          example: 2500
+        transfer_maximum_rate:
+          type: integer
+          description: A targeted rate in Kbps for data transfer maximums
+          default: 250000
+          example: 300000
+        expected_md5_checksum:
+          type: string
+          description: The expected MD5 checksum of the input file. If the file's checksum does not match the provided checksum the job will fail.
+          example: d5ed34b6b49f57a4a5f4be72fc0a2cd4
+        credentials:
+          type: string
+          description: References saved credentials by a nickname
+          example: my_s3_credentials
+        notifications:
+          description: 'Array of notification destination objects or strings - notifications defined here are for job-level events.  A notification will be sent to the destination when selected event occurs. You can use a simple string with a url: &quot;http://log:pass@httpbin.org/post&quot;, or you can use an object.  <br> Retry strategy: In the event of a failed request to send a notification, the default retry strategy is to retry 50 times with an exponential delay between attempts: <br>
+
+            `max_retry_times = 50` <br> `delay_delta_s = 5` <br>
+
+            `next_retry = now_s + retry_count * delay_delta_s`'
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/Notification'
+            - type: string
+              description: A URL or email address to send notifications to
+          type: array
+          example:
+          - dev@example.com
+          - http://user:pass@example.com/path/to/notification/action
+          - url: https://example.com/notifications.html
+        outputs:
+          type: array
+          description: Array of output specifications
+          items:
+            $ref: '#/components/schemas/Output'
+    DRM:
+      title: DRM
+      type: object
+      description: Hash of DRM options
+      properties:
+        method:
+          type: string
+          description: The Digital Rights Management (DRM) method used to protect content
+          enum:
+          - cenc
+          - playready
+        provider:
+          type: string
+          description: The Digital Rights Management (DRM) provider used. Only required for PlayReady.
+        key_id:
+          type: string
+          description: '''32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use. This is specified with all bytes in standard (big-endian) order..Some DRM services return key IDs in little-endian order formatted as a GUID; to specify the key in that format see [key_guid]{/encoding-settings/content-protection/encoding-settings-drm.html#key_guid}.'''
+        key_guid:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use, in GUID-formatted little-endian order. Some DRM services return key IDs using this formatting. If a `key_id` is not also specified, this will be converted to use as the `key_id`. For specifying the key ID in a standard big-endian binary or UUID format, see `key_id`
+        user_key:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). The user key from the DRM provider.
+        server_key:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). The server key from the DRM provider.
+        media_id:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the media.
+        content_id:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
+        content_key:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
+        schemas:
+          type: array
+          description: 'When using Common Encryption to encrypt an output (or set of outputs), information about the DRM providers is specified as a schema including the schema type, and provider-specific infomration.
+
+
+            This is generally only specified on playlist outputs for multi-bitrate encoding jobs, but may also be specified for a CENC-encoded output to ensure that output is playable on its own.'
+          items:
+            $ref: '#/components/schemas/Schema'
+  parameters:
+    ZencoderApiKey:
+      name: Zencoder-Api-Key
+      in: header
+      description: Your API key
+      required: true
+      schema:
+        type: string
+    JobId:
+      name: job_id
+      in: path
+      description: The Zencoder job id
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: The page of results to return
+      style: form
+      explode: true
+      schema:
+        type: integer
+    PerPage:
+      name: per_page
+      in: query
+      description: The number of results to return for each page
+      style: form
+      explode: true
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+    ContentType:
+      name: Content-Type
+      in: header
+      description: 'Content-Type: application/json'
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
 x-bc-implicit-head: true
 x-bc-implicit-options: true
 x-bc-upstream: http://backend_server

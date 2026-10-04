@@ -127,6 +127,50 @@ paths:
         IsMultiContentStreaming: false
 components:
   schemas:
+    GetAccountDetailsResponse:
+      title: Get Account Details Response
+      type: object
+      properties:
+        account_state:
+          type: string
+          description: The current account state
+          enum:
+          - active
+          - stopped
+          - suspended
+          - cancelled
+        plan:
+          type: string
+          description: The current account plan
+          example: growth
+        billing_state:
+          type: string
+          description: The current billing state
+          enum:
+          - active
+          - past due
+          - cancelled
+        minutes_used:
+          type: integer
+          description: Minutes of encoded output used this month
+          example: 12549
+        minutes_included:
+          type: integer
+          description: Minutes of encoded output included in the plan per month
+          example: 25000
+        integration_mode:
+          type: boolean
+          description: Whether the account is in integration (test) mode
+    CreateAccountResponse:
+      title: Create Account Response
+      type: object
+      properties:
+        api-key:
+          type: string
+          description: The API key to autheticate requests
+        password:
+          type: string
+          description: The password submitted or auto-generated if none was submitted with the create account request
     CreateAccountFields:
       title: Create Account Request Body Fields
       type: object
@@ -403,50 +447,6 @@ components:
         confirm_password:
           type: string
           description: enter the password again
-    GetAccountDetailsResponse:
-      title: Get Account Details Response
-      type: object
-      properties:
-        account_state:
-          type: string
-          description: The current account state
-          enum:
-          - active
-          - stopped
-          - suspended
-          - cancelled
-        plan:
-          type: string
-          description: The current account plan
-          example: growth
-        billing_state:
-          type: string
-          description: The current billing state
-          enum:
-          - active
-          - past due
-          - cancelled
-        minutes_used:
-          type: integer
-          description: Minutes of encoded output used this month
-          example: 12549
-        minutes_included:
-          type: integer
-          description: Minutes of encoded output included in the plan per month
-          example: 25000
-        integration_mode:
-          type: boolean
-          description: Whether the account is in integration (test) mode
-    CreateAccountResponse:
-      title: Create Account Response
-      type: object
-      properties:
-        api-key:
-          type: string
-          description: The API key to autheticate requests
-        password:
-          type: string
-          description: The password submitted or auto-generated if none was submitted with the create account request
   parameters:
     ZencoderApiKey:
       name: Zencoder-Api-Key
