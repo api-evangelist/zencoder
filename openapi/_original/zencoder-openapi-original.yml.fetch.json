@@ -1,0 +1,12 @@
+{
+ "url": "https://zencoder.support.brightcove.com/references/openapi.yaml",
+ "requested_url": "https://zencoder.support.brightcove.com/references/openapi.yaml",
+ "status": 200,
+ "content_type": "binary/octet-stream",
+ "bytes": 162614,
+ "sha256": "1c9ad03e166e524055b3ed3a4797558d0ded8dc0008d65434656eb9153d4bc33",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
