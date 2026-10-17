@@ -204,155 +204,292 @@ paths:
         IsMultiContentStreaming: false
 components:
   schemas:
-    Skip:
-      title: Skip
-      description: 'An object containing conditions for skipping the output
-
-
-        **Note**: Due to the nature of video metadata and inconsistencies between video types some source files may have their dimensions read incorrectly during inspection, resulting in conditions being applied or ignored incorrectly.'
+    CreateJobResponse:
+      title: Create Encoding Job Response
+      description: Success response for job creation
+      type: object
       properties:
-        min_size:
-          type: string
-          description: 'If the source''s dimensions are smaller than the requested size, the output will be skipped.
-
-
-            Dimensions are calculated by mutliplying the height and the width of the source and comparing to the product of provided dimensions.'
-          example: 640x360
-        max_size:
-          type: string
-          description: 'If the source''s dimensions are larger than the requested size, the output will be skipped.
-
-
-            Dimensions are calculated by mutliplying the height and the width of the source and comparing to the product of provided dimensions.'
-          example: 640x360
-        min_duration:
+        id:
           type: integer
-          description: 'If the source''s duration is shorter than the requested duration, the output will be skipped.
-
-
-            Duration must be provided in seconds. To skip an output if the source is shorter than 5 minutes, use `300`.'
-          example: 300
-        max_duration:
-          type: integer
-          description: 'If the source''s duration is longer than the requested duration, the output will be skipped.
-
-
-            Duration must be provided in seconds. To skip an output if the source is longer than 10 minutes, use `600`.'
-          example: 600
-        min_audio_bitrate:
-          type: integer
-          description: 'If the source''s audio bitrate is less than the specified bitrate (in kbps), the output will be skipped.
-
-
-            **Source files without an audio track or without a recognizable audio bitrate will ignore this setting.** (See [require_audio](/encoding-settings/general/encoding-settings-conditional-outputs.html#require-audio) for more options.) To skip an output if the source audio bitrate is less than 128 Kbps, use 128.'
-          example: 128
-        max_audio_bitrate:
-          type: integer
-          description: 'If the source''s audio bitrate is greater than the specified bitrate (in kbps), the output will be skipped.
-
-
-            ''**Source files without an audio track or without a recognizable audio bitrate will ignore this setting.** (See [require_audio](encoding-settings/general/encoding-settings-conditional-outputs.html#require-audio) for more options.) To skip an output if the source audio bitrate is greater than 160 Kbps, use 160.'''
-          example: 160
-        min_video_bitrate:
-          type: integer
-          description: 'If the source''s video bitrate is less than the specified bitrate (in kbps), the output will be skipped.
-
-
-            ''**Source files without a video track or without a recognizable video bitrate will ignore this setting.** (See [require_video](encoding-settings/general/encoding-settings-conditional-outputs.html#require-video) for more options.) To skip an output if the source video bitrate is less than 800 Kbps, use 800.'''
-          example: 800
-        max_video_bitrate:
-          type: integer
-          description: 'If the source''s video bitrate is greater than the specified bitrate (in kbps), the output will be skipped.
-
-
-            ''**Source files without a video track or without a recognizable video bitrate will ignore this setting.** (See [require_video](encoding-settings/general/encoding-settings-conditional-outputs.html#require-video) for more options.) To skip an output if the source video bitrate is greater than 2000 Kbps, use 2000.'''
-          example: 2000
-        require_audio:
-          type: boolean
-          description: To skip an output if the source does not have an audio track, set this option to true.
-        require_video:
-          type: boolean
-          description: To skip an output if the source does not have an video track, set this option to true.
-    MasterDisplay:
-      title: Master Display
-      description: Hash of HDR10 output settings
+          description: The job id, an integer in the 64-bit range.
+          example: 365524597
+          readOnly: true
+        outputs:
+          type: array
+          description: Details on each output rendition of the Live job.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique id for the rendition, an integer in the 64-bit range.
+                example: 1294836780
+                readOnly: true
+              url:
+                type: string
+                description: URL for the media or manifest for the specified rendition (non-SSAI).
+              label:
+                type: string
+                description: Label for the output (from the input)
+    Thumbnail:
+      title: Thumbnail
+      description: Hash of thumbnail properties
       properties:
-        red:
-          type: object
-          description: Hash of red color volumes for HDR10 output settings
-          properties:
-            x:
-              type: number
-              description: Color volume x setting for red (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.74
-            y:
-              type: number
-              description: Color volume y setting for red (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.84
-        greeen:
-          type: object
-          description: Hash of green color volumes for HDR10 output settings
-          properties:
-            x:
-              type: number
-              description: Color volume x setting for green (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.74
-            y:
-              type: number
-              description: Color volume y setting for green (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.84
-        blue:
-          type: object
-          description: Hash of blue color volumes for HDR10 output settings
-          properties:
-            x:
-              type: number
-              description: Color volume x setting for blue (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.74
-            y:
-              type: number
-              description: Color volume y setting for blue (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.84
-        white_point:
-          type: object
-          description: Hash of white point color volumes for HDR10 output settings
-          properties:
-            x:
-              type: number
-              description: Color volume x setting for white point (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.74
-            y:
-              type: number
-              description: Color volume y setting for white point (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 0.84
-        luminence:
-          type: object
-          description: Hash of luminance settings for HDR10 output settings
-          properties:
-            min:
-              type: number
-              description: Minimum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
-              minimum: 0.0001
-              maximum: 5.0
-            max:
-              type: number
-              description: Maximum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
-              minimum: 5.0
-              maximum: 10000.0
+        label:
+          type: string
+          description: A name for the thumbnail set. Required when requesting thumbnail sets in an array.
+        format:
+          type: string
+          description: The format of the thumbnail image.
+          enum:
+          - png
+          - jpg
+          default: png
+        public:
+          type: boolean
+          description: 'By default, files put into a S3 bucket are not publicly readable. Instead, we use the canned access policy of [bucket-owner-full-control](http://docs.amazonwebservices.com/AmazonS3/latest/index.html?RESTAccessPolicy.html). This is true even if the bucket itself is publicly readable - a S3 bucket policy is not automatically inherited by new files added to the bucket.
+
+            Use the public API setting to flag a file output to S3 as being publicly readable. This is done by granting the READ permission to the AllUsers group.
+
+            This setting applies to both output video files and output thumbnails. By default, permissions set on an output file also apply to thumbnails. Setting `access_control` will override this setting.
+
+            An alternative to manual permissions would be to use a [bucket policy](http://awspolicygen.s3.amazonaws.com/policygen.html).
+
+            [More information](http://docs.amazonwebservices.com/AmazonS3/latest/dev/) from the Amazon S3 docs.'
+          default: false
     ListJobsResponse:
       title: List Jobs Response
       description: Success response for list jobs request
       type: array
       items:
         $ref: '#/components/schemas/JobResponseFields'
+    JobResponseFields:
+      title: Create Job Request Body Fields
+      type: object
+      description: Hash of Zencoder job properties
+      required:
+      - input
+      properties:
+        id:
+          type: integer
+          description: The job id, an integer in the 64-bit range.
+          example: 365524597
+          readOnly: true
+        submitted_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was submitted
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        created_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was created
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        updated_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was last updated
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        finished_at:
+          type: string
+          description: ISO 8601 date-time string representing when the job was completed
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        state:
+          type: string
+          description: 'The current state of the job:
+
+            - pending (not yet submitted to Zencoder)
+
+            - submitting (currently submitting to Zencoder)
+
+            - transcoding (successfully submitted to Zencoder)
+
+            - finished (Zencoder finished transcoding, and the job is done)
+
+            - failed (Zencoder was unable to transcode the video)'
+          enum:
+          - pending
+          - submitting
+          - transcoding
+          - finished
+          - failed
+          readOnly: true
+        input_media_file:
+          $ref: '#/components/schemas/InputMediaFile'
+        output_media_files:
+          type: array
+          description: Array of objects containing the properties of the output files
+          items:
+            $ref: '#/components/schemas/OutputMediaFile'
+    InputMediaFile:
+      type: object
+      readOnly: true
+      description: Object containing properties for the input media file.
+      properties:
+        audio_bitrate_in_kbps:
+          type: integer
+          description: Audio bitrate of the input media file
+          example: 90
+          readOnly: true
+        audio_codec:
+          type: string
+          description: Audio codec of the input media file
+          example: aac
+          readOnly: true
+        audio_sample_rate:
+          type: integer
+          description: Audio sample rate of the input media file
+          example: 44100
+          readOnly: true
+        audio_tracks:
+          type: integer
+          description: The number of audio tracks in the input media file
+          example: 2
+          readOnly: true
+        channels:
+          type: integer
+          description: The number of audio channels in the input media file
+          example: 2
+          readOnly: true
+        created_at:
+          type: string
+          description: ISO 8601 date-time string representing when the input file was created
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        updated_at:
+          type: string
+          description: ISO 8601 date-time string representing when state of processing on the input file last changed
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        finished_at:
+          type: string
+          description: ISO 8601 date-time string representing when processing the input file finished
+          example: '2017-04-20T16:08:02Z'
+          readOnly: true
+        duration_in_ms:
+          type: integer
+          description: Duration in ms of the input media file
+          example: 51312
+          readOnly: true
+        error_class:
+          type: string
+          description: The type of error thrown if an error occurred in processing the input file
+          example: InvalidAudioSettingsError
+          readOnly: true
+        error_message:
+          type: string
+          description: The error message thrown if an error occurred in processing the input file
+          example: The supplied audio encoding settings were not valid
+          readOnly: true
+        file_size_bytes:
+          type: integer
+          description: The file size in bytes of the input file
+          example: 922620
+          readOnly: true
+        format:
+          type: string
+          description: The format of the input file
+          example: mpeg4
+          readOnly: true
+        frame_rate:
+          type: integer
+          description: The frame_rate of the input file
+          example: 30
+          readOnly: true
+        height:
+          type: integer
+          description: The frame height of the input file in pixels
+          example: 360
+          readOnly: true
+        id:
+          type: integer
+          description: The id of the input file, an integer in the 64-bit range.
+          example: 365495537
+          readOnly: true
+        md5_checksum:
+          type: integer
+          description: The checksum of the input file
+          example: 9c98085f2e10ca0490aa3e2b6746f7dd
+          readOnly: true
+        privacy:
+          type: boolean
+          description: Privacy mode
+          example: true
+          readOnly: true
+        state:
+          type: string
+          description: 'The current state of the file:
+
+            - pending (not yet submitted to Zencoder)
+
+            - submitting (currently submitting to Zencoder)
+
+            - finished (Zencoder finished processing the file)
+
+            - failed (Zencoder was unable to process the file)'
+        test:
+          type: boolean
+          description: Test mode
+          example: true
+          readOnly: true
+        video_bitrate_in_kbps:
+          type: integer
+          description: video bitrate of the input file
+          example: 1402
+          readOnly: true
+        video_codec:
+          type: string
+          description: video codec of the input file
+          example: h264
+          readOnly: true
+        width:
+          type: integer
+          description: frame width of the input file in pixels
+          example: 640
+          readOnly: true
+        total_bitrate_in_kbps:
+          type: integer
+          description: total audio+video bitrate of the input file
+          example: 7906
+          readOnly: true
+        url:
+          type: string
+          description: URL of the input file
+          example: s3://zencodertesting/test.mov
+          readOnly: true
+    InputProgressResponse:
+      title: Job Input Progress Response
+      description: Progress in the processing of a job input file
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The input id, an integer in the 64-bit range.
+          readOnly: true
+        state:
+          type: string
+          description: The state of input processing
+          enum:
+          - waiting
+          - pending
+          - assigning
+          - processing
+          - finished
+          - failed
+          - cancelled
+        progress:
+          type: number
+          description: Input processing percentage completed
+        current_event:
+          type: string
+          description: The current activity
+          enum:
+          - downloading
+          - inspecting
+        current_event_progress:
+          type: number
+          description: The current activity percentage completed
     DynamicProfileOptions:
       title: Dynamic Profile Options
       type: object
@@ -491,49 +628,302 @@ components:
           description: '''An array of structures describing resolutions, frame rates and associated codec settings that should be preferentially or mandatorily generated as part of the CAE encoding. See the [CAE encoding guide](/encoding-settings/general/cae-settings.html#video_configurations) for details.'''
           items:
             type: object
-    Notification:
+    Skip:
+      title: Skip
+      description: 'An object containing conditions for skipping the output
+
+
+        **Note**: Due to the nature of video metadata and inconsistencies between video types some source files may have their dimensions read incorrectly during inspection, resulting in conditions being applied or ignored incorrectly.'
       properties:
-        url:
-          description: A valid HTTP or HTTPS URL to notify, optionally including HTTP Auth credential
+        min_size:
           type: string
-        format:
+          description: 'If the source''s dimensions are smaller than the requested size, the output will be skipped.
+
+
+            Dimensions are calculated by mutliplying the height and the width of the source and comparing to the product of provided dimensions.'
+          example: 640x360
+        max_size:
           type: string
-          description: A format and content type for notifications
-          enum:
-          - json
-          - xml
-        headers:
-          type: object
-          description: By default, HTTP notifications are sent with an HTTP Content-Type, along with a User-Agent; if your application requires additional headers, they can be specified here
-      title: notification
-      type: object
-    CreateJobResponse:
-      title: Create Encoding Job Response
-      description: Success response for job creation
-      type: object
-      properties:
-        id:
+          description: 'If the source''s dimensions are larger than the requested size, the output will be skipped.
+
+
+            Dimensions are calculated by mutliplying the height and the width of the source and comparing to the product of provided dimensions.'
+          example: 640x360
+        min_duration:
           type: integer
-          description: The job id, an integer in the 64-bit range.
-          example: 365524597
-          readOnly: true
+          description: 'If the source''s duration is shorter than the requested duration, the output will be skipped.
+
+
+            Duration must be provided in seconds. To skip an output if the source is shorter than 5 minutes, use `300`.'
+          example: 300
+        max_duration:
+          type: integer
+          description: 'If the source''s duration is longer than the requested duration, the output will be skipped.
+
+
+            Duration must be provided in seconds. To skip an output if the source is longer than 10 minutes, use `600`.'
+          example: 600
+        min_audio_bitrate:
+          type: integer
+          description: 'If the source''s audio bitrate is less than the specified bitrate (in kbps), the output will be skipped.
+
+
+            **Source files without an audio track or without a recognizable audio bitrate will ignore this setting.** (See [require_audio](/encoding-settings/general/encoding-settings-conditional-outputs.html#require-audio) for more options.) To skip an output if the source audio bitrate is less than 128 Kbps, use 128.'
+          example: 128
+        max_audio_bitrate:
+          type: integer
+          description: 'If the source''s audio bitrate is greater than the specified bitrate (in kbps), the output will be skipped.
+
+
+            ''**Source files without an audio track or without a recognizable audio bitrate will ignore this setting.** (See [require_audio](encoding-settings/general/encoding-settings-conditional-outputs.html#require-audio) for more options.) To skip an output if the source audio bitrate is greater than 160 Kbps, use 160.'''
+          example: 160
+        min_video_bitrate:
+          type: integer
+          description: 'If the source''s video bitrate is less than the specified bitrate (in kbps), the output will be skipped.
+
+
+            ''**Source files without a video track or without a recognizable video bitrate will ignore this setting.** (See [require_video](encoding-settings/general/encoding-settings-conditional-outputs.html#require-video) for more options.) To skip an output if the source video bitrate is less than 800 Kbps, use 800.'''
+          example: 800
+        max_video_bitrate:
+          type: integer
+          description: 'If the source''s video bitrate is greater than the specified bitrate (in kbps), the output will be skipped.
+
+
+            ''**Source files without a video track or without a recognizable video bitrate will ignore this setting.** (See [require_video](encoding-settings/general/encoding-settings-conditional-outputs.html#require-video) for more options.) To skip an output if the source video bitrate is greater than 2000 Kbps, use 2000.'''
+          example: 2000
+        require_audio:
+          type: boolean
+          description: To skip an output if the source does not have an audio track, set this option to true.
+        require_video:
+          type: boolean
+          description: To skip an output if the source does not have an video track, set this option to true.
+    Schema:
+      title: Schema
+      type: object
+      properties:
+        type:
+          type: string
+          description: Provider type for this DRM schema.
+          enum:
+          - widevine
+          - playready
+          - marlin
+        license_acquisition_url:
+          type: string
+          description: License acquisition URL for Playready CENC DRM schema.
+    CreateJobFields:
+      title: Create Job Request Body Fields
+      type: object
+      description: Hash of Zencoder job properties
+      required:
+      - input
+      properties:
+        dynamic_profile_options:
+          $ref: '#/components/schemas/DynamicProfileOptions'
+        generate_dynamic_profile:
+          type: boolean
+          deprecated: true
+          description: '''With CAE the number of outputs and parameters of such outputs may change dynamically for each input file. To specify limits on the number of outputs to be generated as well as other profile constraints, CAE job request must also include dynamic_profile_options object. The outputs reserved for CAE use should not include resolution, bitrate, or codec-related parameters. Instead, they should include labels dynamic_profile_rendition. The number of outputs reserved for CAE use must match the number specified as max_renditions in dynamic_profile_options.'''
+          default: false
+        input:
+          type: string
+          description: '''A valid URL to a media file (HTTP/HTTPS, FTP/FTPS, SFTP, Azure, GCS, CF or S3), with or without authentication'''
+          example: s3://zencodertesting/test.mov
+        region:
+          type: string
+          description: '''The AWS region or Google Compute Engine instance (beta) where Zencoder should process the job'''
+          enum:
+          - us
+          - europe
+          - asia
+          - sa
+          - australia
+          - us-virginia
+          - us-oregon
+          - us-n-california
+          - eu-dublin
+          - asia-singapore
+          - asia-tokyo
+          - sa-saopaulo
+          - australia-sydney
+          default: us
+          example: us-virginia
+        test:
+          type: boolean
+          description: '''Enable test mode ("Integration Mode") for a job'''
+          default: false
+        private:
+          type: boolean
+          description: Enable privacy mode for a job
+          default: false
+        pass_through:
+          type: string
+          description: Optional information to store alongside this job
+          example: my-custom-pass-through-value
+        mock:
+          type: boolean
+          description: Send a mocked job request
+          default: false
+        grouping:
+          type: string
+          description: A report grouping for this job
+          example: my-custom-group-name
+        aspera_transfer_policy:
+          type: string
+          description: How to allocate available bandwidth for Aspera file transfers
+          enum:
+          - fair
+          - low
+          default: fair
+        transfer_minimum_rate:
+          type: integer
+          description: A targeted rate in Kbps for data transfer minimums
+          default: 1800
+          example: 2500
+        transfer_maximum_rate:
+          type: integer
+          description: A targeted rate in Kbps for data transfer maximums
+          default: 250000
+          example: 300000
+        expected_md5_checksum:
+          type: string
+          description: The expected MD5 checksum of the input file. If the file's checksum does not match the provided checksum the job will fail.
+          example: d5ed34b6b49f57a4a5f4be72fc0a2cd4
+        credentials:
+          type: string
+          description: References saved credentials by a nickname
+          example: my_s3_credentials
+        notifications:
+          description: 'Array of notification destination objects or strings - notifications defined here are for job-level events.  A notification will be sent to the destination when selected event occurs. You can use a simple string with a url: &quot;http://log:pass@httpbin.org/post&quot;, or you can use an object.  <br> Retry strategy: In the event of a failed request to send a notification, the default retry strategy is to retry 50 times with an exponential delay between attempts: <br>
+
+            `max_retry_times = 50` <br> `delay_delta_s = 5` <br>
+
+            `next_retry = now_s + retry_count * delay_delta_s`'
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/Notification'
+            - type: string
+              description: A URL or email address to send notifications to
+          type: array
+          example:
+          - dev@example.com
+          - http://user:pass@example.com/path/to/notification/action
+          - url: https://example.com/notifications.html
         outputs:
           type: array
-          description: Details on each output rendition of the Live job.
+          description: Array of output specifications
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: The unique id for the rendition, an integer in the 64-bit range.
-                example: 1294836780
-                readOnly: true
-              url:
-                type: string
-                description: URL for the media or manifest for the specified rendition (non-SSAI).
-              label:
-                type: string
-                description: Label for the output (from the input)
+            $ref: '#/components/schemas/Output'
+    Watermark:
+      title: Watermark
+      description: Hash of watermark properties
+      type: object
+      properties:
+        url:
+          type: string
+          description: 'A valid URL of a remote image file to use as a watermark. Use the input URL syntax. Supports S3, GCS, Cloud Files, HTTP/S, FTP, and SFTP, with or without authentication.
+
+
+            Zencoder supports watermark files in GIF, JPEG, BMP, or PNG format.
+
+
+            For transparent watermarks, use PNGs with alpha or index transparency.
+
+
+            **Supported PNG Formats**
+
+            - 8-bit RGB
+
+            - 8-bit RGB+Alpha
+
+            - 8-bit Grayscale
+
+            - 8-bit Indexed
+
+            - 8-bit Indexed+Transparency
+
+            - 16-bit RGB
+
+            - 16-bit Grayscale
+
+
+            **Unsupported PNG Formats**
+
+            - 8-bit Grayscale+Alpha
+
+            - 16-bit Grayscale+Alpha
+
+            - 16-bit RGB+Alpha'
+        x:
+          oneOf:
+          - type: string
+          - type: integer
+          description: 'Where to place the watermark within the video, on the x axis (left/right). Can be a number of pixels (e.g. `100` or `-20`), a percent of the video width (e.g. `25%` or `-5%`), or `centered` to align the watermark to the center of the video. Use a positive number to place relative to the left side of the video, and a negative number to place relative to the right side of the video. Use "-0" (as a *string*) to lock to the right side.
+
+
+            By default, position is based on the visible content area, not including any padding. Use `origin` to set watermark position based on the full output.'
+        y:
+          oneOf:
+          - type: string
+          - type: integer
+          description: 'Where to place the watermark within the video, on the y axis (top/bottom). Can be a number of pixels (e.g. `100` or `-20`), a percent of the video width (e.g. `25%` or `-5%`), or `centered` to align the watermark to the center of the video. Use a positive number to place relative to the left side of the video, and a negative number to place relative to the right side of the video. Use "-0" (as a *string*) to lock to the bottom.
+
+
+            By default, position is based on the visible content area, not including any padding. Use `origin` to set watermark position based on the full output.'
+        width:
+          oneOf:
+          - type: string
+          - type: integer
+          description: The width of the watermark, expressed as a number of pixels (e.g. `64`) or as a percent of the video width (e.g. `10%`). If `height` is provided, but not `width`, the watermark image will be scaled proportionately. Note that percentage values must be strings - pixel values may be strings or numbers.
+          default: Scale to `height`, or original image width
+        height:
+          oneOf:
+          - type: string
+          - type: integer
+          description: The height of the watermark, expressed as a number of pixels (e.g. `64`) or as a percent of the video width (e.g. `10%`). If `width` is provided, but not `height`, the watermark image will be scaled proportionately.
+          default: Scale to `width`, or original image height
+        origin:
+          type: string
+          description: 'The part of the video to base the watermark''s positioning on. This only affects jobs where aspect_mode is ''pad''.
+
+
+            - `frame` bases the placement on the full resolution of the output, including any padding.
+
+            - `content` bases the placement on the visible content area, not including padding.'
+          default: content
+          enum:
+          - content
+          - frame
+        opacity:
+          type: number
+          description: Make the watermark transparent by setting an opacity value between `0.0` (transparent) and `1.0` (opaque).
+          default: 1.0
+          minimum: 0.0
+          maximum: 1.0
+    GetProgressResponse:
+      title: Get Job Progress Response
+      type: object
+      properties:
+        state:
+          type: string
+          description: 'The current state of the job:
+
+            - pending (not yet submitted to Zencoder)
+
+            - submitting (currently submitting to Zencoder)
+
+            - transcoding (successfully submitted to Zencoder)
+
+            - finished (Zencoder finished transcoding, and the job is done)
+
+            - failed (Zencoder was unable to transcode the video)'
+        progress:
+          type: number
+          description: The percentage complete
+        input:
+          $ref: '#/components/schemas/InputProgressResponse'
+        output:
+          $ref: '#/components/schemas/OutputProgressResponse'
     Stream:
       title: Stream
       type: object
@@ -622,6 +1012,85 @@ components:
               language: en
               name: Secondary English Audio Track
               source: secondary-english-audio
+    DRM:
+      title: DRM
+      type: object
+      description: Hash of DRM options
+      properties:
+        method:
+          type: string
+          description: The Digital Rights Management (DRM) method used to protect content
+          enum:
+          - cenc
+          - playready
+        provider:
+          type: string
+          description: The Digital Rights Management (DRM) provider used. Only required for PlayReady.
+        key_id:
+          type: string
+          description: '''32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use. This is specified with all bytes in standard (big-endian) order..Some DRM services return key IDs in little-endian order formatted as a GUID; to specify the key in that format see [key_guid]{/encoding-settings/content-protection/encoding-settings-drm.html#key_guid}.'''
+        key_guid:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use, in GUID-formatted little-endian order. Some DRM services return key IDs using this formatting. If a `key_id` is not also specified, this will be converted to use as the `key_id`. For specifying the key ID in a standard big-endian binary or UUID format, see `key_id`
+        user_key:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). The user key from the DRM provider.
+        server_key:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). The server key from the DRM provider.
+        media_id:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the media.
+        content_id:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
+        content_key:
+          type: string
+          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
+        schemas:
+          type: array
+          description: 'When using Common Encryption to encrypt an output (or set of outputs), information about the DRM providers is specified as a schema including the schema type, and provider-specific infomration.
+
+
+            This is generally only specified on playlist outputs for multi-bitrate encoding jobs, but may also be specified for a CENC-encoded output to ensure that output is playable on its own.'
+          items:
+            $ref: '#/components/schemas/Schema'
+    CuePoint:
+      title: Cue Point
+      description: 'Zencoder supports adding event and navigation cue points to VP6 Flash Video (FLV) files. Cue points are embedded in the FLV stream and FLV metadata packet when you encode the FLV file.
+
+
+        There are two cue point types: "navigation" and "event". Navigation cue points can be used to let users seek to a specified part of a video file. Navigation cue points create a keyframe at the specified cue point location, so you can use code to move a video player’s playhead to that location. You can set particular points in an FLV file where you might want users to seek. For example, your video might have multiple chapters or segments, and you can control the video by embedding navigation cue points in the video file.
+
+
+        Event cue points can be used to perform actions in a SWF video player that are triggered at specified points during FLV playback.'
+      properties:
+        type:
+          type: string
+          description: 'A `cue_point` type: either `navigation` or `event`.'
+          enum:
+          - navigation
+          - event
+        time:
+          type: number
+          description: The time for a `cue_point`, in seconds.
+          example: 30.4
+        name:
+          type: number
+          description: A name for a `cue_point`.
+          example: First cue point
+        data:
+          type: number
+          description: Data for a `cue_point`, as a hash of key/value pairs.
+          example:
+            input: s3://zencodertesting/test.mov
+            outputs:
+            - cue_points:
+              - type: navigation
+                time: 30.4
+                name: My Cue Point
+                data:
+                  mykey: myvalue
     OutputMediaFile:
       type: object
       readOnly: true
@@ -775,209 +1244,6 @@ components:
         url:
           type: string
           description: URL of the output file
-          example: s3://zencodertesting/test.mov
-          readOnly: true
-    OutputProgressResponse:
-      title: Job Input Progress Response
-      description: Progress in the processing of a job input file
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The output id, an integer in the 64-bit range.
-          readOnly: true
-        state:
-          type: string
-          description: The state of output processing
-          enum:
-          - waiting
-          - queued
-          - assigning
-          - processing
-          - finished
-          - failed
-          - cancelle`
-          - no input
-          - skipped
-        progress:
-          type: number
-          description: Input processing percentage completed
-        current_event:
-          type: string
-          description: The current activity
-          enum:
-          - downloading
-          - transcoding
-          - uploading
-        current_event_progress:
-          type: number
-          description: The current activity percentage completed
-    InputProgressResponse:
-      title: Job Input Progress Response
-      description: Progress in the processing of a job input file
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The input id, an integer in the 64-bit range.
-          readOnly: true
-        state:
-          type: string
-          description: The state of input processing
-          enum:
-          - waiting
-          - pending
-          - assigning
-          - processing
-          - finished
-          - failed
-          - cancelled
-        progress:
-          type: number
-          description: Input processing percentage completed
-        current_event:
-          type: string
-          description: The current activity
-          enum:
-          - downloading
-          - inspecting
-        current_event_progress:
-          type: number
-          description: The current activity percentage completed
-    InputMediaFile:
-      type: object
-      readOnly: true
-      description: Object containing properties for the input media file.
-      properties:
-        audio_bitrate_in_kbps:
-          type: integer
-          description: Audio bitrate of the input media file
-          example: 90
-          readOnly: true
-        audio_codec:
-          type: string
-          description: Audio codec of the input media file
-          example: aac
-          readOnly: true
-        audio_sample_rate:
-          type: integer
-          description: Audio sample rate of the input media file
-          example: 44100
-          readOnly: true
-        audio_tracks:
-          type: integer
-          description: The number of audio tracks in the input media file
-          example: 2
-          readOnly: true
-        channels:
-          type: integer
-          description: The number of audio channels in the input media file
-          example: 2
-          readOnly: true
-        created_at:
-          type: string
-          description: ISO 8601 date-time string representing when the input file was created
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        updated_at:
-          type: string
-          description: ISO 8601 date-time string representing when state of processing on the input file last changed
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        finished_at:
-          type: string
-          description: ISO 8601 date-time string representing when processing the input file finished
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        duration_in_ms:
-          type: integer
-          description: Duration in ms of the input media file
-          example: 51312
-          readOnly: true
-        error_class:
-          type: string
-          description: The type of error thrown if an error occurred in processing the input file
-          example: InvalidAudioSettingsError
-          readOnly: true
-        error_message:
-          type: string
-          description: The error message thrown if an error occurred in processing the input file
-          example: The supplied audio encoding settings were not valid
-          readOnly: true
-        file_size_bytes:
-          type: integer
-          description: The file size in bytes of the input file
-          example: 922620
-          readOnly: true
-        format:
-          type: string
-          description: The format of the input file
-          example: mpeg4
-          readOnly: true
-        frame_rate:
-          type: integer
-          description: The frame_rate of the input file
-          example: 30
-          readOnly: true
-        height:
-          type: integer
-          description: The frame height of the input file in pixels
-          example: 360
-          readOnly: true
-        id:
-          type: integer
-          description: The id of the input file, an integer in the 64-bit range.
-          example: 365495537
-          readOnly: true
-        md5_checksum:
-          type: integer
-          description: The checksum of the input file
-          example: 9c98085f2e10ca0490aa3e2b6746f7dd
-          readOnly: true
-        privacy:
-          type: boolean
-          description: Privacy mode
-          example: true
-          readOnly: true
-        state:
-          type: string
-          description: 'The current state of the file:
-
-            - pending (not yet submitted to Zencoder)
-
-            - submitting (currently submitting to Zencoder)
-
-            - finished (Zencoder finished processing the file)
-
-            - failed (Zencoder was unable to process the file)'
-        test:
-          type: boolean
-          description: Test mode
-          example: true
-          readOnly: true
-        video_bitrate_in_kbps:
-          type: integer
-          description: video bitrate of the input file
-          example: 1402
-          readOnly: true
-        video_codec:
-          type: string
-          description: video codec of the input file
-          example: h264
-          readOnly: true
-        width:
-          type: integer
-          description: frame width of the input file in pixels
-          example: 640
-          readOnly: true
-        total_bitrate_in_kbps:
-          type: integer
-          description: total audio+video bitrate of the input file
-          example: 7906
-          readOnly: true
-        url:
-          type: string
-          description: URL of the input file
           example: s3://zencodertesting/test.mov
           readOnly: true
     Output:
@@ -2347,405 +2613,132 @@ components:
           type: integer
       title: Output Object
       type: object
-    Thumbnail:
-      title: Thumbnail
-      description: Hash of thumbnail properties
+    MasterDisplay:
+      title: Master Display
+      description: Hash of HDR10 output settings
       properties:
-        label:
-          type: string
-          description: A name for the thumbnail set. Required when requesting thumbnail sets in an array.
-        format:
-          type: string
-          description: The format of the thumbnail image.
-          enum:
-          - png
-          - jpg
-          default: png
-        public:
-          type: boolean
-          description: 'By default, files put into a S3 bucket are not publicly readable. Instead, we use the canned access policy of [bucket-owner-full-control](http://docs.amazonwebservices.com/AmazonS3/latest/index.html?RESTAccessPolicy.html). This is true even if the bucket itself is publicly readable - a S3 bucket policy is not automatically inherited by new files added to the bucket.
-
-            Use the public API setting to flag a file output to S3 as being publicly readable. This is done by granting the READ permission to the AllUsers group.
-
-            This setting applies to both output video files and output thumbnails. By default, permissions set on an output file also apply to thumbnails. Setting `access_control` will override this setting.
-
-            An alternative to manual permissions would be to use a [bucket policy](http://awspolicygen.s3.amazonaws.com/policygen.html).
-
-            [More information](http://docs.amazonwebservices.com/AmazonS3/latest/dev/) from the Amazon S3 docs.'
-          default: false
-    Watermark:
-      title: Watermark
-      description: Hash of watermark properties
+        red:
+          type: object
+          description: Hash of red color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for red (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.74
+            y:
+              type: number
+              description: Color volume y setting for red (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.84
+        greeen:
+          type: object
+          description: Hash of green color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for green (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.74
+            y:
+              type: number
+              description: Color volume y setting for green (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.84
+        blue:
+          type: object
+          description: Hash of blue color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for blue (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.74
+            y:
+              type: number
+              description: Color volume y setting for blue (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.84
+        white_point:
+          type: object
+          description: Hash of white point color volumes for HDR10 output settings
+          properties:
+            x:
+              type: number
+              description: Color volume x setting for white point (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.74
+            y:
+              type: number
+              description: Color volume y setting for white point (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 0.84
+        luminence:
+          type: object
+          description: Hash of luminance settings for HDR10 output settings
+          properties:
+            min:
+              type: number
+              description: Minimum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
+              minimum: 0.0001
+              maximum: 5.0
+            max:
+              type: number
+              description: Maximum luminance in nits or candelas per square meter (cd/m2) (for HDR10 outputs)
+              minimum: 5.0
+              maximum: 10000.0
+    OutputProgressResponse:
+      title: Job Input Progress Response
+      description: Progress in the processing of a job input file
       type: object
-      properties:
-        url:
-          type: string
-          description: 'A valid URL of a remote image file to use as a watermark. Use the input URL syntax. Supports S3, GCS, Cloud Files, HTTP/S, FTP, and SFTP, with or without authentication.
-
-
-            Zencoder supports watermark files in GIF, JPEG, BMP, or PNG format.
-
-
-            For transparent watermarks, use PNGs with alpha or index transparency.
-
-
-            **Supported PNG Formats**
-
-            - 8-bit RGB
-
-            - 8-bit RGB+Alpha
-
-            - 8-bit Grayscale
-
-            - 8-bit Indexed
-
-            - 8-bit Indexed+Transparency
-
-            - 16-bit RGB
-
-            - 16-bit Grayscale
-
-
-            **Unsupported PNG Formats**
-
-            - 8-bit Grayscale+Alpha
-
-            - 16-bit Grayscale+Alpha
-
-            - 16-bit RGB+Alpha'
-        x:
-          oneOf:
-          - type: string
-          - type: integer
-          description: 'Where to place the watermark within the video, on the x axis (left/right). Can be a number of pixels (e.g. `100` or `-20`), a percent of the video width (e.g. `25%` or `-5%`), or `centered` to align the watermark to the center of the video. Use a positive number to place relative to the left side of the video, and a negative number to place relative to the right side of the video. Use "-0" (as a *string*) to lock to the right side.
-
-
-            By default, position is based on the visible content area, not including any padding. Use `origin` to set watermark position based on the full output.'
-        y:
-          oneOf:
-          - type: string
-          - type: integer
-          description: 'Where to place the watermark within the video, on the y axis (top/bottom). Can be a number of pixels (e.g. `100` or `-20`), a percent of the video width (e.g. `25%` or `-5%`), or `centered` to align the watermark to the center of the video. Use a positive number to place relative to the left side of the video, and a negative number to place relative to the right side of the video. Use "-0" (as a *string*) to lock to the bottom.
-
-
-            By default, position is based on the visible content area, not including any padding. Use `origin` to set watermark position based on the full output.'
-        width:
-          oneOf:
-          - type: string
-          - type: integer
-          description: The width of the watermark, expressed as a number of pixels (e.g. `64`) or as a percent of the video width (e.g. `10%`). If `height` is provided, but not `width`, the watermark image will be scaled proportionately. Note that percentage values must be strings - pixel values may be strings or numbers.
-          default: Scale to `height`, or original image width
-        height:
-          oneOf:
-          - type: string
-          - type: integer
-          description: The height of the watermark, expressed as a number of pixels (e.g. `64`) or as a percent of the video width (e.g. `10%`). If `width` is provided, but not `height`, the watermark image will be scaled proportionately.
-          default: Scale to `width`, or original image height
-        origin:
-          type: string
-          description: 'The part of the video to base the watermark''s positioning on. This only affects jobs where aspect_mode is ''pad''.
-
-
-            - `frame` bases the placement on the full resolution of the output, including any padding.
-
-            - `content` bases the placement on the visible content area, not including padding.'
-          default: content
-          enum:
-          - content
-          - frame
-        opacity:
-          type: number
-          description: Make the watermark transparent by setting an opacity value between `0.0` (transparent) and `1.0` (opaque).
-          default: 1.0
-          minimum: 0.0
-          maximum: 1.0
-    JobResponseFields:
-      title: Create Job Request Body Fields
-      type: object
-      description: Hash of Zencoder job properties
-      required:
-      - input
       properties:
         id:
           type: integer
-          description: The job id, an integer in the 64-bit range.
-          example: 365524597
-          readOnly: true
-        submitted_at:
-          type: string
-          description: ISO 8601 date-time string representing when the job was submitted
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        created_at:
-          type: string
-          description: ISO 8601 date-time string representing when the job was created
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        updated_at:
-          type: string
-          description: ISO 8601 date-time string representing when the job was last updated
-          example: '2017-04-20T16:08:02Z'
-          readOnly: true
-        finished_at:
-          type: string
-          description: ISO 8601 date-time string representing when the job was completed
-          example: '2017-04-20T16:08:02Z'
+          description: The output id, an integer in the 64-bit range.
           readOnly: true
         state:
           type: string
-          description: 'The current state of the job:
-
-            - pending (not yet submitted to Zencoder)
-
-            - submitting (currently submitting to Zencoder)
-
-            - transcoding (successfully submitted to Zencoder)
-
-            - finished (Zencoder finished transcoding, and the job is done)
-
-            - failed (Zencoder was unable to transcode the video)'
+          description: The state of output processing
           enum:
-          - pending
-          - submitting
-          - transcoding
+          - waiting
+          - queued
+          - assigning
+          - processing
           - finished
           - failed
-          readOnly: true
-        input_media_file:
-          $ref: '#/components/schemas/InputMediaFile'
-        output_media_files:
-          type: array
-          description: Array of objects containing the properties of the output files
-          items:
-            $ref: '#/components/schemas/OutputMediaFile'
-    Schema:
-      title: Schema
-      type: object
-      properties:
-        type:
-          type: string
-          description: Provider type for this DRM schema.
-          enum:
-          - widevine
-          - playready
-          - marlin
-        license_acquisition_url:
-          type: string
-          description: License acquisition URL for Playready CENC DRM schema.
-    CuePoint:
-      title: Cue Point
-      description: 'Zencoder supports adding event and navigation cue points to VP6 Flash Video (FLV) files. Cue points are embedded in the FLV stream and FLV metadata packet when you encode the FLV file.
-
-
-        There are two cue point types: "navigation" and "event". Navigation cue points can be used to let users seek to a specified part of a video file. Navigation cue points create a keyframe at the specified cue point location, so you can use code to move a video player’s playhead to that location. You can set particular points in an FLV file where you might want users to seek. For example, your video might have multiple chapters or segments, and you can control the video by embedding navigation cue points in the video file.
-
-
-        Event cue points can be used to perform actions in a SWF video player that are triggered at specified points during FLV playback.'
-      properties:
-        type:
-          type: string
-          description: 'A `cue_point` type: either `navigation` or `event`.'
-          enum:
-          - navigation
-          - event
-        time:
-          type: number
-          description: The time for a `cue_point`, in seconds.
-          example: 30.4
-        name:
-          type: number
-          description: A name for a `cue_point`.
-          example: First cue point
-        data:
-          type: number
-          description: Data for a `cue_point`, as a hash of key/value pairs.
-          example:
-            input: s3://zencodertesting/test.mov
-            outputs:
-            - cue_points:
-              - type: navigation
-                time: 30.4
-                name: My Cue Point
-                data:
-                  mykey: myvalue
-    GetProgressResponse:
-      title: Get Job Progress Response
-      type: object
-      properties:
-        state:
-          type: string
-          description: 'The current state of the job:
-
-            - pending (not yet submitted to Zencoder)
-
-            - submitting (currently submitting to Zencoder)
-
-            - transcoding (successfully submitted to Zencoder)
-
-            - finished (Zencoder finished transcoding, and the job is done)
-
-            - failed (Zencoder was unable to transcode the video)'
+          - cancelle`
+          - no input
+          - skipped
         progress:
           type: number
-          description: The percentage complete
-        input:
-          $ref: '#/components/schemas/InputProgressResponse'
-        output:
-          $ref: '#/components/schemas/OutputProgressResponse'
-    CreateJobFields:
-      title: Create Job Request Body Fields
-      type: object
-      description: Hash of Zencoder job properties
-      required:
-      - input
+          description: Input processing percentage completed
+        current_event:
+          type: string
+          description: The current activity
+          enum:
+          - downloading
+          - transcoding
+          - uploading
+        current_event_progress:
+          type: number
+          description: The current activity percentage completed
+    Notification:
       properties:
-        dynamic_profile_options:
-          $ref: '#/components/schemas/DynamicProfileOptions'
-        generate_dynamic_profile:
-          type: boolean
-          deprecated: true
-          description: '''With CAE the number of outputs and parameters of such outputs may change dynamically for each input file. To specify limits on the number of outputs to be generated as well as other profile constraints, CAE job request must also include dynamic_profile_options object. The outputs reserved for CAE use should not include resolution, bitrate, or codec-related parameters. Instead, they should include labels dynamic_profile_rendition. The number of outputs reserved for CAE use must match the number specified as max_renditions in dynamic_profile_options.'''
-          default: false
-        input:
+        url:
+          description: A valid HTTP or HTTPS URL to notify, optionally including HTTP Auth credential
           type: string
-          description: '''A valid URL to a media file (HTTP/HTTPS, FTP/FTPS, SFTP, Azure, GCS, CF or S3), with or without authentication'''
-          example: s3://zencodertesting/test.mov
-        region:
+        format:
           type: string
-          description: '''The AWS region or Google Compute Engine instance (beta) where Zencoder should process the job'''
+          description: A format and content type for notifications
           enum:
-          - us
-          - europe
-          - asia
-          - sa
-          - australia
-          - us-virginia
-          - us-oregon
-          - us-n-california
-          - eu-dublin
-          - asia-singapore
-          - asia-tokyo
-          - sa-saopaulo
-          - australia-sydney
-          default: us
-          example: us-virginia
-        test:
-          type: boolean
-          description: '''Enable test mode ("Integration Mode") for a job'''
-          default: false
-        private:
-          type: boolean
-          description: Enable privacy mode for a job
-          default: false
-        pass_through:
-          type: string
-          description: Optional information to store alongside this job
-          example: my-custom-pass-through-value
-        mock:
-          type: boolean
-          description: Send a mocked job request
-          default: false
-        grouping:
-          type: string
-          description: A report grouping for this job
-          example: my-custom-group-name
-        aspera_transfer_policy:
-          type: string
-          description: How to allocate available bandwidth for Aspera file transfers
-          enum:
-          - fair
-          - low
-          default: fair
-        transfer_minimum_rate:
-          type: integer
-          description: A targeted rate in Kbps for data transfer minimums
-          default: 1800
-          example: 2500
-        transfer_maximum_rate:
-          type: integer
-          description: A targeted rate in Kbps for data transfer maximums
-          default: 250000
-          example: 300000
-        expected_md5_checksum:
-          type: string
-          description: The expected MD5 checksum of the input file. If the file's checksum does not match the provided checksum the job will fail.
-          example: d5ed34b6b49f57a4a5f4be72fc0a2cd4
-        credentials:
-          type: string
-          description: References saved credentials by a nickname
-          example: my_s3_credentials
-        notifications:
-          description: 'Array of notification destination objects or strings - notifications defined here are for job-level events.  A notification will be sent to the destination when selected event occurs. You can use a simple string with a url: &quot;http://log:pass@httpbin.org/post&quot;, or you can use an object.  <br> Retry strategy: In the event of a failed request to send a notification, the default retry strategy is to retry 50 times with an exponential delay between attempts: <br>
-
-            `max_retry_times = 50` <br> `delay_delta_s = 5` <br>
-
-            `next_retry = now_s + retry_count * delay_delta_s`'
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/Notification'
-            - type: string
-              description: A URL or email address to send notifications to
-          type: array
-          example:
-          - dev@example.com
-          - http://user:pass@example.com/path/to/notification/action
-          - url: https://example.com/notifications.html
-        outputs:
-          type: array
-          description: Array of output specifications
-          items:
-            $ref: '#/components/schemas/Output'
-    DRM:
-      title: DRM
+          - json
+          - xml
+        headers:
+          type: object
+          description: By default, HTTP notifications are sent with an HTTP Content-Type, along with a User-Agent; if your application requires additional headers, they can be specified here
+      title: notification
       type: object
-      description: Hash of DRM options
-      properties:
-        method:
-          type: string
-          description: The Digital Rights Management (DRM) method used to protect content
-          enum:
-          - cenc
-          - playready
-        provider:
-          type: string
-          description: The Digital Rights Management (DRM) provider used. Only required for PlayReady.
-        key_id:
-          type: string
-          description: '''32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use. This is specified with all bytes in standard (big-endian) order..Some DRM services return key IDs in little-endian order formatted as a GUID; to specify the key in that format see [key_guid]{/encoding-settings/content-protection/encoding-settings-drm.html#key_guid}.'''
-        key_guid:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Identifier of the key to use, in GUID-formatted little-endian order. Some DRM services return key IDs using this formatting. If a `key_id` is not also specified, this will be converted to use as the `key_id`. For specifying the key ID in a standard big-endian binary or UUID format, see `key_id`
-        user_key:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). The user key from the DRM provider.
-        server_key:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). The server key from the DRM provider.
-        media_id:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the media.
-        content_id:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
-        content_key:
-          type: string
-          description: 32 hexadecimal characters (with optional dashes for UUID formatting). Unique identifier for the content.
-        schemas:
-          type: array
-          description: 'When using Common Encryption to encrypt an output (or set of outputs), information about the DRM providers is specified as a schema including the schema type, and provider-specific infomration.
-
-
-            This is generally only specified on playlist outputs for multi-bitrate encoding jobs, but may also be specified for a CENC-encoded output to ensure that output is playable on its own.'
-          items:
-            $ref: '#/components/schemas/Schema'
   parameters:
-    ZencoderApiKey:
-      name: Zencoder-Api-Key
-      in: header
-      description: Your API key
-      required: true
-      schema:
-        type: string
     JobId:
       name: job_id
       in: path
@@ -2755,14 +2748,6 @@ components:
       explode: false
       schema:
         type: string
-    Page:
-      name: page
-      in: query
-      description: The page of results to return
-      style: form
-      explode: true
-      schema:
-        type: integer
     PerPage:
       name: per_page
       in: query
@@ -2773,6 +2758,21 @@ components:
         type: integer
         minimum: 1
         maximum: 50
+    ZencoderApiKey:
+      name: Zencoder-Api-Key
+      in: header
+      description: Your API key
+      required: true
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: The page of results to return
+      style: form
+      explode: true
+      schema:
+        type: integer
     ContentType:
       name: Content-Type
       in: header
