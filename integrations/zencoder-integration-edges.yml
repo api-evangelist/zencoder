@@ -86,6 +86,37 @@ edges:
     year: '2010'
   detected_by: sweep-accelerator-portfolios.py
   first_seen: '2026-10-21'
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/zencoder/zencoder-php
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: zencoder/zencoder-php
+      version: v2.2.4
+      released: '2019-09-05'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/zencoder/zencoder-php
+      repo_leg: github-org:zencoder
+      publisher_leg: org:zencoder
+      matched_by: github-org
+      abandoned: true
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 generated: '2026-10-18'
 method: searched
 source:
@@ -109,3 +140,6 @@ checked:
 - https://www.antler.co/portfolio
 - https://www.techstars.com/portfolio
 - https://www.ycombinator.com/companies
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
