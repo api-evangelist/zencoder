@@ -327,3 +327,9 @@ components:
 x-bc-implicit-head: true
 x-bc-implicit-options: true
 x-bc-upstream: http://backend_server
+x-provenance:
+  method: harvested
+  publisher: Zencoder
+  source: https://zencoder.support.brightcove.com/references/openapi.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
